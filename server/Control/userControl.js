@@ -35,4 +35,26 @@ const registerUser = async(req,res)=>{
     }
 }
 
-module.exports={registerUser};
+//login function for User
+const loginUser = async (req, res) => {
+    try {
+      //Extract email and password from request
+      const { email, password} = req.body;
+  
+      // To find user in the database
+      const user = await RegisterUser.findOne({ email });
+  
+      // If user not found or password is incorrect, return error
+      if (!user || !(await bcrypt.compare(password, user.password))) {
+        return res.status(400).json({ message: 'Invalid email or password' });
+      }
+  
+      // If user is found and password is correct, generate token and return
+      const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
+      return res.status(200).json({ message: 'logged in successfully', token, userId: user._id,  role: user.role });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  };
+
+module.exports={registerUser, loginUser};
