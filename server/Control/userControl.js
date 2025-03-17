@@ -11,7 +11,6 @@ const registerUser = async(req,res)=>{
         if (!password || password.length < 8) {
           return res.status(400).json({ message: "Password must be at least 8 characters long" });
         }
-
         console.log(req.body)
         const salt = await bcrypt.genSalt(10) //generating salt
         const hashedPassword = await bcrypt.hash(password,salt) 
@@ -36,3 +35,4 @@ const registerUser = async(req,res)=>{
     }
 }
 
+module.exports={registerUser};

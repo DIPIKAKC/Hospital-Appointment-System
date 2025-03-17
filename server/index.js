@@ -5,6 +5,8 @@ const cors = require("cors");
 
 require("dotenv").config();
 
+const authRoutes = require("./Route/auth");
+
 //Database Connection
 connectDb();
 
@@ -27,6 +29,11 @@ app.get('/', (req, res) => {
 app.get('/api', (req, res) => {
     res.json({ message: 'API is working!' });
   });
+
+
+//SYSTEM ROUTES
+app.use("/auth", authRoutes);
+
 
 //Starting the server
 app.listen(PORT, (err) => {
