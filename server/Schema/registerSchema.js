@@ -60,6 +60,6 @@ const register2 = mongoose.Schema({
 
 
 const RegisterUser= mongoose.model('RegisterUser', register1);
-const RegisterDoctor= mongoose.model('RegisterUser', register2);
+const RegisterDoctor= mongoose.model('RegisterDoctor', register2);
 
 module.exports = {RegisterUser, RegisterDoctor};

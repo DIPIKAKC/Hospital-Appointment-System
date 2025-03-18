@@ -1,13 +1,28 @@
 const express = require("express");
 const router = express.Router();
 const { registerUser, loginUser} = require("../Control/userControl");
+const {registerDoctor, loginDoctor} = require("../Control/doctorControl")
+
+
+
 
 //USER
 
-// Route for user registration
+// Route for user and registration
 router.post("/signup", registerUser);
-//user login
+//user and doctor login
 router.post("/login", loginUser);
+
+
+
+
+
+//DOCTOR
+
+//Route for doc registration
+router.post("/add-doctor", registerDoctor)
+router.post("/login-doc", loginDoctor);
+
 
 
 module.exports = router;
