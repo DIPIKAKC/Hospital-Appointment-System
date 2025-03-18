@@ -16,12 +16,50 @@ const register1 = mongoose.Schema({
         required: true,
         minlength: [8, "Password must be at least 8 characters long"] // Minimum password length requirement
     },
-    role: { type: String, enum: ["doctor", "patient"], default: "patient" }
+    role: { 
+        type: String,
+        enum: ["doctor", "patient"],
+        default: "patient"
+    }
     },
 
  { timestamps: true 
 })
 
-const RegisterUser= mongoose.model('RegisterUser', register1);
 
-module.exports = {RegisterUser};
+//register schema for doctor
+const register2 = mongoose.Schema({
+    fullName: { type: String, required: true },
+    email: { 
+        type: String,
+        required: true,     
+        unique: true,       
+        trim: true,         
+        lowercase: true,    
+        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ 
+    },
+    password: {  
+        type: String,
+        required: true,
+        minlength: [8, "Password must be at least 8 characters long"] 
+    },
+    role: { 
+        type: String,
+        enum: ["doctor", "patient"],
+        default: "doctor" 
+    },
+    contact: {type:String, required:true},
+    department: {
+        type:String,
+        required:true
+    }
+    },
+
+ { timestamps: true 
+})
+
+
+const RegisterUser= mongoose.model('RegisterUser', register1);
+const RegisterDoctor= mongoose.model('RegisterUser', register2);
+
+module.exports = {RegisterUser, RegisterDoctor};
