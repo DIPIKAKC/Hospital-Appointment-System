@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { registerUser, loginUser} = require("../Control/userControl");
 const {registerDoctor, loginDoctor} = require("../Control/doctorControl")
+const {registerAdmin} = require("../Control/adminControl")
 
 
 
@@ -24,5 +25,11 @@ router.post("/add-doctor", registerDoctor)
 router.post("/login-doc", loginDoctor);
 
 
+
+
+//ADMIN
+
+//route for admin registration
+router.post("/register-admin", registerAdmin)
 
 module.exports = router;
