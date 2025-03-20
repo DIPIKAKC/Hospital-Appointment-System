@@ -57,4 +57,29 @@ const loginUser = async (req, res) => {
     }
   };
 
-module.exports={registerUser, loginUser};
+
+
+//Get user info by id
+const getUserById = async (req,res) => {
+
+  try {
+    const user = await RegisterUser.findById({ _id: req.params.userId });
+
+    if (!user) {
+        return res.status(404).send({ message: "User does not exist", sucess: false });
+    }
+
+    user.password = undefined; // Hide password before sending response
+
+    res.status(200).send({ success: true, data: user });
+    
+  } catch (error) {
+      return res.status(500).send({ message: "Error getting user info", success: false, error });
+  }
+}
+
+
+
+
+
+module.exports={registerUser, loginUser, getUserById};
