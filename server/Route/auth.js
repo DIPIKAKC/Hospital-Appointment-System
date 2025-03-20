@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, loginUser, getUserById} = require("../Control/userControl");
+const { registerUser, loginUser, getUserById, editUserData} = require("../Control/userControl");
 const {registerDoctor, loginDoctor} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin} = require("../Control/adminControl")
 
@@ -15,7 +15,8 @@ router.post("/signup", registerUser);
 router.post("/login", loginUser);
 //get user by id
 router.get("/get-user-by-id/:userId", getUserById)
-
+//update user data
+router.put("/edit-user-by-id/:userId", editUserData)
 
 
 

@@ -79,7 +79,34 @@ const getUserById = async (req,res) => {
 }
 
 
+//Update user data by id
+const editUserData = async(req,res)=>{
+    try {
+        const userId = req.params.userId
+        // console.log(userId)
+        const {fullName,email} = req.body
+
+        if (password) {
+          const salt = await bcrypt.genSalt(10);
+          password = await bcrypt.hash(password, salt);
+        }
+
+        const editUser = await RegisterUser.findByIdAndUpdate(
+          userId,
+          {fullName,email},
+          { new: true, runValidators: true } // Return updated document and apply validators
+        );
+
+        if(!editUser){
+            return res.status(404).json({success:false,message:"Unable to edit the profile"})
+        }else{
+            return res.status(200).json({success:true,message:"Edited successfully"})
+        }
+    } catch (error) {
+        return res.status(400).json({success:false,message:"error",error})
+    }
+}
 
 
 
-module.exports={registerUser, loginUser, getUserById};
+module.exports={registerUser, loginUser, getUserById, editUserData};
