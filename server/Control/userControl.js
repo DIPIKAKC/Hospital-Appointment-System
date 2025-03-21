@@ -109,4 +109,41 @@ const editUserData = async(req,res)=>{
 
 
 
-module.exports={registerUser, loginUser, getUserById, editUserData};
+//delete user by id
+const deleteUserData = async(req,res)=>{
+    try {
+        const userId = req.params.userId
+        const { password } = req.body; // Get entered password from request body
+
+        const deleteUser = await RegisterUser.findByIdAndDelete(userId);
+        if (!deleteUser) {
+          return res.status(404).json({ success: false, message: "User not found" });
+        }
+    
+        // Check if password is provided
+        if (!password) {
+          return res.status(400).json({ success: false, message: "Password is required for account deletion" });
+        }
+    
+        // Compare entered password with stored hashed password
+        const isMatch = await bcrypt.compare(password, deleteUser.password);
+        if (!isMatch) {
+          return res.status(401).json({ success: false, message: "Incorrect password. Deletion failed." });
+        }
+    
+        // Delete user if password matches
+        await RegisterUser.findByIdAndDelete(userId);
+
+        if(!deleteUser){
+            return res.status(404).json({success:false,message:"Unable to delete the user profile"})
+        }else{
+            return res.status(200).json({success:true,message:"Deleted successully"})
+        }
+    } catch (error) {
+        return res.status(400).json({sucess:false,message:"error,err"})
+    }
+}
+
+
+
+module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData};

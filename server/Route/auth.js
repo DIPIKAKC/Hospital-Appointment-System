@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, loginUser, getUserById, editUserData} = require("../Control/userControl");
+const { registerUser, loginUser, getUserById, editUserData, deleteUserData} = require("../Control/userControl");
 const {registerDoctor, loginDoctor} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin} = require("../Control/adminControl")
 
@@ -17,6 +17,8 @@ router.post("/login", loginUser);
 router.get("/get-user-by-id/:userId", getUserById)
 //update user data
 router.put("/edit-user-by-id/:userId", editUserData)
+//delete user
+router.delete("/delete-user-by-id/:userId", deleteUserData)
 
 
 
