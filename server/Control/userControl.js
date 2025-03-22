@@ -209,6 +209,42 @@ const bookAppointment = async (req, res) => {
 }
 
 
-module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment};
+
+//Cancel an appointment
+const cancelAppointment = async (req, res) => {
+  try {
+    const userId = req.userId;
+    
+    const appointment = await Appointment.findById(req.params.id);
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    // Verify this appointment belongs to the user or the user is a doctor/admin
+    if (appointment.user.toString() !== userId && 
+        req.userRole !== "admin" && 
+        (req.userRole === "doctor" && appointment.doctor.toString() !== userId)) {
+      return res.status(403).json({ message: "You are not authorized to cancel this appointment" });
+    }
+
+    // Only allow cancellation of pending or confirmed appointments
+    if (!["pending", "confirmed"].includes(appointment.status)) {
+      return res.status(400).json({ message: `Cannot cancel an appointment that is already ${appointment.status}` });
+    }
+
+    appointment.status = "canceled";
+    await appointment.save();
+
+    res.status(200).json({ 
+      message: "Appointment canceled successfully", 
+      appointment 
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error canceling appointment", error: error.message });
+  }
+};
+
+
+module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment, cancelAppointment};
 
 

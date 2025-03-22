@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { auth, authorize } = require('../Middleware/authentication');
 
-const { registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment} = require("../Control/userControl");
+const { registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment, cancelAppointment} = require("../Control/userControl");
 const {registerDoctor, loginDoctor, doctorSlotsPost, appointmentStatus} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin} = require("../Control/adminControl")
 
@@ -23,6 +23,9 @@ router.put("/edit-user-by-id/:userId", editUserData)
 router.delete("/delete-user-by-id/:userId", deleteUserData)
 //book an appointment
 router.post("/book-appointment", auth, authorize("patient"), bookAppointment )
+//Cancel appointment
+router.patch("/:id/cancel", auth, cancelAppointment )
+
 
 
 
