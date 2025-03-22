@@ -155,7 +155,7 @@ const deleteUserData = async(req,res)=>{
 }
 
 
-
+//Appointment Booking
 //book appointment
 const bookAppointment = async (req, res) => {
    
@@ -210,3 +210,5 @@ const bookAppointment = async (req, res) => {
 
 
 module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment};
+
+
