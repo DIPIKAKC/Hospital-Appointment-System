@@ -3,7 +3,7 @@ const router = express.Router();
 const { auth, authorize } = require('../Middleware/authentication');
 
 const { registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment} = require("../Control/userControl");
-const {registerDoctor, loginDoctor, doctorSlotsPost} = require("../Control/doctorControl")
+const {registerDoctor, loginDoctor, doctorSlotsPost, appointmentStatus} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin} = require("../Control/adminControl")
 
 
@@ -31,7 +31,11 @@ router.post("/book-appointment", auth, authorize("patient"), bookAppointment )
 //Route for doc registration
 router.post("/add-doctor", registerDoctor)
 router.post("/login-doc", loginDoctor);
-router.post("/add-time-slot/:doctorId", auth, authorize("doctor"),  doctorSlotsPost)
+//adding time slot for appointments
+router.post("/add-time-slot", auth, authorize("doctor"),  doctorSlotsPost)
+// router.get("/my-assigned-appointments", auth, authorize("doctor"), getAppointments)
+//updating user appointment status - reject/confirm
+router.put("/:id/status", auth, authorize("doctor"),  appointmentStatus)
 
 
 

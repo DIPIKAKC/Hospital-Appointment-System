@@ -1,4 +1,6 @@
-const {RegisterDoctor} = require("../Schema/registerSchema") //imported schema
+const {RegisterDoctor, RegisterUser} = require("../Schema/registerSchema") //imported schema
+const {Appointment} = require("../Schema/appointmentSchema")
+
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
@@ -118,5 +120,104 @@ const loginDoctor = async (req, res) => {
   };
 
 
+//Update appointment status (confirm/reject)
+const appointmentStatus = async (req, res) => {
+  try {
+    const { status, notes } = req.body;
+    const doctorId = req.userId;
+    
+    if (!["confirmed", "rejected"].includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
+    }
 
-module.exports = {registerDoctor, loginDoctor, doctorSlotsPost};
+    const appointment = await Appointment.findById(req.params.id);
+    console.log (appointment)
+    
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    // Verify this appointment belongs to the doctor
+    if (String(appointment.doctor) !== String(doctorId)) {
+      return res.status(403).json({ message: "You are not authorized to update this appointment" });
+    }
+
+    appointment.status = status;
+    if (notes) appointment.notes = notes;
+    
+    await appointment.save();
+
+    res.status(200).json({ 
+      message: `Appointment ${status}`, 
+      appointment 
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating appointment status", error: error.message });
+  }
+};
+
+
+//Get Assigned Appointments
+// const getAppointments = async (req, res) => {
+//     try {
+//       const userId = req.user._id;
+//       const userRole = req.user.role;
+      
+//       let query = {};
+      
+//       // If user is patient, get their appointments
+//       if (userRole === "patient") {
+//         query.user = userId;
+//       } 
+//       // If user is doctor, get appointments they need to handle
+//       else if (userRole === "doctor") {
+//         query.doctor = userId;
+//       }
+//       // Admin can see all appointments
+  
+//       const appointments = await Appointment.find(query)
+//         .populate("user", "fullName email")
+//         .populate("doctor", "fullName department")
+//         .sort({ createdAt: -1 });
+  
+//       res.status(200).json(appointments);
+//     } catch (error) {
+//       res.status(500).json({ message: "Error fetching appointments", error: error.message });
+//     }
+//   };
+
+
+// const getAppointments = async (req, res) => {
+//   try {
+//     const userId = req.userId;
+//     const userRole = req.userRole;
+    
+//     const appointment = await Appointment.findById(req.params.id)
+//       .populate("user", "fullName email")
+//       .populate("doctor", "fullName department");
+      
+//     if (!appointment) {
+//       return res.status(404).json({ message: "Appointment not found" });
+//     }
+
+//     // Check permissions - user can only see their own appointments
+//     if (userRole === "patient" && appointment.user._id.toString() !== String(userId)) {
+//       return res.status(403).json({ message: "You don't have permission to view this appointment" });
+//     }
+    
+//     // Doctor can only see appointments assigned to them
+//     if (userRole === "doctor" && appointment.doctor._id.toString() !== String(userId)) {
+//       return res.status(403).json({ message: "You don't have permission to view this appointment" });
+//     }
+
+//     res.status(200).json(appointment);
+//   } catch (error) {
+//     res.status(500).json({ message: "Error fetching appointment details", error: error.message });
+//   }
+// };
+
+
+
+
+
+module.exports = {registerDoctor, loginDoctor, doctorSlotsPost, appointmentStatus};
