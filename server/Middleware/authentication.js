@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const {RegisterUser} = require("../Schema/registerSchema");
+const {RegisterUser, RegisterDoctor, RegisterAdmin} = require("../Schema/registerSchema");
 const { default: mongoose } = require("mongoose");
 
 // Authentication middleware
@@ -18,8 +18,17 @@ const auth = async (req, res, next) => {
     console.log('Decoded Token:', decoded); // Log the decoded token
     
     // Get user from database
-    const user = await RegisterUser.findById(decoded.id)
+    // const user = await RegisterUser.findById(decoded.id)
+    let user;
+    if (decoded.role === "doctor") {
+      user = await RegisterDoctor.findById(decoded.id);
+    } else if (decoded.role === "patient") {
+      user = await RegisterUser.findById(decoded.id);
+    } else if (decoded.role === "admin") {
+      user = await RegisterAdmin.findById(decoded.id);
+    }
     
+
     console.log('User from DB:', user); // Log the user information
     
     if (!user) {

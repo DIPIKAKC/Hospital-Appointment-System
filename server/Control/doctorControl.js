@@ -2,7 +2,6 @@ const {RegisterDoctor} = require("../Schema/registerSchema") //imported schema
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
-
 //Register function for Doctor
 const registerDoctor = async(req,res)=>{
     try{
@@ -81,24 +80,43 @@ const loginDoctor = async (req, res) => {
   };
 
 
-// //Get user info by id
-// const getDoctorById = async (req,res) => {
+  const doctorSlotsPost = async (req, res) => {
+    try {
 
-//   try {
-//     const user = await RegisterUser.findById({ _id:req.params.doctorId});
+      console.log("Request User:", req.user);
+      const { date, times } = req.body;
+      const doctorId = req.user.id;
+  
+      // Find the doctor 
+      const doctor = await RegisterDoctor.findById(doctorId);
+      if (!doctor) {
+        return res.status(404).json({ message: "Doctor not found" });
+      }
+  
+      // Check if there's already a slot for this date
+      const existingSlotIndex = doctor.availableSlots.findIndex(
+        slot => slot.date === date
+      );
+  
+      if (existingSlotIndex >= 0) {
+        // Update existing slot
+        doctor.availableSlots[existingSlotIndex].times = times;
+      } else {
+        // Add new slot
+        doctor.availableSlots.push({ date, times });
+      }
+  
+      await doctor.save();
+  
+      res.status(201).json({ 
+        message: "Appointment slots added successfully", 
+        availableSlots: doctor.availableSlots 
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Error adding appointment slots", error: error.message });
+    }
+  };
 
-//     if (!user) {
-//         return res.status(404).send({ message: "Doctor does not exist", sucess: false });
-//     }
-
-//     user.password = undefined; // Hide password before sending response
-
-//     res.status(200).send({ success: true, data: user });
-    
-//   } catch (error) {
-//       return res.status(500).send({ message: "Error getting doctor info", success: false, error });
-//   }
-// }
 
 
-module.exports = {registerDoctor, loginDoctor};
+module.exports = {registerDoctor, loginDoctor, doctorSlotsPost};
