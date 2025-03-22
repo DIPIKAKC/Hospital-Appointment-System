@@ -14,8 +14,15 @@ const registerDoctor = async(req,res)=>{
         if(!department || !email || !fullName || !contact){
           return res.status(400).json({ message: "All fields are required" });
         }
-  
+
+        // Check if email already exists
+        const existingDoctor = await RegisterDoctor.findOne({ email });
+        if (existingDoctor) {
+          return res.status(400).json({ message: "Doctor with this email already exists" });
+        }
+
         console.log(req.body)
+
         const salt = await bcrypt.genSalt(10) //generating salt
         const hashedPassword = await bcrypt.hash(password,salt) 
   
@@ -23,10 +30,13 @@ const registerDoctor = async(req,res)=>{
             fullName,
             email: email, 
             password: hashedPassword,
-            contact: contact,
-            department: department,
+            contact,
+            department,
             role: "doctor"
         })
+
+        await user.save();
+
         if(user){
             res.status(200).json({message:'Successfully registered'})
         }else{
@@ -70,4 +80,25 @@ const loginDoctor = async (req, res) => {
     }
   };
 
-module.exports = {registerDoctor, loginDoctor};
+
+// //Get user info by id
+// const getDoctorById = async (req,res) => {
+
+//   try {
+//     const user = await RegisterUser.findById({ _id:req.params.doctorId});
+
+//     if (!user) {
+//         return res.status(404).send({ message: "Doctor does not exist", sucess: false });
+//     }
+
+//     user.password = undefined; // Hide password before sending response
+
+//     res.status(200).send({ success: true, data: user });
+    
+//   } catch (error) {
+//       return res.status(500).send({ message: "Error getting doctor info", success: false, error });
+//   }
+// }
+
+
+module.exports = {registerDoctor, loginDoctor, getDoctorById};

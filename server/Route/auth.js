@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, loginUser, getUserById, editUserData, deleteUserData} = require("../Control/userControl");
-const {registerDoctor, loginDoctor} = require("../Control/doctorControl")
+
+const { registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment} = require("../Control/userControl");
+const {registerDoctor, loginDoctor, getDoctorById} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin} = require("../Control/adminControl")
 
 
@@ -28,6 +29,7 @@ router.delete("/delete-user-by-id/:userId", deleteUserData)
 //Route for doc registration
 router.post("/add-doctor", registerDoctor)
 router.post("/login-doc", loginDoctor);
+// router.get("/get-doc-by-id/:doctorId", getDoctorById)
 
 
 

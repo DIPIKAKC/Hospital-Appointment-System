@@ -52,11 +52,14 @@ const register2 = mongoose.Schema({
     department: {
         type:String,
         required:true
-    }
+    },
+    availableSlots: [{
+        date: { type: String },
+        times: [{ type: String }]    
+    }]
     },
 
- { timestamps: true 
-})
+ { timestamps: true });
 
 
 

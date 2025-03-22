@@ -1,4 +1,5 @@
-const {RegisterUser} = require("../Schema/registerSchema") //imported schema
+const {RegisterUser, RegisterDoctor} = require("../Schema/registerSchema") //imported schema
+const {Appointment} =require("../Schema/appointmentSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
@@ -6,7 +7,13 @@ const jwt = require("jsonwebtoken")
 //Register function for user
 const registerUser = async(req,res)=>{
     try{
-        const {fullName,email,password} = req.body
+        const {fullName,email,password, role} = req.body
+
+        // Check if email already exists
+        const existingUser = await RegisterUser.findOne({ email });
+        if (existingUser) {
+          return res.status(400).json({ message: "User with this email already exists" });
+        }
 
         if (!password || password.length < 8) {
           return res.status(400).json({ message: "Password must be at least 8 characters long" });
@@ -24,6 +31,8 @@ const registerUser = async(req,res)=>{
             // address: address
             role: "patient"
         })
+        await user.save();
+
         if(user){
             res.status(200).json({message:'Successfully registered'})
         }else{
@@ -51,6 +60,7 @@ const loginUser = async (req, res) => {
       
       // If user is found and password is correct, generate token and return
       const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
+
       return res.status(200).json({ message: 'logged in successfully', token, userId: user._id,  role: user.role });
     } catch (err) {
       return res.status(500).json({ message: err.message });
@@ -146,4 +156,57 @@ const deleteUserData = async(req,res)=>{
 
 
 
-module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData};
+//book appointment
+const bookAppointment = async (req, res) => {
+   
+  try {
+    const { doctorId, date, time, reason } = req.body;
+    const userId = req.user.id;
+
+    // Verify the doctor exists
+    const doctor = await RegisterDoctor.findById(doctorId);
+    if (!doctor || doctor.role !== "doctor") {
+      return res.status(400).json({ message: "Invalid doctor" });
+    }
+
+    // // Check if the doctor has the requested slot available
+    // const dateSlot = doctor.availableSlots.find(slot => slot.date === date);
+    // if (!dateSlot || !dateSlot.times.includes(time)) {
+    //   return res.status(400).json({ message: "This slot is not available" });
+    // }
+
+    // // Check if the appointment slot is already booked
+    // const existingAppointment = await Appointment.findOne({ 
+    //   doctor: doctorId,
+    //   date, 
+    //   time,
+    //   status: { $in: ["pending", "confirmed"] }
+    // });
+    
+    // if (existingAppointment) {
+    //   return res.status(400).json({ message: "This slot is already booked. Please choose another time." });
+    // }
+
+    // Create new appointment
+    const newAppointment = new Appointment({ 
+      user: userId, 
+      doctor: doctorId, 
+      date, 
+      time, 
+      reason 
+    });
+    
+    await newAppointment.save();
+
+    res.status(201).json({ 
+      message: "Appointment booked successfully! Waiting for doctor's confirmation.", 
+      appointment: newAppointment 
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error booking appointment", error: error.message });
+  }
+
+}
+
+
+module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment};
