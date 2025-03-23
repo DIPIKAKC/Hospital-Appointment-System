@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //system imports
  import LoginForm from "./System/Login";
  import Register from "./System/Register";
- import { Dashboard } from "./System/User/Dashboard";
+//  import { Dashboard } from "./System/User/Dashboard";
 
 const App = () => {
 
