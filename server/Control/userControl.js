@@ -246,8 +246,18 @@ const cancelAppointment = async (req, res) => {
 
 
 
- 
+//get available-doctors and slots
+const getAvailableDoctorsForUser = async (req, res) => {
+  try {
+    const doctors = await RegisterDoctor.find({ role: "doctor", availableSlots: { $exists: true, $not: { $size: 0 } } })
+      .select("fullName department availableSlots");
 
-module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment, cancelAppointment};
+    res.status(200).json(doctors);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching available doctors", error: error.message });
+  }
+};
+
+module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment, cancelAppointment, getAvailableDoctorsForUser};
 
 
