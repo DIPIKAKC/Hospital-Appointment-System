@@ -3,23 +3,22 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
 //system imports
-import NavBar from "./Components/Navbar";
-import HomePage from "./System/User/HomePage";
-import AppointmentBooking from "./System/User/AppointmentBooking";
-import LoginForm from "./System/User/LoginForm";
-
+ import LoginForm from "./System/Login";
+ import Register from "./System/Register";
+ import { Dashboard } from "./System/User/Dashboard";
 
 const App = () => {
 
   return (
     <Router>
 
-      <NavBar/> {/* NavBar should be outside Routes to show on all pages */}
+      {/* //<NavBar/>  */}
+      {/* NavBar should be outside Routes to show on all pages */}
 
       <Routes>
           <Route path = "/login" element={<LoginForm />} />
-          <Route path= "/Home" element ={<HomePage/>} /> 
-          <Route path= "/appointment-book" element = {<AppointmentBooking/>} />
+          <Route path = "/register" element={<Register />} />
+          <Route path= "/" element ={<Dashboard/>} /> 
           
       </Routes>
     </Router>
