@@ -1,0 +1,75 @@
+.profile-card {
+    width: 300px;
+    overflow: hidden;
+    height:400px;
+    border-radius: 20px;
+  }
+  
+  .profile-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    padding-top: 30px;
+    background-color: white;
+    border-bottom: 1px solid #d3d7d9;
+    padding-bottom: 20px;
+  }
+  
+  .doctor-photo {
+    margin-right: 15px;
+  }
+  
+  .doctor-image img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .doctor-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .experience {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 5px;
+  }
+  
+  .name {
+    font-size: 15px;
+    font-weight: bold;
+    color: #1e3a8a;
+    margin-bottom: 3px;
+  }
+  
+  .specialty {
+    font-size: 15px;
+    color: #4b5563;
+  }
+  
+  .about-section {
+    padding: 15px;
+    padding-top: 25px;
+    background-color: white;
+    padding-bottom: 40px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  
+  .about-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #1e3a8a;
+    margin-bottom: 8px;
+  }
+  
+  .about-description {
+    font-size: 13px;
+    color: #4b5563;
+    line-height: 1.4;
+  }
+
+
+

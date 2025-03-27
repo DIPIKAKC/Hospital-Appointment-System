@@ -63,7 +63,7 @@ const NavBar = () => {
                         <Link to="/appointments" />Appointments
                         </button>
                         <button className="nav-item">
-                        <Link to="/doctors" />Doctors
+                        <Link to="/doctors" /> Find Doctors
                         </button>
                         <button className="nav-item">
                         <Link to="/contact-us" />Contact Us
@@ -77,10 +77,11 @@ const NavBar = () => {
                         <div className="notification-icon">🔔</div>
 
                     <div className="user-profile">
+                        <img className='user-photo' src={userImg} alt="User"></img>
+
                         <div className="username">
                             {username ? `Welcome, ${username}` : `Welcome, Guest`}
                         </div>
-                        <img className='user-photo' src={userImg} alt="User"></img>
 
                     </div>                    
                     </div>

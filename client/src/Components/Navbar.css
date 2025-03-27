@@ -85,8 +85,8 @@
     }
   
   .username {
-    background-color: #4A90E2;
-    color: white;
+    /* background-color: #4A90E2; */
+    color: rgb(0, 0, 0);
     padding: 8px 16px;
     border-radius: 20px;
   }
