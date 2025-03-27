@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken")
 //Register function for user
 const registerUser = async(req,res)=>{
     try{
-        const {fullName,email,password, role} = req.body
+        const {fullName,email,password} = req.body
 
         // Check if email already exists
         const existingUser = await RegisterUser.findOne({ email });
@@ -48,7 +48,7 @@ const registerUser = async(req,res)=>{
 const loginUser = async (req, res) => {
     try {
       //Extract email and password from request
-      const { email, password} = req.body;
+      const { email, password } = req.body;
   
       // To find user in the database
       const user = await RegisterUser.findOne({ email });
@@ -61,7 +61,7 @@ const loginUser = async (req, res) => {
       // If user is found and password is correct, generate token and return
       const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
 
-      return res.status(200).json({ message: 'logged in successfully', token, userId: user._id,  role: user.role });
+      return res.status(200).json({ message: 'logged in successfully', token, userId: user._id, fullName: user.fullName, email: user.email, role: user.role });
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }

@@ -6,7 +6,7 @@ const { registerUser, loginUser, getUserById,
     editUserData, deleteUserData, bookAppointment, 
     cancelAppointment, getAvailableDoctorsForUser} = require("../Control/userControl");
 const {registerDoctor, loginDoctor, doctorSlotsPost, appointmentStatus} = require("../Control/doctorControl")
-const {registerAdmin, loginAdmin} = require("../Control/adminControl")
+const {registerAdmin, loginAdmin, addDepartments} = require("../Control/adminControl")
 
 
 
@@ -18,7 +18,7 @@ router.post("/signup", registerUser);
 //user and doctor login
 router.post("/login", loginUser);
 //get user by id
-router.get("/get-user-by-id/:userId", getUserById)
+router.get("/get-user-by-id/:userId", auth, getUserById)
 //update user data
 router.put("/edit-user-by-id/:userId", editUserData)
 //delete user
@@ -28,7 +28,7 @@ router.post("/book-appointment", auth, authorize("patient"), bookAppointment )
 //Cancel appointment
 router.patch("/:id/cancel", auth, cancelAppointment )
 //get available doctors and their slots
-router.get("/available-doctors", auth, getAvailableDoctorsForUser )
+router.get("/available-doctors",  getAvailableDoctorsForUser ) //auth
 
 
 
@@ -50,5 +50,6 @@ router.put("/:id/status", auth, authorize("doctor"),  appointmentStatus)
 //route for admin registration
 router.post("/register-admin", registerAdmin)
 router.post("/login-admin", loginAdmin)
+router.post("/add-department", auth, authorize("admin"), addDepartments )
 
 module.exports = router;

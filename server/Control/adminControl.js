@@ -1,4 +1,6 @@
 const {RegisterAdmin} = require("../Schema/registerSchema") //imported schema
+const {Department} = require("../Schema/departmentSchema")
+
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
@@ -56,6 +58,31 @@ const loginAdmin = async (req, res) => {
     }
   };
 
+const addDepartments = async(req,res) => {
+  try{
+    const {name,description} = req.body
+
+// Check if department already exists
+    const existingDepartment = await Department.findOne({ name });
+    if (existingDepartment) {
+        return res.status(400).json({ success: false, message: "Department already exists" });
+      }
+
+    const newdepartment = await Department.create({
+        name: name,
+        description: description
+    })
+
+    if(newdepartment){
+        res.status(200).json({message:'Successfully added department'})
+    }else{
+        res.status(400).json({message:"Error adding department."})
+    }
+}
+catch(err){
+    res.status(500).json({message: err.message})
+}
+}
 
 
-module.exports = {registerAdmin, loginAdmin}
+module.exports = {registerAdmin, loginAdmin, addDepartments}

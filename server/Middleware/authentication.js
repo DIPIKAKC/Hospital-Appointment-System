@@ -41,6 +41,7 @@ const auth = async (req, res, next) => {
     req.userRole = decoded.role; // Ensure userRole is attached to the request object
     
     
+    
     next();
   } catch (error) {
     console.error('Auth middleware error:', error);
