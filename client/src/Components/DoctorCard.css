@@ -23,25 +23,25 @@
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 25px;
   width: 350px;
   padding-left: 30px;
   padding-right: 30px;
 }
 
-.doctor-image {
+/* .doctor-image {
   margin-right: 20px;
-}
+} */
 
-.doctor-image img {
+.doctor-photo img {
   width: 120px;
-  height: 160px;
-  object-fit: cover;
+  height: 140px;
+  /* object-fit: cover; */
   border-radius: 10px;
 }
 
 .doctor-details {
-  margin-left: 15px;
+  margin-right: 30px;
   flex-grow: 1;
 }
 

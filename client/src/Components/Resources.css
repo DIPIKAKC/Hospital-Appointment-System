@@ -1,0 +1,16 @@
+.resource-button{
+    padding: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: larger;
+    border-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border: none;
+    background-color: #10B8B9;
+    color: whitesmoke;
+}
+
+.resource-button:hover{
+    background-color: #089d9d;
+    cursor: pointer;
+}

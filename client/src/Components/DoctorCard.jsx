@@ -44,9 +44,7 @@ const DoctorCard = () => {
   return (
     <div className="doctor-card-container">
       <div className="doctor-card">
-        <div className="doctor-image">
-            <img src={doctorImg} alt="Doctor"></img>
-        </div>
+
         <div className="doctor-details">
           <div className="experience-label">Experience</div>
           <div className="experience-value">2 years</div>
@@ -54,6 +52,10 @@ const DoctorCard = () => {
           <div className="doctor-specialty">{doctor.department}</div>
           <button className="book-appointment-btn">Book Appointment</button>
         </div>
+        <div className="doctor-photo">
+            <img src={doctorImg} alt="Doctor"></img>
+        </div>
+
       </div>
     </div>
   );

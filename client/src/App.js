@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
  import NavBar from "./Components/Navbar";
  import DoctorCard from "./Components/DoctorCard";
  import DoctorProfileCard from "./Components/DoctorProfile";
+import Resources from "./Components/Resources";
 
 const App = () => {
 
@@ -17,7 +18,8 @@ const App = () => {
 
       <Routes>
           <Route path = "/" element={<DoctorCard />} />
-          <Route path = "/a" element={<DoctorProfileCard />} />
+          <Route path = "/a" element={<Resources />} />
+          <Route path = "/b" element={<DoctorProfileCard />} />
 
           
       </Routes>
