@@ -1,0 +1,135 @@
+* {
+    margin-top: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+  
+/* Main Content Styles */
+.main-content {
+    margin-top: 100px;
+    display: flex;
+    min-height: calc(100vh - 70px);
+    width: 100%;
+    position: relative;
+}
+  
+/* Sidebar Styles */
+.sidebar {
+    margin-top: 20px;
+    width: 240px;
+    min-width: 240px; /* Ensures sidebar maintains its width */
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px 0;
+    position: sticky;
+    top: 120px; /* Adjusts for the margin-top of main-content */
+    height: fit-content;
+}
+  
+.departments-section {
+    padding: 0 20px;
+}
+  
+.departments-section h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+  
+.find-text {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 35px;
+}
+  
+.department-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 250px;
+    width: 170px;
+    overflow-y: auto;
+}
+  
+.department-item {
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+  
+.department-item.active {
+    background-color: #5b91c5;
+    color: white;
+}
+  
+/* Content Area Styles */
+.content-area {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100% - 240px); /* Ensures content respects sidebar width */
+}
+  
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #eaeaea;
+    border-radius: 20px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    width: 75%;
+}
+  
+.search-icon {
+    margin-right: 10px;
+}
+  
+.search-bar input {
+    border: none;
+    background: transparent;
+    outline: none;
+    flex: 1;
+}
+
+/* Doctor Cards Layout */
+.doctors-card-container {
+    margin-top: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+  
+/* Responsive layout for smaller screens */
+@media (max-width: 992px) {
+    .content-area {
+        margin-right: 0;
+        max-width: 100%;
+    }
+    
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+        margin-bottom: 20px;
+        position: static;
+    }
+    
+    .doctors-card-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .doctors-card-container {
+        grid-template-columns: 1fr;
+    }
+}

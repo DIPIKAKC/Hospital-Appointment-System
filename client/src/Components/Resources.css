@@ -1,9 +1,16 @@
 .resource-button{
+    position: fixed;
+    bottom: 40px;
+    left: 50px;
+    z-index: 900;
+}
+
+.resource-button button{
     padding: 15px;
     padding-left: 25px;
     padding-right: 25px;
     font-size: larger;
-    border-radius: 10px;
+    border-radius: 16px;
     border-bottom-left-radius: 0px;
     border: none;
     background-color: #10B8B9;

@@ -2,6 +2,7 @@ const {RegisterUser, RegisterDoctor} = require("../Schema/registerSchema") //imp
 const {Appointment} =require("../Schema/appointmentSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const { get } = require("../Route/auth")
 
 
 //Register function for user
@@ -258,6 +259,21 @@ const getAvailableDoctorsForUser = async (req, res) => {
   }
 };
 
-module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment, cancelAppointment, getAvailableDoctorsForUser};
+
+
+
+//get all doctors
+const getAllDoctors = async(req,res) => {
+  try{
+    const doctors = await RegisterDoctor.find({role: "doctor"}).select("fullName department")
+
+    res.status(200).json(doctors)
+  } catch(error){
+    res.status(500).jsom({ message: "Error fetching available doctors", error: error.message })
+  }
+};
+
+
+module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment, cancelAppointment, getAvailableDoctorsForUser, getAllDoctors};
 
 
