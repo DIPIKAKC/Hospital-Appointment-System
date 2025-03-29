@@ -4,7 +4,7 @@ const { auth, authorize } = require('../Middleware/authentication');
 
 const { registerUser, loginUser, getUserById, 
     editUserData, deleteUserData, bookAppointment, 
-    cancelAppointment, getAvailableDoctorsForUser, getAllDoctors} = require("../Control/userControl");
+    cancelAppointment, getAvailableDoctorsForUser, getAllDoctors, getDepartments} = require("../Control/userControl");
 const {registerDoctor, loginDoctor, doctorSlotsPost, appointmentStatus} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin, addDepartments} = require("../Control/adminControl")
 
@@ -31,6 +31,8 @@ router.patch("/:id/cancel", auth, cancelAppointment )
 router.get("/available-doctors",  getAvailableDoctorsForUser ) //auth
 //get all doctors
 router.get("/all-doctors", getAllDoctors)
+//get departments
+router.get("/departments", getDepartments)
 
 
 

@@ -82,6 +82,8 @@ const loginDoctor = async (req, res) => {
   };
 
 
+
+  //post time/date slots
   const doctorSlotsPost = async (req, res) => {
     try {
 
