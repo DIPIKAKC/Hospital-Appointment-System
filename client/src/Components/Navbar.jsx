@@ -78,11 +78,10 @@ const NavBar = () => {
 
                     <div className="user-profile">
                         <img className='user-photo' src={userImg} alt="User"></img>
-
                         <div className="username">
                             {username ? `Welcome, ${username}` : `Welcome, Guest`}
                         </div>
-
+                        
                     </div>                    
                     </div>
             </div>

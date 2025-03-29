@@ -1,9 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
-import './GetAllDoctor.css';
+import './FindDoctors.css';
 import DoctorCard from '../../Components/DoctorCard';
 
-const GetAllDoctors = () => {
+const FindDoctors = () => {
 
     const [doctors, setDoctors] = useState([]);
 
@@ -75,7 +75,7 @@ const GetAllDoctors = () => {
   );
 };
 
-export default GetAllDoctors;
+export default FindDoctors;
 
 
 
