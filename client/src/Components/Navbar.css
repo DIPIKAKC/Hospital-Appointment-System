@@ -20,7 +20,7 @@
     top: 0;
     left: 0;
     z-index: 1000; /* Ensure navbar appears on top */
-
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Added subtle shadow for better definition */
   }
   
   .logo {
@@ -45,21 +45,42 @@
     cursor: pointer;
     font-size: 16px;
     color: #666;
+    position: relative; /* Added for absolute positioning of underline */
+    transition: color 0.3s ease-in-out;
   }
 
-  .nav-item:hover {
-    background: #4A90E2;
-    border-radius: 10px;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-size: 16px;
-    color: white;
-  }
-  
-  /* .nav-link.active {
-    color: #4A90E2;
-  } */
-  
+/* Add underline effect on hover */
+.nav-item:hover {
+  color: #4A90E2; /* Changed to use the blue color instead of white */
+}
+
+/* Create the underline effect */
+.nav-item::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #4A90E2;
+  transition: width 0.3s ease;
+}
+
+/* Expand the underline on hover */
+.nav-item:hover::after {
+  width: 100%; /* Width of the underline */
+}
+
+/* Style for active/selected nav item */
+.nav-item.active {
+  color: #4A90E2;
+} 
+
+/* Underline for active/selected nav item */
+.nav-item.active::after {
+  width: 100%; /* Width of the underline */
+}
+
   .nav-actions {
     display: flex;
     align-items: center;
