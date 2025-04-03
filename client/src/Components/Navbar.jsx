@@ -18,7 +18,7 @@ const NavBar = () => {
     // }
 
     useEffect(() => {
-        const  userId = localStorage.getItem("userId")
+        const  userId = localStorage.getItem("id")
         console.log(userId)
         
         const fetchUser = async () => {
@@ -36,7 +36,7 @@ const NavBar = () => {
             }
 
             const data = await response.json();
-            setUsername(data.fullName);
+            setUsername(data.data.fullName);
 
             }catch (error) {
                 console.error("Error fetching user:", error);

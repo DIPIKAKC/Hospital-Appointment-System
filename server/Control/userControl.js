@@ -251,6 +251,7 @@ const cancelAppointment = async (req, res) => {
 //get available-doctors and slots
 const getAvailableDoctorsForUser = async (req, res) => {
   try {
+    
     const doctors = await RegisterDoctor.find({ role: "doctor", availableSlots: { $exists: true, $not: { $size: 0 } } })
       .select("fullName department availableSlots");
 
@@ -275,6 +276,23 @@ const getAllDoctors = async(req,res) => {
 };
 
 
+//get doctor by id
+const getDoctorById = async(req,res) => {
+  try{
+    const doctorId = req.params.doctorId;
+
+    const doctor = await RegisterDoctor.findById(doctorId);
+
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+    res.status(200).json(doctor);
+  } catch(error){
+    res.status(500).json({ message: "Error fetching doctor", error: error.message })
+  }
+}
+
+
 //get departments
 const getDepartments = async(req,res) => {
   try{
@@ -285,6 +303,8 @@ const getDepartments = async(req,res) => {
     res.status(500).json( {message: "Error fetching departments", error: error.message} )
   }
 }
-module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData, bookAppointment, cancelAppointment, getAvailableDoctorsForUser, getAllDoctors, getDepartments};
+module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData,
+                 bookAppointment, cancelAppointment, getAvailableDoctorsForUser, getAllDoctors,
+                  getDepartments, getDoctorById};
 
 

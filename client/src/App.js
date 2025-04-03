@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Resources from "./Components/Resources";
 import Footer from "./Components/Footer";
 import FindDoctors from "./Pages/User/FindDoctors";
+import DoctorPage from "./Pages/User/DoctorPage"
 
 const App = () => {
 
@@ -21,6 +22,7 @@ const App = () => {
           <Route path = "/" element={<Footer />} />
           <Route path = "/b" element={<DoctorProfileCard />} />
           <Route path="/getAllDoctors" element={<FindDoctors />} />
+          <Route path= "/doctor/:doctorId" element={<DoctorPage />} />
 
           
       </Routes>
