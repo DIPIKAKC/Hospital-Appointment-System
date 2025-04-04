@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
     }
     
     // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, {expiresIn: '1h'});
     console.log('Decoded Token:', decoded); // Log the decoded token
     
     // Get user from database
