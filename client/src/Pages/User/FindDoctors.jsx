@@ -1,4 +1,6 @@
  import React, { useEffect, useState } from 'react';
+ import { GoSearch } from "react-icons/go";
+
 import './FindDoctors.css';
 import DoctorCard from '../../Components/DoctorCard';
 
@@ -120,7 +122,7 @@ const FindDoctors = () => {
 
             <div className="content-area">
                 <div className="search-bar">
-                    <i className="search-icon">🔍</i>
+                    <i className="search-icon"><GoSearch size={22}/></i>
                     <input 
                         type="text" 
                         placeholder="Search by name" 

@@ -211,6 +211,36 @@ const bookAppointment = async (req, res) => {
 }
 
 
+//get My appointments
+const getMyAppointments = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const userRole = req.userRole;
+    
+    let query = {};
+    
+    // If user is patient, get their appointments
+    if (userRole === "user") {
+      query.user = userId;
+    } 
+    // If user is doctor, get appointments they need to handle
+    else if (userRole === "doctor") {
+      query.doctor = userId;
+    }
+    // Admin can see all appointments
+
+    const appointments = await Appointment.find(query)
+      .populate("user", "fullName email")
+      .populate("doctor", "fullName department")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(appointments);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching appointments", error: error.message });
+  }
+};
+
+
 
 //Cancel an appointment
 const cancelAppointment = async (req, res) => {
@@ -319,6 +349,6 @@ const getDepartments = async(req,res) => {
 }
 module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData,
                  bookAppointment, cancelAppointment, getAvailableSlots, getAllDoctors,
-                  getDepartments, getDoctorById};
+                  getDepartments, getDoctorById, getMyAppointments};
 
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineArrowDropDown } from "react-icons/md";
+import { HiOutlineBell } from "react-icons/hi2";
 
 import './Navbar.css';
 import userImg from '../Images/user.jpg'
@@ -94,7 +95,7 @@ const NavBar = () => {
 
 
                     <div className="nav-actions">
-                        <div className="notification-icon">🔔</div>
+                        <div className="notification-icon"><HiOutlineBell size={22}/></div>
 
                     <div className="user-profile">
                         <img className='user-photo' src={userImg} alt="User"></img>

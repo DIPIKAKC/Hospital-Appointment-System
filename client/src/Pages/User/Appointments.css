@@ -1,0 +1,94 @@
+.appointments-container {
+    display: flex;
+    min-height: 400px;
+  }
+  
+  .appointments-sidebar {
+    width: 240px;
+    border-right: 1px solid #e0e0e0;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .tab-button {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #333;
+    transition: background-color 0.2s ease;
+  }
+  
+  .tab-button:hover {
+    background-color: #f0f7ff;
+  }
+  
+  .tab-button.active {
+    background-color: #4f93e0;
+    color: white;
+    font-weight: 500;
+  }
+  
+  .appointments-content {
+    flex-grow: 1;
+    padding: 0 20px;
+    overflow-y: auto;
+    max-height: 600px;
+  }
+  
+  .appointment-card {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 16px;
+    padding: 16px;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .appointment-card:first-child {
+    margin-top: 10px;
+  }
+  
+  .appointment-header {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 12px;
+  }
+  
+  .appointment-date {
+    flex: 1;
+  }
+  
+  .appointment-details {
+    display: flex;
+    padding-top: 12px;
+  }
+  
+  .appointment-doctor {
+    flex: 1;
+  }
+  
+  .label {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  
+  .value {
+    font-size: 16px;
+    margin-top: 0;
+  }
+  
+  .no-appointments {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    color: #777;
+    font-size: 16px;
+  }
