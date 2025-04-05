@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { MdOutlineArrowDropDown } from "react-icons/md";
+
 import './Navbar.css';
 import userImg from '../Images/user.jpg'
 
@@ -99,12 +101,12 @@ const NavBar = () => {
                         <div className="username">
                             {username ? `Welcome, ${username}` : `Welcome, Guest`}
                         </div>
-                        
+                        <MdOutlineArrowDropDown size={22}/>
                     </div>                    
                     </div>
             </div>
         </nav>
     );
-};
+}; 
 
 export default NavBar;

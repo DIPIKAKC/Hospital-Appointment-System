@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
@@ -15,7 +16,7 @@ const DoctorPage = () => {
     const [selectedTime, setSelectedTime] = useState(null);
     const [doctors, setDoctors] = useState(null);
     const [reason, setReason] = useState("");
-
+    const navigate= useNavigate()
 
     //time-slots doctor
     useEffect(() => {
@@ -107,7 +108,8 @@ const DoctorPage = () => {
                 }
                 
                 const data = await response.json();
-                alert("Appointment booked successfully!");
+                alert("Appointment request sent successfully. Waiting for response");
+                setTimeout(() => navigate("/appointments"), 2000);
                 // Reset selected time or redirect to confirmation page
             } catch (error) {
                 console.error("Error booking appointment:", error);
@@ -118,7 +120,7 @@ const DoctorPage = () => {
         const handleLogout = () => {
             localStorage.removeItem("token");
             // redirect to login or homepage
-            window.location.href = "/login";
+            navigate("/login");
           };
           
 
@@ -179,10 +181,10 @@ const DoctorPage = () => {
                     disabled={!selectedTime}
                 >
                     
-                    Continue
+                    Book Appointment
                 </button>
             </div>
-            <button onClick={handleLogout}>Logout</button>
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
 
         </div>
 

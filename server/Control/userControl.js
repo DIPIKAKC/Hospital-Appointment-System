@@ -63,7 +63,7 @@ const loginUser = async (req, res) => {
       // If user is found and password is correct, generate token and return
       const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
 
-      return res.status(200).json({ message: 'logged in successfully', token, userId: user._id, fullName: user.fullName, email: user.email, role: user.role });
+      return res.status(200).json({ message: 'logged in successfully', token, user: {userId: user._id, fullName: user.fullName, email: user.email, role: user.role }});
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }

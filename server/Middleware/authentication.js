@@ -35,7 +35,7 @@ const auth = async (req, res, next) => {
       return res.status(401).json({ message: 'User not found' });
     }
     
-    req.user= user;
+    req.user= decoded.fullName;
     
     req.userId = decoded.id; // Ensure userId is attached to the request object
     req.userRole = decoded.role; // Ensure userRole is attached to the request object
