@@ -25,7 +25,7 @@
   
   .logo {
     font-size: 24px;
-    color: #4A90E2;
+    color: #10B8B9;
     font-style: italic;
     border: none;
     background-color: white;
@@ -62,7 +62,7 @@
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #4A90E2;
+  background-color: #10B8B9;
   transition: width 0.3s ease;
 }
 
@@ -73,7 +73,7 @@
 
 /* Style for active/selected nav item */
 .nav-item.active {
-  color: #4A90E2;
+  color: #10B8B9;
 } 
 
 /* Underline for active/selected nav item */

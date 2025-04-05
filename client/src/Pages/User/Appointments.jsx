@@ -1,58 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import './Appointments.css';
-
-// const AppointmentList = () => {
-//   const [appointments, setAppointments] = useState([]);
-//   const [message, setMessage] = useState("");
-
-//   useEffect(() => {
-//   const fetchAppointments = async () => {
-//     try {
-//       const response = await fetch("http://localhost:5000/auth/appointments");
-//       const data = await response.json();
-                
-//       if (Array.isArray(data)) {
-//           setAppointments(data);
-//       }
-//     } catch (error) {
-//       console.error("Error fetching appointments", error);
-//     }
-//   };
-//   fetchAppointments();
-// }, []);
-
-
-// return (
-//     <div className="appointments-container">
-//       <h2 className="appointments-title">Booked Appointments</h2>
-//       {message && <p className="appointments-message">{message}</p>}
-      
-//       {appointments.length === 0 ? (
-//         <p className="no-appointments">No appointments found</p>
-//       ) : (
-//         <ul className="appointments-list">
-//           {appointments.map((appointment) => (
-//             <li key={appointment._id} className="appointment-item">
-//               <div className="appointment-details">
-//                 <p className="appointment-person">
-//                   <span className="name">{appointment.userName}</span> with{" "}
-//                   <span className="name">{appointment.doctorName}</span>
-//                 </p>
-//                 <p className="appointment-time">
-//                   {appointment.date} at {appointment.time}
-//                 </p>
-//               </div>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default AppointmentList;
-
-
 
 import React, { useEffect, useState } from "react";
 import './Appointments.css';
@@ -149,6 +94,10 @@ const AppointmentList = () => {
                 <div className="appointment-time">
                   <p className="label">Time</p>
                   <p className="value">{appointment.time || '--'}</p>
+                </div>
+                <div className="appointment-status">
+                  <p className="label">Status</p>
+                  <p className="value">{appointment.status || '--'}</p>
                 </div>
               </div>
               <div className="appointment-details">

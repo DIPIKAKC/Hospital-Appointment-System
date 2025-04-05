@@ -1,10 +1,13 @@
 .appointments-container {
+    margin-top: 140px;
+    margin-left: 160px;
+    margin-bottom: 50px;
     display: flex;
     min-height: 400px;
   }
   
   .appointments-sidebar {
-    width: 240px;
+    width: 290px;
     border-right: 1px solid #e0e0e0;
     padding-right: 10px;
     display: flex;
@@ -14,9 +17,10 @@
   
   .tab-button {
     background: none;
+    width:210px;
     border: none;
     text-align: left;
-    padding: 12px 16px;
+    padding: 12px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
@@ -35,6 +39,7 @@
   }
   
   .appointments-content {
+    margin-left: 100px;
     flex-grow: 1;
     padding: 0 20px;
     overflow-y: auto;
@@ -42,11 +47,11 @@
   }
   
   .appointment-card {
-    background-color: #f9f9f9;
+    background-color: #e9e9e9;
     border-radius: 8px;
     margin-top: 16px;
     padding: 16px;
-    width: 100%;
+    width:550px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
   
@@ -60,8 +65,37 @@
     padding-bottom: 12px;
   }
   
-  .appointment-date {
+  .appointment-date, .appointment-time, .appointment-status {
     flex: 1;
+  }
+  
+  .appointment-status .value {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 14px;
+    text-transform: capitalize;
+  }
+  
+  /* Status colors */
+  .appointment-status .value:contains("confirmed") {
+    background-color: #e3f2fd;
+    color: #1976d2;
+  }
+  
+  .appointment-status .value:contains("completed") {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+  
+  .appointment-status .value:contains("canceled") {
+    background-color: #ffebee;
+    color: #c62828;
+  }
+  
+  .appointment-status .value:contains("pending") {
+    background-color: #fff8e1;
+    color: #f57f17;
   }
   
   .appointment-details {
@@ -69,7 +103,7 @@
     padding-top: 12px;
   }
   
-  .appointment-doctor {
+  .appointment-doctor, .appointment-department {
     flex: 1;
   }
   

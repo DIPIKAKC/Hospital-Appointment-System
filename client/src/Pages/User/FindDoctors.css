@@ -7,7 +7,8 @@
   
 /* Main Content Styles */
 .main-content {
-    margin-top: 100px;
+    margin-top: 120px;
+    margin-left: 190px;
     display: flex;
     min-height: calc(100vh - 70px);
     width: 100%;
@@ -16,7 +17,7 @@
   
 /* Sidebar Styles */
 .sidebar {
-    margin-top: 20px;
+    margin-top: 50px;
     width: 240px;
     min-width: 240px; /* Ensures sidebar maintains its width */
     border-right: 1px solid #e0e0e0;
@@ -67,6 +68,7 @@
   
 /* Content Area Styles */
 .content-area {
+    margin-left: 50px;
     flex: 1;
     padding: 20px;
     display: flex;
@@ -81,7 +83,7 @@
     border-radius: 20px;
     padding: 10px 15px;
     margin-bottom: 20px;
-    width: 75%;
+    width: 25%;
 }
   
 .search-icon {
@@ -97,11 +99,9 @@
 
 /* Doctor Cards Layout */
 .doctors-card-container {
-    margin-top: 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    width: 100%;
+    grid-template-columns: repeat(2,0.3fr);
+    gap:40px;
 }
   
 /* Responsive layout for smaller screens */

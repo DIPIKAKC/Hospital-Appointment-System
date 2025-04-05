@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { HiOutlineBell } from "react-icons/hi2";
 
@@ -9,16 +9,6 @@ import userImg from '../Images/user.jpg'
 const NavBar = () => {
 
     const [username, setUsername] = useState ("");
-
-    // const handleChange = (e) =>{
-    //     const {name, value} =e.target;
-    //     setUsername({...username, [name]: value});
-    // };
-
-    // const handleSubmit = async (e) =>{
-    //     e.preventDefault();
-    //     console.log(username);
-    // }
 
     useEffect(() => {
         const  userId = localStorage.getItem("id")
@@ -59,25 +49,12 @@ const NavBar = () => {
                         <Link to= "/" > MedEase</Link>
                     </button> */}
 
-                    <Link to="/Home">
+                    <Link to="/">
                         <button className="logo">MedEase</button>
                     </Link>
 
                     <div className="navbar-menu">
-                        {/* <button className="nav-item">
-                            <Link to="/Home">Home</Link>
-                        </button>
-                        <button className="nav-item">
-                            <Link to="/appointments" >Appointments</Link>
-                        </button>
-                        <button className="nav-item">
-                            <Link to="/getAllDoctors" > Find Doctors</Link>
-                        </button>
-                        <button className="nav-item">
-                            <Link to="/contact-us" >Contact Us</Link>
-                        </button> */}
-
-                        <Link to="/Home">
+                        <Link to="/">
                             <button className="nav-item" activeClassName="active">Home</button>
                         </Link>
                         <Link to="/appointments">

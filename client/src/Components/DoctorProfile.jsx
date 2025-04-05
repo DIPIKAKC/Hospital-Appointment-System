@@ -22,19 +22,18 @@ const DoctorProfileCard = () => {
                     if (data) {
                         setDoctor(data);
                     }
-                }
-                // } else {
-                //     const response = await fetch("http://localhost:5000/auth/available-doctors");
-                //     const data = await response.json();
-                //     console.log("Fetched doctor list:", data); // Debugging
+                }else {
+                    const response = await fetch("http://localhost:5000/auth/all-doctors");
+                    const data = await response.json();
+                    console.log("Fetched doctor list:", data); // Debugging
 
-                //     if (Array.isArray(data) && data.length > 0) {
-                //         setDoctor(data[0]); // Assuming you want to display the first doctor
-                //     }else if (data.fullName) {
-                //         setDoctor(data); // If the API returns a single doctor object
-                //     }
+                    if (Array.isArray(data) && data.length > 0) {
+                        setDoctor(data[0]); // Assuming you want to display the first doctor
+                    }else if (data.fullName) {
+                        setDoctor(data); // If the API returns a single doctor object
+                    }
                     
-                // }   
+                }   
             } catch (error) {
                 console.error("Error fetching doctor data:", error);
             }

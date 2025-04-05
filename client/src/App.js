@@ -10,6 +10,7 @@ import FindDoctors from "./Pages/User/FindDoctors";
 import DoctorPage from "./Pages/User/DoctorPage"
 import LoginForm from "./Pages/User/Login";
 import AppointmentList from "./Pages/User/Appointments";
+import Home from "./Pages/User/Dashboard";
 
 const App = () => {
 
@@ -20,7 +21,7 @@ const App = () => {
       {/* NavBar should be outside Routes to show on all pages */}
 
       <Routes>
-          <Route path = "/" element={<Footer />} />
+          <Route path = "/" element={<Home />} />
           <Route path = "/login" element={<LoginForm />} />
           <Route path="/getAllDoctors" element={<FindDoctors />} />
           <Route path= "/doctor/:doctorId" element={<DoctorPage />} />
@@ -30,7 +31,7 @@ const App = () => {
       </Routes>
 
       <Resources / >
-
+      <Footer />
     </Router>
   );
 
