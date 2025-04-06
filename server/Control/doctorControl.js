@@ -158,6 +158,32 @@ const appointmentStatus = async (req, res) => {
   }
 };
 
+// Get current user profile
+const getMeDoctor = async (req, res) => {
+  try {
+
+    const doctor= await RegisterDoctor.findById(req.userId)
+
+    if(!doctor){
+      return res.status(404).send({ message: "doctor does not exist", sucess: false });    
+    }
+
+    doctor.password = undefined; // Hide password before sending response
+
+    res.status(200).json({
+      id: doctor._id,
+      fullName: doctor.fullName,
+      email: doctor.email,
+      role: req.userRole,
+      contact: doctor.contact,
+      department: doctor.department,
+      availableSlots: doctor.availableSlots
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error getting user profile", error: error.message });
+  }
+};
+
 
 //Get Assigned Appointments
 // const getAppointments = async (req, res) => {
@@ -222,4 +248,4 @@ const appointmentStatus = async (req, res) => {
 
 
 
-module.exports = {registerDoctor, loginDoctor, doctorSlotsPost, appointmentStatus};
+module.exports = {registerDoctor, loginDoctor, doctorSlotsPost, appointmentStatus, getMeDoctor};

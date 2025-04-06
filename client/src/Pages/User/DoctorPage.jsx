@@ -43,10 +43,10 @@ const DoctorPage = () => {
 
             // Format backend date to match selectedDate
             const formattedSelectedDate = selectedDate.toISOString().split("T")[0];
-            
+                        
             // Find the doctor with ID matching doctorId
             const currentDoctor = data.find(doctor => doctor._id === doctorId);
-            
+
             if (!currentDoctor || !currentDoctor.availableSlots) {
                 console.error("Doctor not found or has no available slots:", doctorId);
                 setAvailableTimes([]);
@@ -56,7 +56,7 @@ const DoctorPage = () => {
             // Find slots for the selected date
             const slotsForDate = currentDoctor.availableSlots.find(slot => 
                 slot.date === formattedSelectedDate
-            );
+            );           
 
             console.log("Slots for Selected Date:", slotsForDate); // Debugging log
             
@@ -104,11 +104,12 @@ const DoctorPage = () => {
                 });
                 
                 if (!response.ok) {
-                    throw new Error("Failed to book appointment");
+                    const errorData = await response.json();
+                    throw new Error("Failed to book appointment",errorData);
                 }
                 
                 const data = await response.json();
-                alert("Appointment request sent successfully. Waiting for response");
+                alert("Appointment request sent successfully. Waiting for response",data);
                 setTimeout(() => navigate("/appointments"), 2000);
                 // Reset selected time or redirect to confirmation page
             } catch (error) {

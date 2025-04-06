@@ -6,7 +6,8 @@ const { registerUser, loginUser, getUserById,
     editUserData, deleteUserData, bookAppointment, 
     cancelAppointment, getAvailableSlots, getAllDoctors, getDepartments,
     getDoctorById, getMyAppointments} = require("../Control/userControl");
-const {registerDoctor, loginDoctor, doctorSlotsPost, appointmentStatus} = require("../Control/doctorControl")
+const {registerDoctor, loginDoctor, doctorSlotsPost, 
+    appointmentStatus, getMeDoctor} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin, addDepartments} = require("../Control/adminControl")
 
 
@@ -52,7 +53,8 @@ router.post("/add-time-slot", auth, authorize("doctor"),  doctorSlotsPost)
 // router.get("/my-assigned-appointments", auth, authorize("doctor"), getAppointments)
 //updating user appointment status - reject/confirm
 router.put("/:id/status", auth, authorize("doctor"),  appointmentStatus)
-
+//get profile
+router.get("/me", auth, getMeDoctor)
 
 
 //ADMIN

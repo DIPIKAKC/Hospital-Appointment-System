@@ -36,6 +36,37 @@ const AppointmentList = () => {
   fetchAppointments();
 }, []);
 
+
+const cancelAppointment = async (id) => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await fetch(`http://localhost:5000/auth/${id}/cancel`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to cancel appointment");
+    }
+
+    // Update the local state to reflect the canceled appointment
+    setAppointments(prevAppointments => 
+      prevAppointments.map(appointment => 
+        appointment._id === id 
+          ? { ...appointment, status: 'canceled' } 
+          : appointment
+      )
+    );
+
+  } catch (error) {
+    console.error("Error canceling appointment", error);
+    alert("Failed to cancel appointment. Please try again.");
+  }
+  };
+
       // Filter appointments based on active tab
     const filteredAppointments = appointments.filter(appointment => {
     const today = new Date();
@@ -113,6 +144,15 @@ const AppointmentList = () => {
                   {appointment.doctor ? appointment.doctor.department || 'Not Specified' : 'Not Specified'}
                   </p>
                 </div>
+                <div className="appointment-cancellation">
+                {appointment.status !== 'canceled' && new Date(appointment.date) > new Date() && (
+                  <button 
+                    className="cancel-button"
+                    onClick={() => cancelAppointment(appointment._id)}> 
+                    Cancel
+                  </button>
+                )}
+                </div>
               </div>
             </div>
           ))
@@ -120,9 +160,11 @@ const AppointmentList = () => {
           <div className="no-appointments">
             <p>No appointments found</p>
           </div>
+
         )}
       </div>
     </div>
+    
   );
 }
 

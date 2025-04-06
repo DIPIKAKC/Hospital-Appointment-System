@@ -11,6 +11,8 @@ import DoctorPage from "./Pages/User/DoctorPage"
 import LoginForm from "./Pages/User/Login";
 import AppointmentList from "./Pages/User/Appointments";
 import Home from "./Pages/User/Dashboard";
+import DoctorDashboard from "./Pages/Doctor/Dashboard";
+import LoginDoctor from "./Pages/Doctor/login";
 
 const App = () => {
 
@@ -25,14 +27,21 @@ const App = () => {
           <Route path = "/login" element={<LoginForm />} />
           <Route path="/getAllDoctors" element={<FindDoctors />} />
           <Route path= "/doctor/:doctorId" element={<DoctorPage />} />
-          <Route path= "appointments" element= {<AppointmentList />} />
+          <Route path= "/appointments" element= {<AppointmentList />} />
+
+
+          <Route path = "/login-doc" element={<LoginDoctor />} />
+          <Route path= "/dashboard" element= {<DoctorDashboard />} />
+
 
           
       </Routes>
 
-      <Resources / >
+      <Resources />
       <Footer />
     </Router>
+
+    
   );
 
 }
