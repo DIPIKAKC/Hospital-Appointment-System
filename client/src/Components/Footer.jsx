@@ -14,15 +14,15 @@ const Footer = () => {
                     </button>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
                 </div>
-                <div className='navigation'>
-                    <Link to="/home" className="nav-item">Home</Link>
-                    <Link to="/appointments" className="nav-item">Appointments</Link>
-                    <Link to="/doctors" className="nav-item">Doctors</Link>
-                    <Link to="/contact" className="nav-item">Contact Us</Link>
+                <div className='footer'>
+                    <Link to="/home" className="footer-link">Home</Link>
+                    <Link to="/appointments" className="footer-link">Appointments</Link>
+                    <Link to="/doctors" className="footer-link">Doctors</Link>
+                    <Link to="/contact" className="footer-link">Contact Us</Link>
                 </div>
                 <div className='terms'>
-                    <Link to="/our-terms" className="nav-item">Our Terms</Link>
-                    <Link to="/privacy" className="nav-item">Privacy Policy</Link>
+                    <Link to="/our-terms" className="footer-link">Our Terms</Link>
+                    <Link to="/privacy" className="footer-link">Privacy Policy</Link>
                 </div>
             </div>
             <p className='copyrights'>Copyright 2025 @ MedEase - All Rights Reseved</p>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import doctorImg from '../Images/docfemale.jpg';
+import doctorImg from '../assets/docfemale.jpg';
 import "./DoctorCard.css";
 
 const DoctorCard = ({ doctors }) => {

@@ -3,6 +3,9 @@
 
 import './FindDoctors.css';
 import DoctorCard from '../../Components/DoctorCard';
+import NavBar from '../../Components/Navbar';
+import Resources from '../../Components/Resources';
+import Footer from '../../Components/Footer';
 
 const FindDoctors = () => {
     const [doctors, setDoctors] = useState([]);
@@ -87,6 +90,9 @@ const FindDoctors = () => {
     };
 
     return (
+        <>
+        <NavBar/> 
+
         <main className="main-content">
             <div className="sidebar">
                 <div className="departments-section">
@@ -144,6 +150,10 @@ const FindDoctors = () => {
                 </div>
             </div>
         </main>
+
+        <Resources />
+        <Footer />
+        </>
     );
 };
 

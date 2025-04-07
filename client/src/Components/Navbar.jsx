@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link} from "react-router-dom";
+import { Link, NavLink} from "react-router-dom";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { HiOutlineBell } from "react-icons/hi2";
 
 import './Navbar.css';
-import userImg from '../Images/user.jpg'
+import userImg from '../assets/user.jpg'
 
 const NavBar = () => {
 
@@ -54,18 +54,22 @@ const NavBar = () => {
                     </Link>
 
                     <div className="navbar-menu">
-                        <Link to="/">
-                            <button className="nav-item" activeClassName="active">Home</button>
-                        </Link>
-                        <Link to="/appointments">
-                            <button className="nav-item" activeClassName="active">Appointments</button>
-                        </Link>
-                        <Link to="/getAllDoctors">
-                            <button className="nav-item" activeClassName="active">Find Doctors</button>
-                        </Link>
-                        <Link to="/contact-us">
-                            <button className="nav-item" activeClassName="active">Contact Us</button>
-                        </Link>
+                    <NavLink to="/" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
+                        Home
+                    </NavLink>
+
+                    <NavLink to="/appointments" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
+                        Appointments
+                    </NavLink>
+
+                    <NavLink to="/getAllDoctors" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
+                        Find Doctors
+                    </NavLink>
+
+                    <NavLink to="/contact-us" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
+                        Contact Us
+                    </NavLink>
+
                     </div>
 
                     <div className="divider"></div>

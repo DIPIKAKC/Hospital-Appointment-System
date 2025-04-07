@@ -6,6 +6,9 @@ import 'react-calendar/dist/Calendar.css';
 import './DoctorPage.css';
 import DoctorProfileCard from "../../Components/DoctorProfile";
 import { useParams } from "react-router-dom";
+import NavBar from '../../Components/Navbar';
+import Resources from "../../Components/Resources";
+import Footer from "../../Components/Footer";
 
 
 const DoctorPage = () => {
@@ -127,6 +130,9 @@ const DoctorPage = () => {
 
 
     return(
+
+        <>
+        <NavBar />
         <div className="main-container">
 
             <div className="doctor">
@@ -188,7 +194,9 @@ const DoctorPage = () => {
             <button className="logout-button" onClick={handleLogout}>Logout</button>
 
         </div>
-
+        <Resources />
+        <Footer />
+    </>
     )
 };
 

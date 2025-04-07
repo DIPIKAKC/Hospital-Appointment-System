@@ -1,0 +1,43 @@
+.contact-container{
+    margin-top: 140px;
+    margin-right: 90px;
+    margin-left: 250px;
+    margin-bottom: 0;
+    height: 550px;
+    background-image: url('../../../public/Images/contact.png');
+    background-size:50%;
+    background-position: left;
+    background-repeat: no-repeat;
+}
+
+
+.left h2{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.right {
+    padding-top: 103px;
+    margin-left: 550px;
+}
+
+.right h2{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.right h3{
+    font-weight: 100;
+}
+
+.right .mail-link{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000000;
+    gap: 8px;
+}
+
+  .gmail-logo {
+    width: 24px;
+    height: 24px;
+  }
+  

@@ -20,7 +20,8 @@
     top: 0;
     left: 0;
     z-index: 1000; /* Ensure navbar appears on top */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Added subtle shadow for better definition */
+    box-shadow: 0 2px 5px #dbbbbb; /* Added subtle shadow for better definition */
+
   }
   
   .logo {
@@ -45,41 +46,32 @@
     cursor: pointer;
     font-size: 16px;
     color: #666;
-    position: relative; /* Added for absolute positioning of underline */
+    position: relative;
     transition: color 0.3s ease-in-out;
   }
-
-/* Add underline effect on hover */
-.nav-item:hover {
-  color: #4A90E2; /* Changed to use the blue color instead of white */
-}
-
-/* Create the underline effect */
-.nav-item::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #10B8B9;
-  transition: width 0.3s ease;
-}
-
-/* Expand the underline on hover */
-.nav-item:hover::after {
-  width: 100%; /* Width of the underline */
-}
-
-/* Style for active/selected nav item */
-.nav-item.active {
-  color: #10B8B9;
-} 
-
-/* Underline for active/selected nav item */
-.nav-item.active::after {
-  width: 100%; /* Width of the underline */
-}
+  
+  
+  .nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #10B8B9;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  /* Show underline on hover */
+  .nav-item:hover::after {
+    width: 100%;
+  }
+  
+  /* Keep underline on active nav item */
+  .nav-item.active::after {
+    width: 100%;
+  }
+  
 
   .nav-actions {
     display: flex;
@@ -115,10 +107,9 @@
 /* line */
 .divider {
     height: 24px; /* Adjust height as needed */
-    border-left: 1px solid #000000; /* Light gray color, adjust as needed */
+    border-left: 1px solid #666; /* Light gray color, adjust as needed */
     margin: 0 15px; /* Space on both sides of the line */
 }
-
 
 
 /* Media query for responsive design */

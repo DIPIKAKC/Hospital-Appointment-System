@@ -1,140 +1,225 @@
-.main{
-    margin-top: 120px;
+.main {
+    margin-top: 150px;
     margin-left: 120px;
     margin-right: 120px;
+    margin-bottom: 50px;
     height: fit-content;
 }
 
-.cover{
+.cover {
     padding: 70px;
-    /* background-color: antiquewhite; */
     height: 450px;
-    background-image: url('../../Images/cover.png');
+    background-image: url('../../../public/Images/cover.png'), url('../../../public/Images/cover2.png');
+    background-size: 55%, 43%;
+    background-position: right, center;
+    background-repeat: no-repeat;
 }
 
-.cover h1{
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    size: 350px;
+.cover h1 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 2.5rem; 
 }
 
-.p1{
-    font-family:Arial, Helvetica, sans-serif;
+.p1 {
+    font-family: Arial, Helvetica, sans-serif;
     font-style: italic;
-    color:rgb(116, 118, 121);
-    size: 50px;
+    color: rgb(116, 118, 121);
+    font-size: 1.25rem; 
 }
 
-.book-appointment{
-    margin-top: 150px;
-    padding: 15px;
-    padding-left: 50px;
-    padding-right: 50px;
+.book-appointment {
+    margin-top: 110px;
+    padding: 15px 50px;
     border-radius: 7px;
     border: none;
     font-size: medium;
     background-color: #10B8B9;
     color: #fff;
+    cursor: pointer;
 }
 
-.doctors-section{
+.doctors-section {
     margin: 40px;
-    /* background-color: blue; */
+    margin-bottom: 0;
 }
 
-.doctor-cards{
+.doctor-cards {
     display: flex;
     flex-direction: row;
-    justify-content:space-evenly;
+    justify-content: space-evenly;
+    flex-wrap: wrap; /* for responsiveness */
+    gap: 20px; /* gap for spacing when cards wrap */
 }
 
-.doctors-section h1{
+.doctors-section h1 {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    size:250px;
-    justify-self: center;
+    font-size: 2rem; 
+    text-align: center; 
     margin-bottom: 40px;
 }
 
-.about-us{
-    /* background-color: blueviolet; */
+.about-us {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
-.about-us .right-side{
-    margin: 50px;
+.about-us .right-side {
+    /* margin: 50px; */
+    padding-top: 70px;
+    max-width: 500px;
 }
 
-.about-us .right-side h1{
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+.about-us .right-side h1 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-.about-img{
+.about-img {
     height: 500px;
-    width: 550px;
+    width: 450px;
+    /* width: 100%; Make image responsive
+    height: auto; Maintain aspect ratio */
 }
 
 .why-us{
-    padding:40px;
+    padding: 40px;
+    margin-top: 10px;
+    width:min-content;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    /* background-color: coral; */
+    justify-content: space-between;
+    background-color: rgb(240, 235, 239);
 }
 
-.why-us .left{
+.why-us .left-pane{
     padding: 20px;
-    width: 400px;
+    width:max-content;
 }
 
-.why-us .right{
-    display:flex;
-    gap:20px;
+.why-us .left-pane h1{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-.why-us .right .why-box{
-    background:#fff;
+.why-us .left-pane p{
+    line-height:1.2lh;
+}
+
+.why-us .right-pane{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap:30px;
+}
+
+.why-us .right-pane .box{
+    background-color: #fff;
     padding: 20px;
     width:150px;
-    height: 170px;
-    font-size: 13px;
+    height: 140px;
+    font-size: 14px;
     border-radius: 10px;
     transition: background0.5s, transform 0.5s;
 }
 
-.why-us .right div h3{
-    font-size: 20px;
-    margin-bottom:15px;
+.why-us .right-pane .box h3{
+    font-size: 17px;
+    margin-bottom: 20px;
 }
 
-.why-us .right div:hover{
-    background-color:#10B8B9;
-    transform:translateY(-10px) ;
+.why-us .right-pane .box:hover{
+    background-color: #dff8ff ;
+    transform: translateY(-10px);
 }
 
-.create-account-section{
-    /* background-color: darkgreen; */
-    margin-top: 20px;
-    height: 200px;
+
+.create-account-section {
+    margin-top: 60px;
+    min-height: 200px; /* Use min-height instead of fixed height */
+    /* Fix the image path for React */
+    background-image: url('../../../public/Images/ready.png');
+    background-size: 48%;
+    background-position: left;
+    background-repeat: no-repeat;
+    display: flex; /* Use flexbox for better positioning */
+    justify-content: flex-end; /* Align content to the right */
+
 }
 
-.create-account-section .r-side{
-    margin-left: 720px;
-    padding-top: 23px;
+.create-account-section .r-side {
+    width: 45%; /* Use percentage instead of fixed margin */
+    padding: 23px;
 }
 
-.create-account-section .r-side h1{
+.create-account-section .r-side h1 {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-weight: 200;
 }
 
-.create-account{
-    padding: 13px;
-    padding-left: 50px;
-    padding-right: 50px;
+.create-account {
+    margin-top: 20px;
+    padding: 13px 50px;
     border-radius: 7px;
     border: none;
     font-size: medium;
     background-color: #10B8B9;
     color: white;
+    cursor: pointer;
+}
+
+/* Add media queries for better responsiveness */
+@media (max-width: 1200px) {
+    .main {
+        margin-left: 60px;
+        margin-right: 60px;
+    }
+    
+    .about-img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .create-account-section .r-side {
+        width: 60%;
+    }
+}
+
+@media (max-width: 768px) {
+    .main {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    
+    .cover {
+        background-size: contain;
+        height: auto;
+        padding: 40px;
+    }
+    
+    .about-us {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .why-us {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .why-us .left {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .create-account-section {
+        background-position: center top;
+        background-size: 70%;
+        padding-top: 220px; /* Make space for the background image */
+        justify-content: center;
+    }
+    
+    .create-account-section .r-side {
+        width: 100%;
+        margin-left: 0;
+        text-align: center;
+    }
 }

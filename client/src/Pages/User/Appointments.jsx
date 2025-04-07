@@ -1,6 +1,9 @@
 
 import React, { useEffect, useState } from "react";
 import './Appointments.css';
+import NavBar from "../../Components/Navbar";
+import Resources from "../../Components/Resources";
+import Footer from "../../Components/Footer";
 
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
@@ -85,6 +88,10 @@ const cancelAppointment = async (id) => {
   });
 
   return (
+
+    <>
+    <NavBar />
+
     <div className="appointments-container">
       <aside className="appointments-sidebar">
         <button 
@@ -164,7 +171,11 @@ const cancelAppointment = async (id) => {
         )}
       </div>
     </div>
+
+    <Resources />
+    <Footer />
     
+    </>
   );
 }
 
