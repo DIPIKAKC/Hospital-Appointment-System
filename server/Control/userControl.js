@@ -247,7 +247,7 @@ const cancelAppointment = async (req, res) => {
   try {
     const userId = req.userId;
     
-    const appointment = await Appointment.findById(req.params.id);
+    const appointment = await Appointment.findById(userId);
     if (!appointment) {
       return res.status(404).json({ message: "Appointment not found" });
     }
@@ -263,7 +263,6 @@ const cancelAppointment = async (req, res) => {
     if (!["pending", "confirmed"].includes(appointment.status)) {
       return res.status(400).json({ message: `Cannot cancel an appointment that is already ${appointment.status}` });
     }
-
     appointment.status = "canceled";
     await appointment.save();
 

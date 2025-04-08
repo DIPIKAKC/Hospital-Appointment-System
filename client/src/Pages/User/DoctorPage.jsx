@@ -21,6 +21,15 @@ const DoctorPage = () => {
     const [reason, setReason] = useState("");
     const navigate= useNavigate()
 
+    // Function to format dates consistently
+    const formatDate = (date) => {
+
+        const d = new Date(date);
+        // return d.toISOString().split('T')[0]; // Returns YYYY-MM-DD format
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    };
+
+
     //time-slots doctor
     useEffect(() => {
         const fetchAppointmentTime = async() =>{
@@ -44,8 +53,9 @@ const DoctorPage = () => {
                 const data = await response.json();
                 setDoctors(data);
 
-            // Format backend date to match selectedDate
-            const formattedSelectedDate = selectedDate.toISOString().split("T")[0];
+            // Format selectedDate consistently
+            const formattedSelectedDate = formatDate(selectedDate);
+            console.log("Looking for slots on date:", formattedSelectedDate);          
                         
             // Find the doctor with ID matching doctorId
             const currentDoctor = data.find(doctor => doctor._id === doctorId);
@@ -56,14 +66,31 @@ const DoctorPage = () => {
                 return;
             }
 
+//
+            console.log("All available slot dates:", 
+                currentDoctor.availableSlots.map(slot => ({
+                    original: slot.date,
+                    formatted: formatDate(new Date(slot.date))
+                }))
+            );
+//
+
             // Find slots for the selected date
-            const slotsForDate = currentDoctor.availableSlots.find(slot => 
-                slot.date === formattedSelectedDate
-            );           
+            const slotsForDate = currentDoctor.availableSlots.find(slot => {
+                const slotDate = formatDate(new Date(slot.date));
+                return slotDate === formattedSelectedDate;
+            });         
 
             console.log("Slots for Selected Date:", slotsForDate); // Debugging log
             
-            setAvailableTimes(slotsForDate ? slotsForDate.times : []);
+            if (slotsForDate && slotsForDate.times) {
+                console.log("Available times:", slotsForDate.times);
+                setAvailableTimes(slotsForDate.times);
+            } else {
+                console.log("No times available for selected date");
+                setAvailableTimes([]);
+            }
+
         } catch (error) {
             console.error("Error fetching available slots:", error);
             setAvailableTimes([]);
@@ -71,6 +98,14 @@ const DoctorPage = () => {
         
         fetchAppointmentTime();
     },[doctorId, selectedDate]); // Re-fetch when date changes
+
+
+    // Handle date change
+    const handleDateChange = (date) => {
+        console.log("Date changed to:", date, "Formatted:", formatDate(date));
+        setSelectedDate(date);
+        setSelectedTime(null); // Reset selected time when date changes
+    };
 
     //book-appointment
         const handleBookAppointment = async () => {
@@ -91,7 +126,7 @@ const DoctorPage = () => {
                 // Log the data being sent
                 const appointmentData = {
                     doctorId,
-                    date: selectedDate.toISOString().split("T")[0],
+                    date: formatDate(selectedDate),
                     time: selectedTime,
                     reason: reason
                 };
@@ -147,7 +182,7 @@ const DoctorPage = () => {
                     <h3>Select Appointment Date</h3>
                     <Calendar 
                         className="appointment-calendar"
-                        onChange={setSelectedDate}
+                        onChange={handleDateChange}
                         value={selectedDate}
                         minDate={new Date()}
                     />           
@@ -174,16 +209,17 @@ const DoctorPage = () => {
 
                 </div>
                 
-                <input type="text"
-                 placeholder="your reason"
-                 value={reason}
-                 onChange={(e) => setReason(e.target.value)}
-                 >
-                
-                </input>
+                <div className="reason-input">
+                    <h3>Appointment Reason</h3>
+                    <input 
+                        type="text"
+                        placeholder="Reason for appointment"
+                        value={reason}
+                        onChange={(e) => setReason(e.target.value)}
+                    />
+                </div>
 
-                <button 
-                    className="continue-button"
+                <button className="continue-button"
                     onClick={handleBookAppointment}
                     disabled={!selectedTime}
                 >

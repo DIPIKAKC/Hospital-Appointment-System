@@ -103,7 +103,7 @@
     padding-top: 12px;
   }
   
-  .appointment-doctor, .appointment-department {
+  .appointment-doctor, .appointment-department, .appointment-button {
     flex: 1;
   }
   
@@ -135,3 +135,12 @@
     border-radius: 7px;
     cursor: pointer;
   }
+
+.status-text{
+  background-color: #282bc6;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}

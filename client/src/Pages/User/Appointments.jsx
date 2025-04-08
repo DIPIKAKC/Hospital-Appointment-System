@@ -41,6 +41,16 @@ const AppointmentList = () => {
 
 
 const cancelAppointment = async (id) => {
+
+    // Find the appointment in the current state
+    const appointmentToCancel = appointments.find(app => app._id === id);
+  
+    // Don't proceed if the appointment is already canceled
+    if (appointmentToCancel.status === 'canceled') {
+      alert("This appointment is already canceled");
+      return;
+    }
+
   const token = localStorage.getItem("token");
   try {
     const response = await fetch(`http://localhost:5000/auth/${id}/cancel`, {
@@ -51,11 +61,15 @@ const cancelAppointment = async (id) => {
       }
     });
 
+    const data = await response.json();  
+    alert("Appointment canceled successfully");
+
     if (!response.ok) {
       throw new Error("Failed to cancel appointment");
     }
 
     // Update the local state to reflect the canceled appointment
+    setTimeout(() => {
     setAppointments(prevAppointments => 
       prevAppointments.map(appointment => 
         appointment._id === id 
@@ -63,6 +77,7 @@ const cancelAppointment = async (id) => {
           : appointment
       )
     );
+  },2500);
 
   } catch (error) {
     console.error("Error canceling appointment", error);
@@ -151,14 +166,26 @@ const cancelAppointment = async (id) => {
                   {appointment.doctor ? appointment.doctor.department || 'Not Specified' : 'Not Specified'}
                   </p>
                 </div>
-                <div className="appointment-cancellation">
-                {appointment.status !== 'canceled' && new Date(appointment.date) > new Date() && (
-                  <button 
-                    className="cancel-button"
-                    onClick={() => cancelAppointment(appointment._id)}> 
-                    Cancel
-                  </button>
-                )}
+                <div className="appointment-button">
+                  {/* <p className="value">
+                    {appointment.status !== 'canceled' ? (
+                    <button 
+                      className="cancel-button"
+                      onClick={() => cancelAppointment(appointment._id)}>
+                      Cancel
+                    </button>
+                    ) : (
+                      <span className="status-text">Already Canceled</span>
+                    )}
+                      </p> */}
+                    <p className="value">
+                    <button 
+                      className="cancel-button"
+                      onClick={() => cancelAppointment(appointment._id)}>
+                      Cancel
+                    </button>
+                      </p>
+                    
                 </div>
               </div>
             </div>
