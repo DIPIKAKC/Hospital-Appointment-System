@@ -4,6 +4,7 @@ import aboutImg from "../assets/about3.jpg"
 
 import { useParams } from "react-router-dom";
 import DoctorHomeCard from "./DoctorProfileCard";
+import { toast } from "sonner";
 
 
 
@@ -21,6 +22,7 @@ const DashboardComponent = () => {
                    console.log("second", data.data)
                      if(data.success){
                          setDoctor(data.data.slice(0,3))
+                         
                      }else{
 
                          console.log("Errro on fetching doctor"); 

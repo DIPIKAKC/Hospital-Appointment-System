@@ -1,5 +1,6 @@
 const {RegisterDoctor, RegisterUser} = require("../Schema/registerSchema") //imported schema
 const {Appointment} = require("../Schema/appointmentSchema")
+const {Notification} = require("../Schema/notificationSchema")
 
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
@@ -149,7 +150,29 @@ const appointmentStatus = async (req, res) => {
     
     await appointment.save();
 
+    let notiContent;
+    if(appointment.status === "confirmed"){
+      notiContent = "You appointment is confirmed"
+    }else if (appointment.status === "rejected"){
+      notiContent = "You appointment is reject"
+    }
+
+    const createNoti =  Notification.create({
+      //this is for user 
+      userId: appointment.user,
+      doctorId: appointment.doctor,
+      userType:"patient",
+      notificationType:appointment.status,
+      content:notiContent
+    })
+
+    
+    if(appointment.status ==="confirmed" || appointment.status==="rejected"){
+      (await createNoti).save()
+    }
+
     res.status(200).json({ 
+      success:true,
       message: `Appointment ${status}`, 
       appointment 
     });

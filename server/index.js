@@ -7,6 +7,7 @@ require("dotenv").config();
 
 const authRoutes = require("./Route/auth");
 
+
 //Database Connection
 connectDb();
 
@@ -33,6 +34,7 @@ app.get('/api', (req, res) => {
 
 //SYSTEM ROUTES
 app.use("/auth", authRoutes);
+
 
 
 //Starting the server

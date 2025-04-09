@@ -76,7 +76,9 @@ const NavBar = () => {
 
 
                     <div className="nav-actions">
-                        <div className="notification-icon"><HiOutlineBell size={22}/></div>
+                        <NavLink to="/notification" >
+                             <HiOutlineBell size={22}/>
+                        </NavLink>
 
                     <div className="user-profile">
                         <img className='user-photo' src={userImg} alt="User"></img>

@@ -8,7 +8,8 @@ const { registerUser, loginUser, getUserById,
     getDoctorById, getMyAppointments} = require("../Control/userControl");
 const {registerDoctor, loginDoctor, doctorSlotsPost, 
     appointmentStatus, getMeDoctor} = require("../Control/doctorControl")
-const {registerAdmin, loginAdmin, addDepartments} = require("../Control/adminControl")
+const {registerAdmin, loginAdmin, addDepartments} = require("../Control/adminControl");
+const { createNotification, getNotification } = require("../Control/notificationControl");
 
 
 
@@ -63,5 +64,10 @@ router.get("/me", auth, getMeDoctor)
 router.post("/register-admin", registerAdmin)
 router.post("/login-admin", loginAdmin)
 router.post("/add-department", auth, authorize("admin"), addDepartments )
+
+
+//NOtification
+router.post('/create', createNotification)
+router.get("/my-notification/:userType/:id", getNotification)
 
 module.exports = router;

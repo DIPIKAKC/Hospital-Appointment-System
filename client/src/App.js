@@ -12,11 +12,21 @@ import LoginDoctor from "./Pages/Doctor/login";
 import ContactUs from "./Pages/User/ContactUs";
 import Home from "./Pages/User/Dashboard";
 import UserProfile from "./Pages/User/UserProfile";
+import Notification from "./Pages/User/Notification";
 
+import { Toaster } from 'sonner';
 const App = () => {
 
   return (
     <Router>
+     <Toaster 
+  position="top-right" 
+  richColors 
+  closeButton 
+  duration={5000}
+  expand={false}
+  offset="16px"
+/>
 
       {/* NavBar should be outside Routes to show on all pages */}
 
@@ -28,6 +38,7 @@ const App = () => {
           <Route path= "/appointments" element= {<AppointmentList />} />
           <Route path= "/contact-us" element= {<ContactUs />} />
           <Route path="/my-profile" element={<UserProfile />} />
+          <Route path="/notification" element={<Notification/>} />
 
 
           <Route path = "/login-doc" element={<LoginDoctor />} />

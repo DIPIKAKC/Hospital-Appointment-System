@@ -21,11 +21,14 @@ const FindDoctors = () => {
             try {
                 const response = await fetch("http://localhost:5000/auth/all-doctors");
                 const data = await response.json();
-                
-                if (Array.isArray(data)) {
-                    setDoctors(data);
-                    setDisplayedDoctors(data); // Initially show all doctors
+                console.log("doctor data", data.data)
+                if(data.success){
+
+                    setDoctors(data.data)
+                    setDisplayedDoctors(data.data); // Initially show all doctors
                 }
+                
+               
             } catch (error) {
                 console.error("Error fetching doctor data:", error);
             } finally {
@@ -88,6 +91,8 @@ const FindDoctors = () => {
         setSelectedDepartment(null);
         setSearchTerm('');
     };
+
+    console.log("doctor" ,doctors)
 
     return (
         <>
