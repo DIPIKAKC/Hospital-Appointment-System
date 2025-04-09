@@ -10,7 +10,8 @@ import AppointmentList from "./Pages/User/Appointments";
 import DoctorDashboard from "./Pages/Doctor/Dashboard";
 import LoginDoctor from "./Pages/Doctor/login";
 import ContactUs from "./Pages/User/ContactUs";
-import Home from "./Pages/User/DashBoard";
+import Home from "./Pages/User/Dashboard";
+import UserProfile from "./Pages/User/UserProfile";
 
 const App = () => {
 
@@ -26,6 +27,7 @@ const App = () => {
           <Route path= "/doctor/:doctorId" element={<DoctorPage />} />
           <Route path= "/appointments" element= {<AppointmentList />} />
           <Route path= "/contact-us" element= {<ContactUs />} />
+          <Route path="/my-profile" element={<UserProfile />} />
 
 
           <Route path = "/login-doc" element={<LoginDoctor />} />

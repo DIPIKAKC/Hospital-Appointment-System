@@ -11,7 +11,8 @@ const appointmentSchema = new mongoose.Schema({
     default: "pending" 
   },
   notes: { type: String },
-  reason: { type: String, required: true }
+  reason: { type: String, required: true },
+  reminder: {type: String, }
 }, { timestamps: true });
 
 const Appointment = mongoose.model("Appointment", appointmentSchema);
