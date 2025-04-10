@@ -59,22 +59,37 @@ const {RegisterUser, RegisterDoctor} = require("../Schema/registerSchema") //imp
 
 
 const getNotification = async(req,res)=>{
-  try {
-      const {id, userType} = req.params
-      let myNoti;
-      if(userType === 'patient'){
-          myNoti =await Notification.find({userId:id})
-      }else{
-          myNoti =await Notification.find({doctorId:id})
-      }
+      const {id, userType} = req.params;
+
+      try{
+        let query = {};
+
+        if (userType === "doctor") {
+          query = {
+            doctorId: id,
+            userType: "doctor" // only notifications meant for the doctor
+          };
+        } else if (userType === "patient") {
+            query = {
+              userId: id,
+              userType: "patient"
+            };
+        }else {
+          return res.status(400).json({ success: false, message: "Invalid user type" });
+        }
+
+        const notifications = await Notification.find(query).sort({ createdAt: -1 });
   
-      if(!myNoti || myNoti.length === 0){
-          return res.status(401).json({success:false, message:"No Notifications"})
+      if(!notifications || notifications.length === 0){
+          return res.status(400).json({success:false, message:"No Notifications"})
       }
-      return res.status(200).json({success:true, message:"Notification Found", data:myNoti})
-  } catch (error) {
+      res.status(200).json({
+        success: true,
+        message: "Notification found",
+        data: notifications});  
+      } catch (error) {
     console.log("Error getting notification :", error)
-    return res.status(401).json({success:false, message:"Internal Server Error"})
+    return res.status(500).json({success:false, message:"Internal Server Error", error:error.message})
 
   }
 }

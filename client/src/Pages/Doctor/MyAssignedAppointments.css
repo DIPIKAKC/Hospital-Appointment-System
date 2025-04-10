@@ -51,7 +51,7 @@
   }
   
   /* Appointment card */
-  .appointment-card {
+  .card-appointment {
     background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
@@ -60,7 +60,7 @@
     position: relative;
   }
   
-  .appointment-card:hover {
+  .card-appointment:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
   }
@@ -216,12 +216,12 @@
     transform: translateY(-2px);
   }
   
-  .cancel-button {
+  .button-cancel {
     background-color: #e5e7eb;
     color: #4b5563;
   }
   
-  .cancel-button:hover {
+  .button-cancel:hover {
     background-color: #d1d5db;
     transform: translateY(-2px);
   }

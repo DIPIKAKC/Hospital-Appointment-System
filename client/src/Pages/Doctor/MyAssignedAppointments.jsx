@@ -101,7 +101,7 @@ const DoctorAppointmentsList = () => {
             <div className="modal-buttons">
               <button
                 onClick={() => setAppointmentToUpdate(null)}
-                className="cancel-button"
+                className="button-cancel"
               >
                 Cancel
               </button>
@@ -125,7 +125,7 @@ const DoctorAppointmentsList = () => {
       ) : (
         <div className="appointment-cards-grid">
           {appointments.map((appointment) => (
-            <div key={appointment._id} className="appointment-card">
+            <div key={appointment._id} className="card-appointment">
               <div className="card-status-banner" data-status={appointment.status}></div>
               <div className="card-content">
                 <div className="appointment-header">

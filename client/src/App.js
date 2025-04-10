@@ -16,6 +16,7 @@ import Notification from "./Pages/User/Notification";
 import AppointmentsList from "./Pages/Doctor/MyAssignedAppointments";
 
 import { Toaster } from 'sonner';
+import MyNotifications from "./Pages/Doctor/MyNotifications";
 const App = () => {
 
   return (
@@ -46,7 +47,8 @@ const App = () => {
           <Route path = "/login-doc" element={<LoginDoctor />} />
           <Route path= "/dashboard" element= {<ManageSchedule />} />
           <Route path= "/my-assigned-appointments" element= {<AppointmentsList />} />
-          
+          <Route path="/my-notifications" element={<MyNotifications/>} />
+
 
 
           

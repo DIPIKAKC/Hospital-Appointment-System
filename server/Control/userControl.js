@@ -1,6 +1,8 @@
 const {RegisterUser, RegisterDoctor} = require("../Schema/registerSchema") //imported schema
 const {Appointment} =require("../Schema/appointmentSchema")
 const {Department} = require("../Schema/departmentSchema")
+const {Notification} = require("../Schema/notificationSchema")
+
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { get } = require("../Route/auth")
@@ -247,7 +249,8 @@ const cancelAppointment = async (req, res) => {
   try {
     const userId = req.userId;
     
-    const appointment = await Appointment.findById(userId);
+    const appointment = await Appointment.findById(req.params.id);
+    console.log (appointment)
     if (!appointment) {
       return res.status(404).json({ message: "Appointment not found" });
     }
@@ -265,6 +268,24 @@ const cancelAppointment = async (req, res) => {
     }
     appointment.status = "canceled";
     await appointment.save();
+
+    let notiContent;
+    if(appointment.status === "canceled"){
+      notiContent = "Appointment was canceled by patient."
+    }
+
+    const createNoti =  await Notification.create({
+      //this is for doctor 
+      userId: appointment.user,
+      doctorId: appointment.doctor,
+      userType:"doctor",
+      notificationType:appointment.status,
+      content:notiContent
+    })
+
+    if(appointment.status ==="canceled"){
+      await createNoti.save()
+    }
 
     res.status(200).json({ 
       message: "Appointment canceled successfully", 
