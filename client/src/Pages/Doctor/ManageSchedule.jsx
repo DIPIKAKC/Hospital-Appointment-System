@@ -158,12 +158,12 @@ const ManageSchedule = () => {
           <p className="empty-schedule">You haven't set any available time slots yet.</p>
         ) : (
           <div className="slot-grid">
-            {doctorSlots.map(slot => (
-              <div key={slot.date} className="slot-card">
+            {doctorSlots.map((slot,index) => (
+                <div key={`${slot.date}-${index}`} className="slot-card">
                 <p className="slot-date">{new Date(slot.date).toDateString()}</p>
                 <div className="time-tags">
-                  {slot.times.map(time => (
-                    <span key={time} className="time-tag">
+                  {slot.times.map((time) => (
+                    <span key={`${slot.date}-${time}`} className="time-tag">
                       {time}
                     </span>
                   ))}

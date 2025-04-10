@@ -54,7 +54,7 @@ router.post("/add-time-slot", auth, authorize("doctor"),  doctorSlotsPost)
 //getting doctor's assigned appointment
 router.get("/my-assigned-appointments", auth, authorize("doctor"), getAppointments)
 //updating user appointment status - reject/confirm
-router.put("/:id/status", auth, authorize("doctor"),  appointmentStatus)
+router.patch("/:id/status", auth, authorize("doctor"),  appointmentStatus)
 //get profile
 router.get("/me", auth, getMeDoctor)
 

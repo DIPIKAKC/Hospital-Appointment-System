@@ -32,7 +32,7 @@ const LoginDoctor = () => {
       if (response.ok) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user.fullName));
-        localStorage.setItem("id", data.user.userId); //This stores the user ID
+        localStorage.setItem("id", data.user._id); //This stores the user ID
         alert("Login successful!");
         navigate("/dashboard");
       } else {

@@ -13,6 +13,7 @@ import ContactUs from "./Pages/User/ContactUs";
 import Home from "./Pages/User/UserDashboard";
 import UserProfile from "./Pages/User/UserProfile";
 import Notification from "./Pages/User/Notification";
+import AppointmentsList from "./Pages/Doctor/MyAssignedAppointments";
 
 import { Toaster } from 'sonner';
 const App = () => {
@@ -31,7 +32,8 @@ const App = () => {
       {/* NavBar should be outside Routes to show on all pages */}
 
       <Routes>
-        <Route path = "/" element={<Home />} />
+
+          <Route path = "/" element={<Home />} />
           <Route path = "/login" element={<LoginForm />} />
           <Route path="/getAllDoctors" element={<FindDoctors />} />
           <Route path= "/doctor/:doctorId" element={<DoctorPage />} />
@@ -40,9 +42,11 @@ const App = () => {
           <Route path="/my-profile" element={<UserProfile />} />
           <Route path="/notification" element={<Notification/>} />
 
-
+          {/* Doctor */}
           <Route path = "/login-doc" element={<LoginDoctor />} />
           <Route path= "/dashboard" element= {<ManageSchedule />} />
+          <Route path= "/my-assigned-appointments" element= {<AppointmentsList />} />
+          
 
 
           
