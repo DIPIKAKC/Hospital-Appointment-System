@@ -2,10 +2,10 @@
  import { GoSearch } from "react-icons/go";
 
 import './FindDoctors.css';
-import DoctorCard from '../../Components/DoctorCard';
-import NavBar from '../../Components/Navbar';
-import Resources from '../../Components/Resources';
-import Footer from '../../Components/Footer';
+import DoctorCard from '../../Components/User/DoctorCard';
+import NavBar from "../../Components/User/Navbar";
+import Resources from "../../Components/User/Resources";
+import Footer from "../../Components/User/Footer";
 
 const FindDoctors = () => {
     const [doctors, setDoctors] = useState([]);
@@ -23,7 +23,7 @@ const FindDoctors = () => {
                 const data = await response.json();
                 console.log("doctor data", data.data)
                 if(data.success){
-
+                    // data.data.forEach(doctor => console.log(`Doctor: ${doctor.fullName}, Department: ${doctor.department}`));
                     setDoctors(data.data)
                     setDisplayedDoctors(data.data); // Initially show all doctors
                 }
@@ -60,12 +60,16 @@ const FindDoctors = () => {
     // Update displayed doctors when filters change
     useEffect(() => {
         if (selectedDepartment || searchTerm) {
+            
+            console.log("Filtering with:", selectedDepartment, searchTerm);
             const filtered = doctors.filter(doctor => {
                 // Department filter
-                const matchesDepartment = selectedDepartment ? doctor.department === selectedDepartment : true;
-                
+                const matchesDepartment = selectedDepartment ? 
+                (doctor.department?.toLowerCase().trim() === selectedDepartment.toLowerCase().trim()) : true;
+                          
                 // Search filter (case insensitive)
-                const matchesSearch = searchTerm ? doctor.fullName.toLowerCase().includes(searchTerm.toLowerCase()) : true;
+                const matchesSearch = searchTerm ? 
+                (doctor.fullName?.toLowerCase().includes(searchTerm.toLowerCase())) : true;
                 
                 return matchesDepartment && matchesSearch;
             });
@@ -91,8 +95,6 @@ const FindDoctors = () => {
         setSelectedDepartment(null);
         setSearchTerm('');
     };
-
-    console.log("doctor" ,doctors)
 
     return (
         <>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../Pages/User/Dashboard.css"
-import aboutImg from "../assets/about3.jpg"
+import "../../Pages/User/UserDashboard.css"
+import aboutImg from "../../assets/about3.jpg"
 
 import { useParams } from "react-router-dom";
 import DoctorHomeCard from "./DoctorProfileCard";

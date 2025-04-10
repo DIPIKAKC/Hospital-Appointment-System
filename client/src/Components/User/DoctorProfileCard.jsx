@@ -1,6 +1,6 @@
 import React from 'react';
 
-import doctorImg from '../assets/docfemale.jpg';
+import doctorImg from '../../assets/docfemale.jpg';
 import './DoctorProfile.css';
 
 const DoctorHomeCard = ({doctor}) => {

@@ -1,9 +1,9 @@
 import React from "react";
 // import contactImg from  '../../assets/contact.png'
 import './ContactUs.css';
-import NavBar from "../../Components/Navbar";
-import Resources from "../../Components/Resources";
-import Footer from "../../Components/Footer";
+import NavBar from "../../Components/User/Navbar";
+import Resources from "../../Components/User/Resources";
+import Footer from "../../Components/User/Footer";
 
 
 

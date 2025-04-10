@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
 //system imports
-  import FindDoctors from "./Pages/User/FindDoctors";
+import FindDoctors from "./Pages/User/FindDoctors";
 import DoctorPage from "./Pages/User/DoctorPage"
 import LoginForm from "./Pages/User/Login";
 import AppointmentList from "./Pages/User/Appointments";
-import DoctorDashboard from "./Pages/Doctor/Dashboard";
+import ManageSchedule from "./Pages/Doctor/ManageSchedule";
 import LoginDoctor from "./Pages/Doctor/login";
 import ContactUs from "./Pages/User/ContactUs";
-import Home from "./Pages/User/Dashboard";
+import Home from "./Pages/User/UserDashboard";
 import UserProfile from "./Pages/User/UserProfile";
 import Notification from "./Pages/User/Notification";
 
@@ -20,13 +20,13 @@ const App = () => {
   return (
     <Router>
      <Toaster 
-  position="top-right" 
-  richColors 
-  closeButton 
-  duration={5000}
-  expand={false}
-  offset="16px"
-/>
+      position="top-right" 
+      richColors 
+      closeButton 
+      duration={5000}
+      expand={false}
+      offset="16px"
+    />
 
       {/* NavBar should be outside Routes to show on all pages */}
 
@@ -42,7 +42,7 @@ const App = () => {
 
 
           <Route path = "/login-doc" element={<LoginDoctor />} />
-          <Route path= "/dashboard" element= {<DoctorDashboard />} />
+          <Route path= "/dashboard" element= {<ManageSchedule />} />
 
 
           

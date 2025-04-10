@@ -4,7 +4,7 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 import { HiOutlineBell } from "react-icons/hi2";
 
 import './Navbar.css';
-import userImg from '../assets/user.jpg'
+import userImg from '../../assets/user.jpg'
 
 const NavBar = () => {
 

@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from "react";
-import "./Dashboard.css";
+import "./ManageSchedule.css";
 import { useNavigate } from "react-router-dom";
 
-const DoctorDashboard = () => {
+const ManageSchedule = () => {
   const [date, setDate] = useState("");
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
@@ -220,4 +220,5 @@ const DoctorDashboard = () => {
   );
 };
 
-export default DoctorDashboard; 
+export default ManageSchedule; 
+

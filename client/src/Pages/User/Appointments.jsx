@@ -1,9 +1,9 @@
 
 import React, { useEffect, useState } from "react";
 import './Appointments.css';
-import NavBar from "../../Components/Navbar";
-import Resources from "../../Components/Resources";
-import Footer from "../../Components/Footer";
+import NavBar from "../../Components/User/Navbar";
+import Resources from "../../Components/User/Resources";
+import Footer from "../../Components/User/Footer";
 
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { FaBell, FaCalendarAlt, FaUser, FaExclamationCircle, FaSpinner, FaCheckCircle } from 'react-icons/fa';
 import { GiConfirmed } from "react-icons/gi";
 import './Notification.css';
-import NavBar from '../../Components/Navbar';
-import Footer from '../../Components/Footer';
-import Resources from '../../Components/Resources';
+import NavBar from "../../Components/User/Navbar";
+import Resources from "../../Components/User/Resources";
+import Footer from "../../Components/User/Footer";
 import { useParams } from 'react-router-dom';
 
 const Notification = () => {

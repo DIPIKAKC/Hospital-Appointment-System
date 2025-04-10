@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
-import doctorImg from '../assets/docfemale.jpg';
+import doctorImg from '../../assets/docfemale.jpg';
 import './DoctorProfile.css';
 
 const DoctorProfileCard = () => {

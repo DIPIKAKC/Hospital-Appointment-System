@@ -209,66 +209,31 @@ const getMeDoctor = async (req, res) => {
 
 
 //Get Assigned Appointments
-// const getAppointments = async (req, res) => {
-//     try {
-//       const userId = req.user._id;
-//       const userRole = req.user.role;
-      
-//       let query = {};
-      
-//       // If user is patient, get their appointments
-//       if (userRole === "patient") {
-//         query.user = userId;
-//       } 
-//       // If user is doctor, get appointments they need to handle
-//       else if (userRole === "doctor") {
-//         query.doctor = userId;
-//       }
-//       // Admin can see all appointments
-  
-//       const appointments = await Appointment.find(query)
-//         .populate("user", "fullName email")
-//         .populate("doctor", "fullName department")
-//         .sort({ createdAt: -1 });
-  
-//       res.status(200).json(appointments);
-//     } catch (error) {
-//       res.status(500).json({ message: "Error fetching appointments", error: error.message });
-//     }
-//   };
-
-
-// const getAppointments = async (req, res) => {
-//   try {
-//     const userId = req.userId;
-//     const userRole = req.userRole;
+const getAppointments = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const userRole = req.userRole;
     
-//     const appointment = await Appointment.findById(req.params.id)
-//       .populate("user", "fullName email")
-//       .populate("doctor", "fullName department");
+    let appointments;
+
+    if(userRole == "doctor"){
+      appointments = await Appointment.find({doctor: userId})
+      .populate("user", "fullName email")
+      .populate("doctor", "fullName department");
+    }
       
-//     if (!appointment) {
-//       return res.status(404).json({ message: "Appointment not found" });
-//     }
+    if (!appointments) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
 
-//     // Check permissions - user can only see their own appointments
-//     if (userRole === "patient" && appointment.user._id.toString() !== String(userId)) {
-//       return res.status(403).json({ message: "You don't have permission to view this appointment" });
-//     }
-    
-//     // Doctor can only see appointments assigned to them
-//     if (userRole === "doctor" && appointment.doctor._id.toString() !== String(userId)) {
-//       return res.status(403).json({ message: "You don't have permission to view this appointment" });
-//     }
-
-//     res.status(200).json(appointment);
-//   } catch (error) {
-//     res.status(500).json({ message: "Error fetching appointment details", error: error.message });
-//   }
-// };
+    res.status(200).json(appointments);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching appointment details", error: error.message });
+  }
+};
 
 
 
 
 
-module.exports = {registerDoctor, loginDoctor, doctorSlotsPost, appointmentStatus, getMeDoctor};
+module.exports = {registerDoctor, loginDoctor, doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments};

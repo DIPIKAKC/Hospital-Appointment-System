@@ -4,11 +4,11 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 import './DoctorPage.css';
-import DoctorProfileCard from "../../Components/DoctorProfile";
+import DoctorProfileCard from "../../Components/User/DoctorProfile";
 import { useParams } from "react-router-dom";
-import NavBar from '../../Components/Navbar';
-import Resources from "../../Components/Resources";
-import Footer from "../../Components/Footer";
+import NavBar from "../../Components/User/Navbar";
+import Resources from "../../Components/User/Resources";
+import Footer from "../../Components/User/Footer";
 
 
 const DoctorPage = () => {
