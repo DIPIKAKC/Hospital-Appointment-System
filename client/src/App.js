@@ -24,6 +24,7 @@ import AdminAddDepartment from "./Pages/Admin/AdminAddDepartment";
 import AdminAppointmentManagement from "./Pages/Admin/AdminAppointmentManagement";
 import AdminDoctorManagement from "./Pages/Admin/AdminDoctorManagement";
 import AdminUpdateDoctor from "./Pages/Admin/AdminEditDoctor";
+import AdminDepartmentManagement from "./Pages/Admin/AdminDepartmentManagement";
 const App = () => {
 
   return (
@@ -64,6 +65,7 @@ const App = () => {
           <Route path= "/admin/add-department" element= {<AdminAddDepartment/>} />
           <Route path= "/admin/appointments" element= {<AdminAppointmentManagement/>} />
           <Route path= "/admin/doctors" element= {<AdminDoctorManagement/>} />
+          <Route path= "/admin/departments" element= {<AdminDepartmentManagement/>} />
 
 
           
