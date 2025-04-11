@@ -206,7 +206,7 @@ const adminDeleteAppointment = async (req, res) => {
 //get all users
 const getAllUsers = async (req, res) => {
   try {
-    const users = await RegisterUser.find().select("-password");
+    const users = await RegisterUser.find().populate("department")
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: "Error fetching users", error: error.message });
@@ -224,26 +224,36 @@ const getAdminDoctors = async (req, res) => {
   }
 };
 
+// Get a single doctor by ID
+const getDoctorById = async (req, res) => {
+  try {
+    const doctor = await RegisterDoctor.findById(req.params.id);
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+    res.status(200).json(doctor);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 //update doctors
-// const adminDeleteDoctors = async (req, res) => {
-//   try {
-//     const doctorId = req.params.id;
-//     console.log("Incoming ID:", doctorId);
+const adminUpdateDoctor = async (req, res) => {
+  try {
+    const doctorId = req.params.id;
+    const updatedData = req.body;
 
-//     const foundDoctor = await RegisterDoctor.findById(doctorId);
-//     console.log("Appointment found before delete:", foundDoctor);
+    const updatedDoctor = await RegisterDoctor.findByIdAndUpdate(doctorId, updatedData, { new: true });
 
-//     const deletedDoctor = await RegisterDoctor.findByIdAndDelete(doctorId);
+    if (!updatedDoctor) {
+      return res.status(404).json({ message: 'Doctor not found' });
+    }
 
-//     if (!deletedDoctor) {
-//       return res.status(404).json({ success: false, message: "Doctor not found" });
-//     }
-
-//     return res.status(200).json({ success: true, message: `Doctor id: ${doctorId} deleted successfully` });
-//   } catch (error) {
-//     return res.status(500).json({ success: false, message: error.message });
-//   }
-// };
+    res.status(200).json({ success:true, message: 'doctor updated successfully' , doctordata: updatedData});
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to update doctor', error: err.message });
+  }
+};
 
 
 
@@ -279,4 +289,4 @@ const getAdminDepartments = async (req, res) => {
 };
 
     module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor, getAllAppointments, 
-      getAllUsers, getAdminDoctors, getAdminDepartments, adminDeleteAppointment, adminDeleteDoctors}
+      getAllUsers, getAdminDoctors, getAdminDepartments, adminDeleteAppointment, adminDeleteDoctors, adminUpdateDoctor, getDoctorById}

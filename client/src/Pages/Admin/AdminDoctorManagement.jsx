@@ -11,6 +11,7 @@ export default function AdminDoctorManagement() {
   const [selectedDepartment, setSelectedDepartment] = useState('All Departments');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [departmentMap, setDepartmentMap] = useState({});
 
   const token = localStorage.getItem("token");
 
@@ -58,6 +59,14 @@ export default function AdminDoctorManagement() {
 
       const data = await response.json();
       setDepartments(data);
+
+      // Create a mapping of department IDs to department names
+      const deptMap = {};
+      data.forEach(dept => {
+        deptMap[dept._id] = dept.name;
+      });
+      setDepartmentMap(deptMap);
+
     } catch (err) {
       setError(err.message);
     }
@@ -68,21 +77,22 @@ export default function AdminDoctorManagement() {
   
     const filtered = doctors.filter((doctor) => {
       const name = doctor.fullName?.toLowerCase() || '';
-      const department = doctor.department?.toLowerCase() || '';
-  
+      // Get the department name from our map or use the department ID as fallback
+      const departmentName = departmentMap[doctor.department] || doctor.department || '';
+
       // Search only by name
       const matchesSearch = name.includes(search);
   
-      // Filter by department
+      // Filter by department (using the name, not ID)
       const matchesDept =
         selectedDepartment === 'All Departments' ||
-        department === selectedDepartment.toLowerCase();
+        departmentName.toLowerCase() === selectedDepartment.toLowerCase();
   
       return matchesSearch && matchesDept;
     });
   
     setFilteredDoctors(filtered);
-  }, [doctors, searchTerm, selectedDepartment]);
+  }, [doctors, searchTerm, selectedDepartment, departmentMap]);
   
 
   const handleDelete = async (doctorId) => {
@@ -112,6 +122,14 @@ export default function AdminDoctorManagement() {
     }
   };
 
+
+  const handleEdit = (doctorId) => {
+    // Redirect to the edit page with doctorId
+    navigate(`/admin/doctors/edit/${doctorId}`);
+  };
+  
+  
+
   if (loading) return <div className="loading">Loading doctors...</div>;
   if (error) return <div className="error">Error: {error}</div>;
 
@@ -126,7 +144,7 @@ export default function AdminDoctorManagement() {
         <div className="filters">
           <input
             type="text"
-            placeholder="Search by doctor name"
+            placeholder="Search by doctor name or department..."
             className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -162,9 +180,16 @@ export default function AdminDoctorManagement() {
                 <tr key={doctor._id}>
                   <td>{doctor.fullName}</td>
                   <td>{doctor.email}</td>
-                  <td>{doctor.department}</td>
+                  <td>{departmentMap[doctor.department] || doctor.department}</td>
                   <td>{doctor.contact}</td>
                   <td className="action-buttons">
+
+                    <button
+                      className="edit-button"
+                      onClick={() => handleEdit(doctor._id)}  // Edit button triggers the handleEdit function
+                    >
+                      Edit
+                    </button>
                     <button
                       className="delete-button"
                       onClick={() => handleDelete(doctor._id)}

@@ -15,7 +15,8 @@ const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor,
     getAdminDepartments,
     deleteAppointment,
     adminDeleteAppointment,
-    adminDeleteDoctors} = require("../Control/adminControl");
+    adminDeleteDoctors,
+    adminUpdateDoctor} = require("../Control/adminControl");
 const { createNotification, getNotification } = require("../Control/notificationControl");
 
 
@@ -77,6 +78,8 @@ router.get("/admin/departments", auth, authorize("admin"), getAdminDepartments )
 
 router.post("/add-doctor", auth, authorize("admin"), registerDoctor)
 router.get("/admin/doctors", auth, authorize("admin"), getAdminDoctors )
+router.get("/doctor/:id", getDoctorById);
+router.patch("/admin/doctors/edit/:id", auth, authorize("admin"), adminUpdateDoctor )
 router.delete("/admin/doctors/delete/:id", auth, authorize("admin"), adminDeleteDoctors )
 
 router.get("/admin/appointments", auth, authorize("admin"), getAllAppointments)
