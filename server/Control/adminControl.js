@@ -288,5 +288,48 @@ const getAdminDepartments = async (req, res) => {
   }
 };
 
+
+//update doctors
+const adminUpdateDepartment = async (req, res) => {
+  try {
+    const departmentId = req.params.id;
+    const updatedData = req.body;
+
+    const updatedDepartment = await Department.findByIdAndUpdate(departmentId, updatedData, { new: true });
+
+    if (!updatedDepartment) {
+      return res.status(404).json({ message: 'Department not found' });
+    }
+
+    res.status(200).json({ success:true, message: 'department updated successfully' , doctordata: updatedData});
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to update department', error: err.message });
+  }
+};
+
+
+
+//delete doctors
+const adminDeleteDepartment = async (req, res) => {
+  try {
+    const departmentId = req.params.id;
+    console.log("Incoming ID:", departmentId);
+
+    const foundDepartment = await Department.findById(departmentId);
+    console.log("Appointment found before delete:", foundDepartment);
+
+    const deletedDepartment = await Department.findByIdAndDelete(departmentId);
+
+    if (!deletedDepartment) {
+      return res.status(404).json({ success: false, message: "Department not found" });
+    }
+
+    return res.status(200).json({ success: true, message: `Department id: ${departmentId} deleted successfully` });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
     module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor, getAllAppointments, 
-      getAllUsers, getAdminDoctors, getAdminDepartments, adminDeleteAppointment, adminDeleteDoctors, adminUpdateDoctor, getDoctorById}
+      getAllUsers, getAdminDoctors, getAdminDepartments, adminUpdateDepartment,adminDeleteDepartment, adminDeleteAppointment, 
+      adminDeleteDoctors, adminUpdateDoctor, getDoctorById}
