@@ -15,6 +15,10 @@ const AdminDashboard = () => {
     navigate('/admin/add-doctor');
   };
   
+  const handleAddDepartment = () => {
+    navigate('/admin/add-department');
+  };
+
   // Function to handle logout
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -100,6 +104,7 @@ const AdminDashboard = () => {
             <h3>Quick Actions</h3>
             <div className="action-buttons">
               <button className="action-btn add-doctor" onClick={handleAddDoctor}>Add New Doctor</button>
+              <button className="action-btn add-doctor" onClick={handleAddDepartment}>Add New Department</button>
               <button className="action-btn add-user" >Add New User</button>
             </div>
           </div>

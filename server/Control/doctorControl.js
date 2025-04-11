@@ -191,4 +191,4 @@ const getAppointments = async (req, res) => {
 
 
 
-module.exports = {registerDoctor, loginDoctor, doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments};
+module.exports = {loginDoctor, doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments};

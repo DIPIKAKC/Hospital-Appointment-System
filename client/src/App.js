@@ -20,6 +20,7 @@ import MyNotifications from "./Pages/Doctor/MyNotifications";
 import LoginAdmin from "./Pages/Admin/AdminLogin";
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
 import AdminAddDoctor from "./Pages/Admin/AdminAddDoctor";
+import AdminAddDepartment from "./Pages/Admin/AdminAddDepartment";
 const App = () => {
 
   return (
@@ -56,6 +57,7 @@ const App = () => {
           <Route path="/login/admin" element={<LoginAdmin/>} />
           <Route path= "/admin/dashboard" element= {<AdminDashboard />} />
           <Route path= "/admin/add-doctor" element= {<AdminAddDoctor />} />
+          <Route path= "/admin/add-department" element= {<AdminAddDepartment/>} />
 
           
       </Routes>

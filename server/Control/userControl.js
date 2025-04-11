@@ -5,7 +5,6 @@ const {Notification} = require("../Schema/notificationSchema")
 
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-const { get } = require("../Route/auth")
 
 
 //Register function for user

@@ -85,80 +85,83 @@ const getMeDAdmin = async (req, res) => {
 
 
 
-const addDepartments = async(req,res) => {
-  try{
-    const {name,description} = req.body
-
-// Check if department already exists
-    const existingDepartment = await Department.findOne({ name });
-    if (existingDepartment) {
-        return res.status(400).json({ success: false, message: "Department already exists" });
-      }
-
-    const newdepartment = await Department.create({
-        name: name,
-        description: description
-    })
-
-    if(newdepartment){
-        res.status(200).json({message:'Successfully added department'})
-    }else{
-        res.status(400).json({message:"Error adding department."})
-    }
-}
-catch(err){
-    res.status(500).json({message: err.message})
-}
-}
 
 
 
 //Register function for Doctor
 const registerDoctor = async(req,res)=>{
-    try{
-        const {fullName,email,password,contact,department, description, experience} = req.body
-  
-        if (!password || password.length < 8) {
-          return res.status(400).json({ message: "Password must be at least 8 characters long" });
+  try{
+    const {fullName,email,password,contact,department, description, experience} = req.body
+    
+    if (!password || password.length < 8) {
+      return res.status(400).json({ message: "Password must be at least 8 characters long" });
+    }
+    if(!department || !email || !fullName || !contact){
+      return res.status(400).json({ message: "All fields are required" });
         }
-        if(!department || !email || !fullName || !contact){
-          return res.status(400).json({ message: "All fields are required" });
-        }
-
+        
         // Check if email already exists
         const existingDoctor = await RegisterDoctor.findOne({ email });
         if (existingDoctor) {
           return res.status(400).json({ message: "Doctor with this email already exists" });
         }
-
+        
         console.log(req.body)
-
+        
         const salt = await bcrypt.genSalt(10) //generating salt
         const hashedPassword = await bcrypt.hash(password,salt) 
-  
+        
         const user = await RegisterDoctor.create({
-            fullName,
-            email: email, 
-            password: hashedPassword,
-            contact,
-            department,
-            description,
-            experience,
-            role: "doctor"
+          fullName,
+          email: email, 
+          password: hashedPassword,
+          contact,
+          department,
+          description,
+          experience,
+          role: "doctor"
         })
-
+        
         await user.save();
-
+        
         if(user){
-            res.status(200).json({message:'Successfully registered'})
+          res.status(200).json({message:'Successfully registered'})
         }else{
-            res.status(400).json({message:"Not registered"})
+          res.status(400).json({message:"Not registered"})
+        }
+      }
+      catch(err){
+        res.status(500).json({message: err.message})
+      }
+    }
+    
+    
+    const addDepartments = async(req,res) => {
+      try{
+        const {name,description} = req.body
+    
+    // Check if department already exists
+        const existingDepartment = await Department.findOne({ name });
+        if (existingDepartment) {
+            return res.status(400).json({ success: false, message: "Department already exists" });
+          }
+    
+        const newdepartment = await Department.create({
+            name: name,
+            description: description
+        })
+    
+        if(newdepartment){
+            res.status(200).json({message:'Successfully added department'})
+        }else{
+            res.status(400).json({message:"Error adding department."})
         }
     }
     catch(err){
         res.status(500).json({message: err.message})
     }
-  }
+    }
 
 
-module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor}
+    
+    module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor}
