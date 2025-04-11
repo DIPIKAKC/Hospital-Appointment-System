@@ -11,6 +11,8 @@ const FindDoctors = () => {
     const [doctors, setDoctors] = useState([]);
     const [departments, setDepartments] = useState([]);
     const [selectedDepartment, setSelectedDepartment] = useState(null);
+
+    
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
     const [displayedDoctors, setDisplayedDoctors] = useState([]);
@@ -101,7 +103,7 @@ const FindDoctors = () => {
         <NavBar/> 
 
         <main className="main-content">
-            <div className="sidebar">
+            <div className="sidebar-departments">
                 <div className="departments-section">
                     <h2>Departments</h2>
                     <p className="find-text">Find by speciality</p>

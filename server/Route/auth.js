@@ -6,9 +6,9 @@ const { registerUser, loginUser, getUserById,
     editUserData, deleteUserData, bookAppointment, 
     cancelAppointment, getAvailableSlots, getAllDoctors, getDepartments,
     getDoctorById, getMyAppointments} = require("../Control/userControl");
-const {registerDoctor, loginDoctor, doctorSlotsPost, 
+const { loginDoctor, doctorSlotsPost, 
     appointmentStatus, getMeDoctor, getAppointments} = require("../Control/doctorControl")
-const {registerAdmin, loginAdmin, addDepartments} = require("../Control/adminControl");
+const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor} = require("../Control/adminControl");
 const { createNotification, getNotification } = require("../Control/notificationControl");
 
 
@@ -47,7 +47,6 @@ router.get("/doctor/:doctorId",getDoctorById)
 //DOCTOR
 
 //Route for doc registration
-router.post("/add-doctor", registerDoctor)
 router.post("/login-doc", loginDoctor);
 //adding time slot for appointments
 router.post("/add-time-slot", auth, authorize("doctor"),  doctorSlotsPost)
@@ -65,6 +64,8 @@ router.get("/me", auth, getMeDoctor)
 router.post("/register-admin", registerAdmin)
 router.post("/login-admin", loginAdmin)
 router.post("/add-department", auth, authorize("admin"), addDepartments )
+router.get("/me-admin", auth, getMeDAdmin)
+router.post("/add-doctor", auth, authorize("admin"), registerDoctor)
 
 
 //NOtification

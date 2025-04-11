@@ -8,7 +8,9 @@ const DoctorProfileCard = () => {
     const {doctorId} = useParams();
     const [doctor, setDoctor] = useState({
         fullName: "",
-        department: ""
+        department: "",
+        experience: "",
+        description: ""
     });
 
     useEffect(() => {        
@@ -47,7 +49,7 @@ const DoctorProfileCard = () => {
         <div className="profile-header">
             <div className="doctor-details">
             <div className="experience">Experience</div>
-            <div className="experience-value">2 years</div><br/>
+            <div className="experience-value">{doctor.experience}</div><br/>
             <div className="name">{doctor.fullName}</div>
             <div className="specialty">{doctor.department}</div>
             </div>
@@ -61,7 +63,7 @@ const DoctorProfileCard = () => {
             {/* Dr. Rive roe, specializes in diagnosing and treating digestive disorders, 
             offering comprehensive care to improve patients' gastrointestinal 
             health and quality of life. */}
-                {doctor.description}  <p>no description</p>
+                {doctor.description} 
             </div>
         </div>
     </div>

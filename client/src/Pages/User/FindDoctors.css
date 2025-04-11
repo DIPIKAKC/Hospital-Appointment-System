@@ -16,7 +16,7 @@
 }
   
 /* Sidebar Styles */
-.sidebar {
+.sidebar-departments {
     margin-top: 50px;
     width: 240px;
     min-width: 240px; /* Ensures sidebar maintains its width */

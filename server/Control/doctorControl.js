@@ -5,51 +5,6 @@ const {Notification} = require("../Schema/notificationSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
-//Register function for Doctor
-const registerDoctor = async(req,res)=>{
-    try{
-        const {fullName,email,password,contact,department} = req.body
-  
-        if (!password || password.length < 8) {
-          return res.status(400).json({ message: "Password must be at least 8 characters long" });
-        }
-        if(!department || !email || !fullName || !contact){
-          return res.status(400).json({ message: "All fields are required" });
-        }
-
-        // Check if email already exists
-        const existingDoctor = await RegisterDoctor.findOne({ email });
-        if (existingDoctor) {
-          return res.status(400).json({ message: "Doctor with this email already exists" });
-        }
-
-        console.log(req.body)
-
-        const salt = await bcrypt.genSalt(10) //generating salt
-        const hashedPassword = await bcrypt.hash(password,salt) 
-  
-        const user = await RegisterDoctor.create({
-            fullName,
-            email: email, 
-            password: hashedPassword,
-            contact,
-            department,
-            role: "doctor"
-        })
-
-        await user.save();
-
-        if(user){
-            res.status(200).json({message:'Successfully registered'})
-        }else{
-            res.status(400).json({message:"Not registered"})
-        }
-    }
-    catch(err){
-        res.status(500).json({message: err.message})
-    }
-  }
-
 
 //login Doctor
 const loginDoctor = async (req, res) => {

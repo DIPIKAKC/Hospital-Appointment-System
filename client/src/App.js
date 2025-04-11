@@ -17,6 +17,9 @@ import AppointmentsList from "./Pages/Doctor/MyAssignedAppointments";
 
 import { Toaster } from 'sonner';
 import MyNotifications from "./Pages/Doctor/MyNotifications";
+import LoginAdmin from "./Pages/Admin/AdminLogin";
+import AdminDashboard from "./Pages/Admin/AdminDashboard";
+import AdminAddDoctor from "./Pages/Admin/AdminAddDoctor";
 const App = () => {
 
   return (
@@ -49,7 +52,10 @@ const App = () => {
           <Route path= "/my-assigned-appointments" element= {<AppointmentsList />} />
           <Route path="/my-notifications" element={<MyNotifications/>} />
 
-
+          {/* Admin */}
+          <Route path="/login/admin" element={<LoginAdmin/>} />
+          <Route path= "/admin/dashboard" element= {<AdminDashboard />} />
+          <Route path= "/admin/add-doctor" element= {<AdminAddDoctor />} />
 
           
       </Routes>
