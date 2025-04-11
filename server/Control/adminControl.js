@@ -1,8 +1,9 @@
-const {RegisterAdmin, RegisterDoctor} = require("../Schema/registerSchema") //imported schema
+const {RegisterAdmin, RegisterDoctor, RegisterUser} = require("../Schema/registerSchema") //imported schema
 const {Department} = require("../Schema/departmentSchema")
-
+const {Appointment} = require("../Schema/appointmentSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+
 
 
 //Register function for admin
@@ -163,5 +164,119 @@ const registerDoctor = async(req,res)=>{
     }
 
 
-    
-    module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor}
+// Get all appointments
+const getAllAppointments = async (req, res) => {
+  try {
+    const appointments = await Appointment.find()
+      .populate("user", "fullName email")
+      .populate("doctor", "fullName department")
+      .sort({ createdAt: -1 });
+      
+    res.status(200).json(appointments);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching appointments", error: error.message });
+  }
+};
+
+//delete apointments
+const adminDeleteAppointment = async (req, res) => {
+  try {
+    const appId = req.params.id;
+    console.log("Incoming ID:", appId);
+
+    const found = await Appointment.findById(appId);
+    console.log("Appointment found before delete:", found);
+
+    const deleted = await Appointment.findByIdAndDelete(appId);
+
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: "Appointment not found" });
+    }
+
+    return res.status(200).json({ success: true, message: `Appointment id: ${appId} deleted successfully` });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+
+
+
+//get all users
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await RegisterUser.find().select("-password");
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching users", error: error.message });
+  }
+};
+
+
+//get all doctors
+const getAdminDoctors = async (req, res) => {
+  try {
+    const doctors = await RegisterDoctor.find().select("-password");
+    res.status(200).json(doctors);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching doctors", error: error.message });
+  }
+};
+
+//update doctors
+// const adminDeleteDoctors = async (req, res) => {
+//   try {
+//     const doctorId = req.params.id;
+//     console.log("Incoming ID:", doctorId);
+
+//     const foundDoctor = await RegisterDoctor.findById(doctorId);
+//     console.log("Appointment found before delete:", foundDoctor);
+
+//     const deletedDoctor = await RegisterDoctor.findByIdAndDelete(doctorId);
+
+//     if (!deletedDoctor) {
+//       return res.status(404).json({ success: false, message: "Doctor not found" });
+//     }
+
+//     return res.status(200).json({ success: true, message: `Doctor id: ${doctorId} deleted successfully` });
+//   } catch (error) {
+//     return res.status(500).json({ success: false, message: error.message });
+//   }
+// };
+
+
+
+//delete doctors
+const adminDeleteDoctors = async (req, res) => {
+  try {
+    const doctorId = req.params.id;
+    console.log("Incoming ID:", doctorId);
+
+    const foundDoctor = await RegisterDoctor.findById(doctorId);
+    console.log("Appointment found before delete:", foundDoctor);
+
+    const deletedDoctor = await RegisterDoctor.findByIdAndDelete(doctorId);
+
+    if (!deletedDoctor) {
+      return res.status(404).json({ success: false, message: "Doctor not found" });
+    }
+
+    return res.status(200).json({ success: true, message: `Doctor id: ${doctorId} deleted successfully` });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+//get all Departments
+const getAdminDepartments = async (req, res) => {
+  try {
+    const doctors = await Department.find();
+    res.status(200).json(doctors);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching departments", error: error.message });
+  }
+};
+
+    module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor, getAllAppointments, 
+      getAllUsers, getAdminDoctors, getAdminDepartments, adminDeleteAppointment, adminDeleteDoctors}

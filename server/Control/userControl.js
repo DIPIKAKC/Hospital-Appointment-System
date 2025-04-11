@@ -330,7 +330,7 @@ const getAvailableSlots = async (req, res) => {
 //get all doctors
 const getAllDoctors = async(req,res) => {
   try{
-    const doctors = await RegisterDoctor.find({role: "doctor"}).select("fullName department")
+    const doctors = await RegisterDoctor.find().select("fullName department")
 
     res.status(200).json({success:true, message:"Fetch successfull", data:doctors})
   } catch(error){

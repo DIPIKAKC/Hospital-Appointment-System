@@ -8,7 +8,14 @@ const { registerUser, loginUser, getUserById,
     getDoctorById, getMyAppointments} = require("../Control/userControl");
 const { loginDoctor, doctorSlotsPost, 
     appointmentStatus, getMeDoctor, getAppointments} = require("../Control/doctorControl")
-const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor} = require("../Control/adminControl");
+const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor, 
+    getAllAppointments,
+    getAllUsers,
+    getAdminDoctors,
+    getAdminDepartments,
+    deleteAppointment,
+    adminDeleteAppointment,
+    adminDeleteDoctors} = require("../Control/adminControl");
 const { createNotification, getNotification } = require("../Control/notificationControl");
 
 
@@ -63,9 +70,20 @@ router.get("/me", auth, getMeDoctor)
 //route for admin registration
 router.post("/register-admin", registerAdmin)
 router.post("/login-admin", loginAdmin)
-router.post("/add-department", auth, authorize("admin"), addDepartments )
 router.get("/me-admin", auth, getMeDAdmin)
+
+router.post("/add-department", auth, authorize("admin"), addDepartments )
+router.get("/admin/departments", auth, authorize("admin"), getAdminDepartments )
+
 router.post("/add-doctor", auth, authorize("admin"), registerDoctor)
+router.get("/admin/doctors", auth, authorize("admin"), getAdminDoctors )
+router.delete("/admin/doctors/delete/:id", auth, authorize("admin"), adminDeleteDoctors )
+
+router.get("/admin/appointments", auth, authorize("admin"), getAllAppointments)
+router.delete("/admin/appointments/delete/:id", auth, authorize("admin"), adminDeleteAppointment)
+
+router.get("/admin/users", auth, authorize("admin"), getAllUsers)
+
 
 
 //NOtification
