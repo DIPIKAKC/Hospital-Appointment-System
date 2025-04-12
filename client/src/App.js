@@ -27,6 +27,7 @@ import AdminUpdateDoctor from "./Pages/Admin/AdminEditDoctor";
 import AdminDepartmentManagement from "./Pages/Admin/AdminDepartmentManagement";
 import AdminUserManagement from "./Pages/Admin/AdminUserManagement";
 import SignupForm from "./Pages/User/Signup";
+import DocContact from "./Pages/Doctor/DoctorContactus";
 
 
 
@@ -62,6 +63,7 @@ const App = () => {
           <Route path= "/dashboard" element= {<ManageSchedule />} />
           <Route path= "/my-assigned-appointments" element= {<AppointmentsList />} />
           <Route path="/my-notifications" element={<MyNotifications/>} />
+          <Route path= "/contact" element= {<DocContact />} />
 
           {/* Admin */}
           <Route path="/login/admin" element={<LoginAdmin/>} />

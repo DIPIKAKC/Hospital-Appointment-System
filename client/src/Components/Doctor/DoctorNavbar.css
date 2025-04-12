@@ -1,0 +1,185 @@
+.Nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 10px;
+  }
+
+.nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin-bottom: 30px; */
+    height: auto;
+    width:100%;
+    background-color: white;  /* Ensure navbar is visible */
+    padding: 10px 20px;
+    position: fixed;  /* Fix navbar at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure navbar appears on top */
+    box-shadow: 0 2px 5px #dbbbbb; /* Added subtle shadow for better definition */
+
+  }
+  
+  .logo {
+    font-size: 24px;
+    color: #10B8B9;
+    font-style: italic;
+    border: none;
+    background-color: white;
+  }
+  
+  .navbar-menu {
+    display: flex;
+    gap: 10px;
+    padding-left: 200px;
+  }
+  
+  .nav-item {
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+    position: relative;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  
+  .nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #10B8B9;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  /* Show underline on hover */
+  .nav-item:hover::after {
+    width: 100%;
+  }
+  
+  /* Keep underline on active nav item */
+  .nav-item.active::after {
+    width: 100%;
+  }
+  
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .notification-icon {
+    cursor: pointer;
+  }
+
+  .user-profile{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .user-photo{
+    margin-left: 10px;
+    width: 40px;
+    height: fit-content;
+    border-radius: 50%;
+    object-fit: cover;
+    }
+  
+  .username {
+    /* background-color: #4A90E2; */
+    color: rgb(0, 0, 0);
+    padding: 8px 16px;
+    border-radius: 20px;
+  }
+
+/* line */
+.divider {
+    height: 24px; /* Adjust height as needed */
+    border-left: 1px solid #666; /* Light gray color, adjust as needed */
+    margin: 0 15px; /* Space on both sides of the line */
+}
+
+
+/* Media query for responsive design */
+@media (max-width: 768px) {
+    .navbar-menu {
+      display: none; /* For mobile, you'll need a hamburger menu */
+}
+}
+
+/* Add these styles to your existing Navbar.css file */
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.create-account-btn {
+  background-color: #10B8B9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-account-btn:hover {
+  background-color: #089d9d;
+}
+
+.login-btn {
+  background-color: transparent;
+  color: #10B8B9;
+  border: 1px solid #10B8B9;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.logout-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-left: 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.username {
+  font-size: 15px;
+  font-weight: 400px;
+}

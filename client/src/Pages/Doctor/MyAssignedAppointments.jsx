@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./MyAssignedAppointments.css";
+import DocBar from "../../Components/Doctor/DoctorNavbar";
 
 const DoctorAppointmentsList = () => {
   const [appointments, setAppointments] = useState([]);
@@ -82,6 +83,8 @@ const DoctorAppointmentsList = () => {
   }
 
   return (
+    <>
+    <DocBar />
     <div className="doctor-appointments-container">
       <h2 className="page-title">Patient Appointment Requests</h2>
       
@@ -184,6 +187,7 @@ const DoctorAppointmentsList = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

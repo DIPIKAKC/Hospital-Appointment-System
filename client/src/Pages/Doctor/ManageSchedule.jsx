@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "./ManageSchedule.css";
 import { useNavigate } from "react-router-dom";
+import DocBar from "../../Components/Doctor/DoctorNavbar";
 
 const ManageSchedule = () => {
   const [date, setDate] = useState("");
@@ -137,6 +138,7 @@ const ManageSchedule = () => {
   
   return (
 <>
+<DocBar />
     <div className="back-link">
     <button 
       onClick={() => navigate("/dashboard")} 
