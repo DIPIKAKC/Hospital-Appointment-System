@@ -118,7 +118,7 @@ export default function AdminAppointmentManagement() {
     <div className="container">
       <div className="header">
         <h1 className="title">Appointment Management</h1>
-        <button className="back-button">Back to Dashboard </button>
+        <button className="back-button" onClick={() => navigate('/admin/dashboard')}>Back to Dashboard </button>
       </div>
 
       <div className="content-box">
