@@ -19,7 +19,8 @@ const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor,
     adminUpdateDoctor,
     adminUpdateDepartment,
     adminDeleteDepartment,
-    adminDeleteUsers} = require("../Control/adminControl");
+    adminDeleteUsers,
+    getStats} = require("../Control/adminControl");
 const { createNotification, getNotification } = require("../Control/notificationControl");
 
 
@@ -93,7 +94,7 @@ router.delete("/admin/appointments/delete/:id", auth, authorize("admin"), adminD
 router.get("/admin/users", auth, authorize("admin"), getAllUsers)
 router.delete("/admin/users/delete/:id", auth, authorize("admin"), adminDeleteUsers )
 
-
+router.get("/admin/stats", auth, authorize("admin"), getStats)
 
 
 //NOtification

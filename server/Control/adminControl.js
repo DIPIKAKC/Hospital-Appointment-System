@@ -351,6 +351,27 @@ const adminDeleteDepartment = async (req, res) => {
   }
 };
 
+
+
+//get counts
+const getStats = async (req, res) => {
+  try {
+    const usersCount = await RegisterUser.countDocuments({ role: 'patient' });
+    const doctorsCount = await RegisterDoctor.countDocuments();
+    const appointmentsCount = await Appointment.countDocuments();
+
+    res.json({
+      users: usersCount,
+      doctors: doctorsCount,
+      appointments: appointmentsCount
+    });
+  } catch (error) {
+    console.error('Error fetching admin stats:', error);
+    res.status(500).json({ message: 'Server error fetching stats' });
+  }
+};
+
+
     module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor, getAllAppointments, 
       getAllUsers, adminDeleteUsers, getAdminDoctors, getAdminDepartments, adminUpdateDepartment,adminDeleteDepartment, adminDeleteAppointment, 
-      adminDeleteDoctors, adminUpdateDoctor, getDoctorById}
+      adminDeleteDoctors, adminUpdateDoctor, getDoctorById, getStats}
