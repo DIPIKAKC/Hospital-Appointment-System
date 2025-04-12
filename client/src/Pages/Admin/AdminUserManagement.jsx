@@ -60,32 +60,32 @@ export default function AdminUserManagement() {
     setFilteredUsers(filtered);
   }, [users, searchTerm]);
   
-  // const handleDelete = async (userId) => {
-  //   const confirmDelete = window.confirm("Are you sure you want to delete this user?");
-  //   if (!confirmDelete) return;
+  const handleDelete = async (userId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    if (!confirmDelete) return;
 
-  //   try {
-  //     const response = await fetch(`http://localhost:5000/auth/admin/users/delete/${userId}`, {
-  //       method: "DELETE",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     });
+    try {
+      const response = await fetch(`http://localhost:5000/auth/admin/users/delete/${userId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-  //     const result = await response.json();
+      const result = await response.json();
 
-  //     if (!response.ok) {
-  //       throw new Error(result.message || "Failed to delete user");
-  //     }
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to delete user");
+      }
+      setUsers(prev => prev.filter(user => user._id !== userId));
 
-  //     setUsers(prev => prev.filter(user => user._id !== userId));
-  //     alert(result.message);
-  //   } catch (error) {
-  //     console.error("Delete error:", error.message);
-  //     alert("Error deleting user: " + error.message);
-  //   }
-  // };
+      alert(result.message);
+    } catch (error) {
+      console.error("Delete error:", error.message);
+      alert("Error deleting user: " + error.message);
+    }
+  };
 
   // const handleEdit = (userId) => {
   //   navigate(`/admin/users/edit/${userId}`);
@@ -174,13 +174,13 @@ export default function AdminUserManagement() {
                       onClick={() => handleActivateDeactivate(user._id, user.active)}
                     >
                       {user.active ? "Deactivate" : "Activate"}
-                    </button>
+                    </button> */}
                     <button
                       className="delete-button"
                       onClick={() => handleDelete(user._id)}
                     >
                       Delete
-                    </button> */}
+                    </button>
                   {/* </td> */}
                 </tr>
               ))

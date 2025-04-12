@@ -213,6 +213,27 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+//delete user by id
+const adminDeleteUsers = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    console.log("Incoming ID:", userId);
+
+    const foundUser = await RegisterUser.findById(userId);
+    console.log("Appointment found before delete:", foundUser);
+
+    const deletedUser = await RegisterUser.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    return res.status(200).json({ success: true, message: `User id: ${userId} deleted successfully` });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 
 //get all doctors
 const getAdminDoctors = async (req, res) => {
@@ -331,5 +352,5 @@ const adminDeleteDepartment = async (req, res) => {
 };
 
     module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor, getAllAppointments, 
-      getAllUsers, getAdminDoctors, getAdminDepartments, adminUpdateDepartment,adminDeleteDepartment, adminDeleteAppointment, 
+      getAllUsers, adminDeleteUsers, getAdminDoctors, getAdminDepartments, adminUpdateDepartment,adminDeleteDepartment, adminDeleteAppointment, 
       adminDeleteDoctors, adminUpdateDoctor, getDoctorById}
