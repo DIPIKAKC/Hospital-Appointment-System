@@ -34,7 +34,7 @@ const LoginForm = () => {
         localStorage.setItem("user", JSON.stringify(data.user.fullName));
         localStorage.setItem("id", data.user.userId); //This stores the user ID
         alert("Login successful!");
-        navigate("/getAllDoctors");
+        navigate("/");
       } else {
         alert(data.message || "Invalid credentials");
       }

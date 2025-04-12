@@ -15,10 +15,10 @@ const Footer = () => {
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
                 </div>
                 <div className='footer'>
-                    <Link to="/home" className="footer-link">Home</Link>
+                    <Link to="/" className="footer-link">Home</Link>
                     <Link to="/appointments" className="footer-link">Appointments</Link>
-                    <Link to="/doctors" className="footer-link">Doctors</Link>
-                    <Link to="/contact" className="footer-link">Contact Us</Link>
+                    <Link to="/find-doctors" className="footer-link">Doctors</Link>
+                    <Link to="/contact-us" className="footer-link">Contact Us</Link>
                 </div>
                 <div className='terms'>
                     <Link to="/our-terms" className="footer-link">Our Terms</Link>

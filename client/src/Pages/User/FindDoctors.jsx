@@ -1,5 +1,5 @@
- import React, { useEffect, useState } from 'react';
- import { GoSearch } from "react-icons/go";
+import React, { useEffect, useState } from 'react';
+import { GoSearch } from "react-icons/go";
 
 import './FindDoctors.css';
 import DoctorCard from '../../Components/User/DoctorCard';
@@ -12,7 +12,6 @@ const FindDoctors = () => {
     const [departments, setDepartments] = useState([]);
     const [selectedDepartment, setSelectedDepartment] = useState(null);
 
-    
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(true);
     const [displayedDoctors, setDisplayedDoctors] = useState([]);
@@ -29,8 +28,6 @@ const FindDoctors = () => {
                     setDoctors(data.data)
                     setDisplayedDoctors(data.data); // Initially show all doctors
                 }
-                
-               
             } catch (error) {
                 console.error("Error fetching doctor data:", error);
             } finally {
@@ -62,7 +59,6 @@ const FindDoctors = () => {
     // Update displayed doctors when filters change
     useEffect(() => {
         if (selectedDepartment || searchTerm) {
-            
             console.log("Filtering with:", selectedDepartment, searchTerm);
             const filtered = doctors.filter(doctor => {
                 // Department filter
@@ -102,31 +98,31 @@ const FindDoctors = () => {
         <>
         <NavBar/> 
 
-        <main className="main-content">
-            <div className="sidebar-departments">
-                <div className="departments-section">
+        <main className="doctor-dashboard">
+            <div className="doctor-sidebar">
+                <div className="dept-container">
                     <h2>Departments</h2>
-                    <p className="find-text">Find by speciality</p>
+                    <p className="dept-subtitle">Find by speciality</p>
                     
-                    <div className="department-list">
+                    <div className="dept-list">
                         {departments.length > 0 ? (
                             departments.map((department, index) => (
                                 <div 
                                     key={index}
-                                    className={`department-item ${selectedDepartment === department.name ? 'active' : ''}`}
+                                    className={`dept-item ${selectedDepartment === department.name ? 'active' : ''}`}
                                     onClick={() => handleDepartmentClick(department.name)}
                                 >
                                     {department.name}
                                 </div>
                             ))
                         ) : (
-                            <div className="department-item">Loading departments...</div>
+                            <div className="dept-item">Loading departments...</div>
                         )}
                     </div>
                     
                     {(selectedDepartment || searchTerm) && (
                         <button 
-                            className="clear-filters-btn"
+                            className="btn-show-all"
                             onClick={clearFilters}
                         >
                             Show All
@@ -135,8 +131,8 @@ const FindDoctors = () => {
                 </div>
             </div>
 
-            <div className="content-area">
-                <div className="search-bar">
+            <div className="doctor-content">
+                <div className="search-wrapper">
                     <i className="search-icon"><GoSearch size={22}/></i>
                     <input 
                         type="text" 
@@ -146,7 +142,7 @@ const FindDoctors = () => {
                     />
                 </div>
 
-                <div className='doctors-card-container'>
+                <div className="doctor-grid">
                     {loading ? (
                         <p>Loading doctors...</p>
                     ) : displayedDoctors.length > 0 ? (

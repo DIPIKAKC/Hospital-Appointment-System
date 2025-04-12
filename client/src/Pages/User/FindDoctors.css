@@ -6,7 +6,7 @@
 }
   
 /* Main Content Styles */
-.main-content {
+.doctor-dashboard {
     margin-top: 120px;
     margin-left: 190px;
     display: flex;
@@ -16,7 +16,7 @@
 }
   
 /* Sidebar Styles */
-.sidebar-departments {
+.doctor-sidebar {
     margin-top: 50px;
     width: 240px;
     min-width: 240px; /* Ensures sidebar maintains its width */
@@ -30,22 +30,22 @@
     height: fit-content;
 }
   
-.departments-section {
+.dept-container {
     padding: 0 20px;
 }
   
-.departments-section h2 {
+.dept-container h2 {
     font-size: 18px;
     margin-bottom: 5px;
 }
   
-.find-text {
+.dept-subtitle {
     font-size: 14px;
     color: #666;
     margin-bottom: 35px;
 }
   
-.department-list {
+.dept-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -54,20 +54,20 @@
     overflow-y: auto;
 }
   
-.department-item {
+.dept-item {
     padding: 10px 15px;
     border-radius: 20px;
     font-size: 14px;
     cursor: pointer;
 }
   
-.department-item.active {
+.dept-item.active {
     background-color: #5b91c5;
     color: white;
 }
   
 /* Content Area Styles */
-.content-area {
+.doctor-content {
     margin-left: 50px;
     flex: 1;
     padding: 20px;
@@ -76,12 +76,12 @@
     max-width: calc(100% - 240px); /* Ensures content respects sidebar width */
 }
   
-.search-bar {
+.search-wrapper {
     display: flex;
     align-items: center;
     background-color: #eaeaea;
     border-radius: 20px;
-    padding: 10px 15px;
+    padding: 0px 15px;
     margin-bottom: 20px;
     width: 25%;
 }
@@ -90,7 +90,7 @@
     margin-right: 10px;
 }
   
-.search-bar input {
+.search-wrapper input {
     border: none;
     background: transparent;
     outline: none;
@@ -98,24 +98,34 @@
 }
 
 /* Doctor Cards Layout */
-.doctors-card-container {
+.doctor-grid {
     display: grid;
-    grid-template-columns: repeat(2,0.3fr);
-    gap:40px;
+    grid-template-columns: repeat(2, 0.3fr);
+    gap: 40px;
+}
+
+.btn-show-all {
+    padding: 8px 16px;
+    background-color: #10B8B9;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    margin-top: 20px;
 }
   
 /* Responsive layout for smaller screens */
 @media (max-width: 992px) {
-    .content-area {
+    .doctor-content {
         margin-right: 0;
         max-width: 100%;
     }
     
-    .main-content {
+    .doctor-dashboard {
         flex-direction: column;
     }
     
-    .sidebar {
+    .doctor-sidebar {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #e0e0e0;
@@ -123,13 +133,13 @@
         position: static;
     }
     
-    .doctors-card-container {
+    .doctor-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 768px) {
-    .doctors-card-container {
+    .doctor-grid {
         grid-template-columns: 1fr;
     }
 }
