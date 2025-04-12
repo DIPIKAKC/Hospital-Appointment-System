@@ -8,7 +8,7 @@ import DoctorPage from "./Pages/User/DoctorPage"
 import LoginForm from "./Pages/User/Login";
 import AppointmentList from "./Pages/User/Appointments";
 import ManageSchedule from "./Pages/Doctor/ManageSchedule";
-import LoginDoctor from "./Pages/Doctor/login";
+// import LoginDoctor from "./Pages/Doctor/login";
 import ContactUs from "./Pages/User/ContactUs";
 import Home from "./Pages/User/UserDashboard";
 import UserProfile from "./Pages/User/UserProfile";
@@ -28,6 +28,7 @@ import AdminDepartmentManagement from "./Pages/Admin/AdminDepartmentManagement";
 import AdminUserManagement from "./Pages/Admin/AdminUserManagement";
 import SignupForm from "./Pages/User/Signup";
 import DocContact from "./Pages/Doctor/DoctorContactus";
+import SignupAdmin from "./Pages/Admin/AdminSignup";
 
 
 
@@ -59,7 +60,7 @@ const App = () => {
           <Route path="/notification" element={<Notification/>} />
 
           {/* Doctor */}
-          <Route path = "/login-doc" element={<LoginDoctor />} />
+          {/* <Route path = "/login-doc" element={<LoginDoctor />} /> */}
           <Route path= "/dashboard" element= {<ManageSchedule />} />
           <Route path= "/my-assigned-appointments" element= {<AppointmentsList />} />
           <Route path="/my-notifications" element={<MyNotifications/>} />
@@ -67,6 +68,7 @@ const App = () => {
 
           {/* Admin */}
           <Route path="/login/admin" element={<LoginAdmin/>} />
+          <Route path="/register/admin" element={<SignupAdmin/>} />
           <Route path= "/admin/dashboard" element= {<AdminDashboard />} />
 
           <Route path= "/admin/add-doctor" element= {<AdminAddDoctor />} />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './Signup.css';
+import './Login.css';
 import { useNavigate } from 'react-router-dom';
 
 const SignupForm = ({ onClose }) => {
@@ -39,37 +39,43 @@ const SignupForm = ({ onClose }) => {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h2>Create new account</h2>
-        <form className="signup-form" onSubmit={handleSubmit}>
-            <input
-            type="text"
-            name="fullName"
-            placeholder="Full Name"
-            value={formData.fullName}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <button type="submit">Create account</button>
-        </form>
-      </div>
+
+    <div className="auth-container">
+    <div className="content">
+      <h1>MedEase</h1>
+      <p>A hospital Appointment Booking System</p>
+      <h2>Login to your account</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="fullName"
+          placeholder="Full Name"
+          value={formData.fullName}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Login</button>
+      </form>
+      <p>
+        Already have an account? <a href="/login">Login</a>
+      </p>
+    </div>
     </div>
   );
 };

@@ -63,7 +63,7 @@ const FindDoctors = () => {
             const filtered = doctors.filter(doctor => {
                 // Department filter
                 const matchesDepartment = selectedDepartment ? 
-                (doctor.department?.toLowerCase().trim() === selectedDepartment.toLowerCase().trim()) : true;
+                (doctor.department?.name?.toLowerCase().trim() === selectedDepartment.toLowerCase().trim()) : true;              
                           
                 // Search filter (case insensitive)
                 const matchesSearch = searchTerm ? 
@@ -147,7 +147,7 @@ const FindDoctors = () => {
                         <p>Loading doctors...</p>
                     ) : displayedDoctors.length > 0 ? (
                         displayedDoctors.map((doctor) => (
-                            <DoctorCard key={doctor._id} doctors={doctor} />
+                            <DoctorCard key={doctor._id} doctor={doctor} />
                         ))
                     ) : (
                         <p>No Doctors Available</p>

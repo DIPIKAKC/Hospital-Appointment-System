@@ -49,26 +49,49 @@ const registerUser = async(req,res)=>{
 
 //login function for User
 const loginUser = async (req, res) => {
-    try {
+
       //Extract email and password from request
       const { email, password } = req.body;
   
-      // To find user in the database
-      const user = await RegisterUser.findOne({ email });
-  
-      // If user not found or password is incorrect, return error
-      if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.status(400).json({ message: 'Invalid email or password' });
-      }
-      
-      // If user is found and password is correct, generate token and return
-      const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
+      try {
+        // To find user in the database
+        let account = await RegisterUser.findOne({ email });
+        let role = 'patient';
+    
+        if (!account) {
+          account = await RegisterDoctor.findOne({ email });
+          role = 'doctor';
+        }
+    
+        if (!account) {
+          return res.status(404).json({ message: 'Email not found' });
+        }
 
-      return res.status(200).json({ message: 'logged in successfully', token, user: {userId: user._id, fullName: user.fullName, email: user.email, role: user.role }});
-    } catch (err) {
-      return res.status(500).json({ message: err.message });
-    }
-  };
+          // Check password
+          const isMatch = await bcrypt.compare(password, account.password);
+          if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid email or password' });
+          }
+
+          // Create token
+          const token = jwt.sign({ id: account._id, role }, process.env.JWT_SECRET);
+
+          // Send response
+          return res.status(200).json({
+            message: 'Logged in successfully',
+            token,
+            user: {
+              userId: account._id,
+              fullName: account.fullName,
+              email: account.email,
+              role: role
+            }
+          });
+
+          } catch (err) {
+          return res.status(500).json({ message: err.message });
+          }
+          };
 
 
 
@@ -330,7 +353,7 @@ const getAvailableSlots = async (req, res) => {
 //get all doctors
 const getAllDoctors = async(req,res) => {
   try{
-    const doctors = await RegisterDoctor.find().select("fullName department")
+    const doctors = await RegisterDoctor.find().populate('department', 'name');
 
     res.status(200).json({success:true, message:"Fetch successfull", data:doctors})
   } catch(error){

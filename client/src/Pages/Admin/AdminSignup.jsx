@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-// import './Login.css';
+import './AdminLogin.css';
 import { useNavigate } from 'react-router-dom';
 
 
-const LoginDoctor = () => {
+const SignupAdmin = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    fullName:"",
      email: "",
      password: "" 
   });
@@ -20,7 +21,7 @@ const LoginDoctor = () => {
     console.log("Form Data:", formData); // Debugging
   
     try {
-      const response = await fetch("http://localhost:5000/auth/login-doc", {
+      const response = await fetch("http://localhost:5000/auth/register-admin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -32,9 +33,9 @@ const LoginDoctor = () => {
       if (response.ok) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user.fullName));
-        localStorage.setItem("id", data.user._id); //This stores the user ID
+        localStorage.setItem("id", data.user.userId); //This stores the user ID
         alert("Login successful!");
-        navigate("/dashboard");
+        navigate("/login/admin");
       } else {
         alert(data.message || "Invalid credentials");
       }
@@ -46,14 +47,20 @@ const LoginDoctor = () => {
 
   return (
 
-    <div className="signup-container">
-    <div className="left-pane">
+    <div className="auth-container">
+    <div className="content">
       <h1>MedEase</h1>
       <p>A hospital Appointment Booking System</p>
-    </div>
-    <div className="right-pane">
       <h2>Login to your account</h2>
       <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="fullName"
+          placeholder="Full Name"
+          value={formData.fullName}
+          onChange={handleChange}
+          required
+        />
         <input
           type="email"
           name="email"
@@ -73,11 +80,11 @@ const LoginDoctor = () => {
         <button type="submit">Login</button>
       </form>
       <p>
-        Don't have an account? <a href="/signup">Sign up</a>
+        Already have an account? <a href="/login/admin">Login</a>
       </p>
     </div>
     </div>
   );
 };
 
-export default LoginDoctor;
+export default SignupAdmin;

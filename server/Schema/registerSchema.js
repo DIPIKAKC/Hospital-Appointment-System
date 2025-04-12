@@ -50,8 +50,8 @@ const register2 = mongoose.Schema({
     },
     contact: {type:String, required:true},
     department: {
-        type:String,
-        required:true
+        type: mongoose.Schema.Types.ObjectId, // Reference to Department
+        ref: 'Department', // Referencing the Department model
     },
     experience: { type: String},
     description: { type: String},

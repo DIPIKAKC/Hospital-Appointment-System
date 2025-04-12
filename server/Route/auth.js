@@ -6,7 +6,7 @@ const { registerUser, loginUser, getUserById,
     editUserData, deleteUserData, bookAppointment, 
     cancelAppointment, getAvailableSlots, getAllDoctors, getDepartments,
     getDoctorById, getMyAppointments} = require("../Control/userControl");
-const { loginDoctor, doctorSlotsPost, 
+const { doctorSlotsPost, 
     appointmentStatus, getMeDoctor, getAppointments} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor, 
     getAllAppointments,
@@ -59,7 +59,7 @@ router.get("/doctor/:doctorId",getDoctorById)
 //DOCTOR
 
 //Route for doc registration
-router.post("/login-doc", loginDoctor);
+// router.post("/login-doc", loginDoctor);
 //adding time slot for appointments
 router.post("/add-time-slot", auth, authorize("doctor"),  doctorSlotsPost)
 //getting doctor's assigned appointment

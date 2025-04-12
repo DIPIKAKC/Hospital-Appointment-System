@@ -6,36 +6,36 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
 
-//login Doctor
-const loginDoctor = async (req, res) => {
-    try {
+// //login Doctor
+// const loginDoctor = async (req, res) => {
+//     try {
   
-      console.log(req.body);
+//       console.log(req.body);
   
-      //Extract email and password from request
-      const { email, password } = req.body;
+//       //Extract email and password from request
+//       const { email, password } = req.body;
   
-      // To find user in the database
-      const user = await RegisterDoctor.findOne({ email });
+//       // To find user in the database
+//       const user = await RegisterDoctor.findOne({ email });
   
-      // If user not found or password is incorrect, return error
-      if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.status(400).json({ message: 'Invalid email or password' });
-      }
+//       // If user not found or password is incorrect, return error
+//       if (!user || !(await bcrypt.compare(password, user.password))) {
+//         return res.status(400).json({ message: 'Invalid email or password' });
+//       }
   
-      const passwordMatch = await bcrypt.compare(password, user.password);
+//       const passwordMatch = await bcrypt.compare(password, user.password);
   
-      if (!passwordMatch) {
-        return res.status(400).json({ message: "Invalid email or password" });
-      }
+//       if (!passwordMatch) {
+//         return res.status(400).json({ message: "Invalid email or password" });
+//       }
   
-      // If user is found and password is correct, generate token and return
-      const token = jwt.sign({ id: user._id, role:user.role }, process.env.JWT_SECRET);
-      return res.status(200).json({ message: 'logged in successfully', token, user });
-    } catch (err) {
-      return res.status(500).json({ message: err.message });
-    }
-  };
+//       // If user is found and password is correct, generate token and return
+//       const token = jwt.sign({ id: user._id, role:user.role }, process.env.JWT_SECRET);
+//       return res.status(200).json({ message: 'logged in successfully', token, user });
+//     } catch (err) {
+//       return res.status(500).json({ message: err.message });
+//     }
+//   };
 
 
 
@@ -191,4 +191,4 @@ const getAppointments = async (req, res) => {
 
 
 
-module.exports = {loginDoctor, doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments};
+module.exports = { doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments};

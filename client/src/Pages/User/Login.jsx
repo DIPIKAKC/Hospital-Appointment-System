@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
 
-const LoginForm = ({ onClose }) => {
+const LoginForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
      email: "",
@@ -32,11 +32,17 @@ const LoginForm = ({ onClose }) => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user.fullName));
         localStorage.setItem("id", data.user.userId); // Store user ID
+        localStorage.setItem("role", data.user.role); // Store role
+
         alert("Login successful!");
 
-        setTimeout(() =>{
-          navigate("/");
-      }, 1000)
+        setTimeout(() => {
+          if (data.user.role === 'doctor') {
+            navigate("/dashboard"); // Doctor dashboard
+          } else {
+            navigate("/"); // Patient homepage
+          }
+        }, 1000);
       } else {
         alert(data.message || "Invalid credentials");
       }
@@ -46,10 +52,13 @@ const LoginForm = ({ onClose }) => {
   };
 
   return (
-    <div className="modal-overlay" >
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+
+      <div className="auth-container">
+      <div className="content">
+        <h1>MedEase</h1>
+        <p>A hospital Appointment Booking System</p>
         <h2>Login to your account</h2>
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input
             type="email"
             name="email"
@@ -68,9 +77,12 @@ const LoginForm = ({ onClose }) => {
           />
           <button type="submit">Login</button>
         </form>
+        <p>
+          Don't have an account? <a href="/signup">Sign up</a>
+        </p>
       </div>
-    </div>
-  );
+      </div>
+    );
 };
 
 export default LoginForm;

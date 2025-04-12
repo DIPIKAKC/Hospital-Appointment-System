@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import './Login.css';
+import './AdminLogin.css';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -46,12 +46,10 @@ const LoginAdmin = () => {
 
   return (
 
-    <div className="signup-container">
-    <div className="left-pane">
+    <div className="auth-container">
+    <div className="content">
       <h1>MedEase</h1>
       <p>A hospital Appointment Booking System</p>
-    </div>
-    <div className="right-pane">
       <h2>Login to your account</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -73,7 +71,7 @@ const LoginAdmin = () => {
         <button type="submit">Login</button>
       </form>
       <p>
-        Don't have an account? <a href="/signup">Sign up</a>
+        Don't have an account? <a href="/register/admin">Sign up</a>
       </p>
     </div>
     </div>

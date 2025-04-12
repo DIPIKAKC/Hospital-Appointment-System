@@ -4,16 +4,21 @@ import doctorImg from '../../assets/docfemale.jpg';
 import "./DoctorCard.css";
 
 
-const DoctorCard = ({ doctors }) => {
+const DoctorCard = ({ doctor }) => {
 
   const navigate = useNavigate();
 
+    // Ensure the doctor prop exists and contains the required properties
+    if (!doctor || !doctor.fullName) {
+      return <div>No doctor data available</div>;
+    }
+
   const handleCardClick = () =>{
-    navigate(`/doctor/${doctors._id}`);
+    navigate(`/doctor/${doctor._id}`);
   }
 
   const handleBookAppointment = () =>{
-    navigate(`doctor/${doctors._id}`);
+    navigate(`doctor/${doctor._id}`);
   }
 
   return (
@@ -21,9 +26,9 @@ const DoctorCard = ({ doctors }) => {
       <div className="doctor-card" onClick={handleCardClick}>
         <div className="doctor-details">
           <div className="experience-label">Experience</div>
-          <div className="experience-value">{doctors.experience}</div>
-          <div className="doctor-name">{doctors.fullName}</div>
-          <div className="doctor-specialty">{doctors.department}</div>
+          <div className="experience-value">{doctor.experience}</div>
+          <div className="doctor-name">{doctor.fullName}</div>
+          <div className="doctor-specialty">{doctor.department?.name}</div>
           <button className="book-appointment-btn" onClick={handleBookAppointment}>Book Appointment</button>
         </div>
         <div className="doctor-photo">
