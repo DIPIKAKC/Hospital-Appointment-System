@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./MyAssignedAppointments.css";
 import DocBar from "../../Components/Doctor/DoctorNavbar";
+import Footer from "../../Components/User/Footer";
+import FooterDoc from "../../Components/Doctor/FooterDoctor";
 
 const DoctorAppointmentsList = () => {
   const [appointments, setAppointments] = useState([]);
@@ -187,6 +189,7 @@ const DoctorAppointmentsList = () => {
         </div>
       )}
     </div>
+    <FooterDoc />
     </>
   );
 };

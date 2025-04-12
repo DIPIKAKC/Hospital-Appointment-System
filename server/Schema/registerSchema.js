@@ -53,8 +53,8 @@ const register2 = mongoose.Schema({
         type:String,
         required:true
     },
-    experience: { type: String, required: true },
-    description: { type: String, required: true },
+    experience: { type: String},
+    description: { type: String},
     availableSlots: [{
         date: { type: String },
         times: [{ type: String }]    

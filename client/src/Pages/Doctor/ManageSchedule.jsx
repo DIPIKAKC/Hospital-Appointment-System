@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import "./ManageSchedule.css";
 import { useNavigate } from "react-router-dom";
 import DocBar from "../../Components/Doctor/DoctorNavbar";
+import Footer from "../../Components/User/Footer";
+import FooterDoc from "../../Components/Doctor/FooterDoctor";
 
 const ManageSchedule = () => {
   const [date, setDate] = useState("");
@@ -111,12 +113,13 @@ const ManageSchedule = () => {
           }
       
           setMessage(data.message || "Schedule updated successfully");
-      
+          alert("Schedule updated successfully")
           // Refresh local slots
           setDoctorSlots(data.availableSlots || []);
       
-          // Optional: Reset time slot selections
+          // Reset time slot selections
           setSelectedTimeSlots([]);
+          setDate(""); //This resets the form to its initial state
       
       // Clear form after 3 seconds
       setTimeout(() => {
@@ -160,18 +163,20 @@ const ManageSchedule = () => {
           <p className="empty-schedule">You haven't set any available time slots yet.</p>
         ) : (
           <div className="slot-grid">
-            {doctorSlots.map((slot,index) => (
+            {doctorSlots
+              .filter(slot => new Date(slot.date).setHours(0, 0, 0, 0) >= today.setHours(0, 0, 0, 0))
+              .map((slot, index) => (
                 <div key={`${slot.date}-${index}`} className="slot-card">
-                <p className="slot-date">{new Date(slot.date).toDateString()}</p>
-                <div className="time-tags">
-                  {slot.times.map((time) => (
-                    <span key={`${slot.date}-${time}`} className="time-tag">
-                      {time}
-                    </span>
-                  ))}
+                  <p className="slot-date">{new Date(slot.date).toDateString()}</p>
+                  <div className="time-tags">
+                    {slot.times.map((time) => (
+                      <span key={`${slot.date}-${time}`} className="time-tag">
+                        {time}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+))}
           </div>
         )}
       </div>
@@ -218,6 +223,8 @@ const ManageSchedule = () => {
       </form>
       
     </div>
+
+    <FooterDoc />
     </>
   );
 };

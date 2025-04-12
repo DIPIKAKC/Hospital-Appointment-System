@@ -1,6 +1,8 @@
 import React from "react";
 import '../User/ContactUs.css';
 import DocBar from "../../Components/Doctor/DoctorNavbar";
+import Footer from "../../Components/User/Footer";
+import FooterDoc from "../../Components/Doctor/FooterDoctor";
 
 const DocContact = () => {
     return(
@@ -19,7 +21,8 @@ const DocContact = () => {
                 <h3>Samakhusi, Kathmandu</h3>
             </div>
         </div>
-
+    
+    <FooterDoc />
     </>
     )
 }

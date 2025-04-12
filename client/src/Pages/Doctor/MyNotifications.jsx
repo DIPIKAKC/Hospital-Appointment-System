@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { FaBell, FaCalendarAlt, FaUser, FaExclamationCircle, FaSpinner, FaCheckCircle } from 'react-icons/fa';
 import { GiConfirmed } from "react-icons/gi";
 import '../User/Notification.css';
+import DocBar from '../../Components/Doctor/DoctorNavbar';
+import Footer from '../../Components/User/Footer';
+import FooterDoc from '../../Components/Doctor/FooterDoctor';
 
 
 const MyNotifications = () => {
@@ -93,6 +96,9 @@ const MyNotifications = () => {
 
   return (
 
+    <>
+    <DocBar />
+
     <div className="notification-container">
       <div className="notification-header">
         <h1 className="notification-title">
@@ -108,7 +114,7 @@ const MyNotifications = () => {
       </div>
 
       {/* Filter tabs */}
-      <div className="filter-tabs">
+      {/* <div className="filter-tabs">
         <button 
           className={`filter-tab ${filter === 'all' ? 'active' : ''}`}
           onClick={() => setFilter('all')}
@@ -139,7 +145,7 @@ const MyNotifications = () => {
         >
           System
         </button>
-      </div>
+      </div> */}
 
       {/* Loading state */}
       {loading && (
@@ -197,7 +203,9 @@ const MyNotifications = () => {
         ))}
       </div>
     </div>
-
+    
+    <FooterDoc />
+    </>
   );
 };
 

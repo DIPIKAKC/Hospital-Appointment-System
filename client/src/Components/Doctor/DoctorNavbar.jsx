@@ -16,21 +16,20 @@ const DocBar = () => {
 
     useEffect(() => {
         const userId = localStorage.getItem("id");
-        const username= localStorage.getItem("user");
         const token = localStorage.getItem("token");
         
         // Check if user is logged in
         if (userId && token) {
             setIsLoggedIn(true);
-            fetchUserData(userId, token, username);
+            fetchUserData(token);
         } else {
             setIsLoggedIn(false);
         }
     }, []);
 
-    const fetchUserData = async (userId, token) => {
+    const fetchUserData = async (token) => {
         try {
-            const response = await fetch(`http://localhost:5000/auth/get-user-by-id/${userId}`, {
+            const response = await fetch(`http://localhost:5000/auth/me`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,7 +42,7 @@ const DocBar = () => {
             }
 
             const data = await response.json();
-            setUsername(data.data.fullName);
+            setUsername(data.fullName);
         } catch (error) {
             console.error("Error fetching user:", error);
         }
@@ -102,9 +101,11 @@ const DocBar = () => {
 
                             <div className="user-profile">
                                 <img className='user-photo' src={userImg} alt="User" />
-                                <div className="username">
-                                    Welcome, Dr. {username}
-                                </div>
+                                {username && (
+                                    <div className="username">
+                                        Welcome, Dr. {username.split(" ")[0]}
+                                    </div>
+                                )}                               
                                 <button className="logout-btn" onClick={handleLogout}>
                                     Logout
                                 </button>

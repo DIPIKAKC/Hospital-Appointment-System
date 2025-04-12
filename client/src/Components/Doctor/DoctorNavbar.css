@@ -85,8 +85,8 @@
 
   .user-profile{
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 12px; /* controls space between img, text, button */
   }
 
   .user-photo{
@@ -97,12 +97,6 @@
     object-fit: cover;
     }
   
-  .username {
-    /* background-color: #4A90E2; */
-    color: rgb(0, 0, 0);
-    padding: 8px 16px;
-    border-radius: 20px;
-  }
 
 /* line */
 .divider {
@@ -180,6 +174,9 @@
 }
 
 .username {
-  font-size: 15px;
-  font-weight: 400px;
-}
+    font-size: 15px;
+    font-weight: 400;
+    color: black;
+    white-space: nowrap; /* Prevent wrapping */
+  }
+  
