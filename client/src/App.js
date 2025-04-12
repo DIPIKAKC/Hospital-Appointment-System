@@ -25,6 +25,10 @@ import AdminAppointmentManagement from "./Pages/Admin/AdminAppointmentManagement
 import AdminDoctorManagement from "./Pages/Admin/AdminDoctorManagement";
 import AdminUpdateDoctor from "./Pages/Admin/AdminEditDoctor";
 import AdminDepartmentManagement from "./Pages/Admin/AdminDepartmentManagement";
+import AdminUserManagement from "./Pages/Admin/AdminUserManagement";
+
+
+
 const App = () => {
 
   return (
@@ -60,12 +64,17 @@ const App = () => {
           {/* Admin */}
           <Route path="/login/admin" element={<LoginAdmin/>} />
           <Route path= "/admin/dashboard" element= {<AdminDashboard />} />
+
           <Route path= "/admin/add-doctor" element= {<AdminAddDoctor />} />
           <Route path= "/admin/doctors/edit/:doctorId" element= {<AdminUpdateDoctor />} />
-          <Route path= "/admin/add-department" element= {<AdminAddDepartment/>} />
-          <Route path= "/admin/appointments" element= {<AdminAppointmentManagement/>} />
           <Route path= "/admin/doctors" element= {<AdminDoctorManagement/>} />
+
+          <Route path= "/admin/add-department" element= {<AdminAddDepartment/>} />
           <Route path= "/admin/departments" element= {<AdminDepartmentManagement/>} />
+
+          <Route path= "/admin/users" element= {<AdminUserManagement/>} />
+
+          <Route path= "/admin/appointments" element= {<AdminAppointmentManagement/>} />
 
 
           
