@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../Pages/User/UserDashboard.css"
 import aboutImg from "../../assets/about3.jpg"
 
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import DoctorHomeCard from "./DoctorProfileCard";
 import { toast } from "sonner";
 
@@ -10,6 +10,7 @@ import { toast } from "sonner";
 
 
 const DashboardComponent = () => {
+    const navigate = useNavigate();
     const {doctorId} = useParams();
     const [doctor, setDoctor] = useState([])
 
@@ -45,7 +46,18 @@ const DashboardComponent = () => {
     
     console.log("doc ", doctor)
     
-    
+    const handleBookAppointment = () => {
+        // Check if user is logged in by looking for a token or user data in localStorage
+        const token = localStorage.getItem('token'); // Assuming you store auth token in localStorage
+        
+        if (token) {
+            // User is logged in, redirect to find-doctors page
+            navigate('/find-doctors');
+        } else {
+            // User is not logged in, show alert
+            alert('Please create an account to book an appointment');
+        }
+    }
    
     return (
      <div>
@@ -54,7 +66,7 @@ const DashboardComponent = () => {
                     <h1>Book Appointments With<br />
                         Your Trusted Doctors</h1>
                     <p className="p1">MedEase to your care.</p>
-                    <button className="book-appointment">
+                    <button className="book-appointment" onClick={handleBookAppointment}>
                         Book Appointment
                     </button>
                     <div className="cover-img"></div>

@@ -26,6 +26,7 @@ import AdminDoctorManagement from "./Pages/Admin/AdminDoctorManagement";
 import AdminUpdateDoctor from "./Pages/Admin/AdminEditDoctor";
 import AdminDepartmentManagement from "./Pages/Admin/AdminDepartmentManagement";
 import AdminUserManagement from "./Pages/Admin/AdminUserManagement";
+import SignupForm from "./Pages/User/Signup";
 
 
 
@@ -48,6 +49,7 @@ const App = () => {
 
           <Route path = "/" element={<Home />} />
           <Route path = "/login" element={<LoginForm />} />
+          <Route path = "/signup" element={<SignupForm />} />
           <Route path="/find-doctors" element={<FindDoctors />} />
           <Route path= "/doctor/:doctorId" element={<DoctorPage />} />
           <Route path= "/appointments" element= {<AppointmentList />} />

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import './Login.css';
+import './Signup.css';
 import { useNavigate } from 'react-router-dom';
 
-const LoginForm = ({ onClose }) => {
+const SignupForm = ({ onClose }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    fullName: "",
      email: "",
-     password: "" 
+     password: "" ,
   });
 
   const handleChange = (e) => {
@@ -16,40 +17,40 @@ const LoginForm = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData); // Debugging
-  
     try {
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch("http://localhost:5000/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-  
       const data = await response.json();
-      console.log("Response Data:", data); // Debugging
-  
       if (response.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user.fullName));
-        localStorage.setItem("id", data.user.userId); // Store user ID
-        alert("Login successful!");
-
-        setTimeout(() =>{
-          navigate("/");
-      }, 1000)
+        alert("Account created successfully");
+        setTimeout(()=>{
+            navigate('/');
+        },1000);
+            
       } else {
-        alert(data.message || "Invalid credentials");
+        alert(data.message);
       }
     } catch (error) {
-      console.error("Error logging in:", error);
+      console.error("Error signing up:", error);
     }
   };
 
   return (
-    <div className="modal-overlay" >
+    <div className="modal-overlay">
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h2>Login to your account</h2>
-        <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Create new account</h2>
+        <form className="signup-form" onSubmit={handleSubmit}>
+            <input
+            type="text"
+            name="fullName"
+            placeholder="Full Name"
+            value={formData.fullName}
+            onChange={handleChange}
+            required
+          />
           <input
             type="email"
             name="email"
@@ -66,11 +67,11 @@ const LoginForm = ({ onClose }) => {
             onChange={handleChange}
             required
           />
-          <button type="submit">Login</button>
+          <button type="submit">Create account</button>
         </form>
       </div>
     </div>
   );
 };
 
-export default LoginForm;
+export default SignupForm;

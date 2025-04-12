@@ -156,13 +156,6 @@ const DoctorPage = () => {
             }
         };
 
-        const handleLogout = () => {
-            localStorage.removeItem("token");
-            // redirect to login or homepage
-            navigate("/login");
-          };
-          
-
 
     return(
 
@@ -227,7 +220,6 @@ const DoctorPage = () => {
                     Book Appointment
                 </button>
             </div>
-            <button className="logout-button" onClick={handleLogout}>Logout</button>
 
         </div>
         <Resources />

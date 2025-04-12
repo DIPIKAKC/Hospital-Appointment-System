@@ -10,16 +10,19 @@ const NavBar = () => {
 
     const [username, setUsername] = useState ("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
     const navigate = useNavigate();
 
     useEffect(() => {
         const userId = localStorage.getItem("id");
+        const username= localStorage.getItem("user");
         const token = localStorage.getItem("token");
         
         // Check if user is logged in
         if (userId && token) {
             setIsLoggedIn(true);
-            fetchUserData(userId, token);
+            fetchUserData(userId, token, username);
         } else {
             setIsLoggedIn(false);
         }
@@ -127,16 +130,18 @@ const NavBar = () => {
                         </>
                     ) : (
                         <div className="auth-buttons">
-                            <Link to="/register">
-                                <button className="create-account-btn">Create Account</button>
+
+                            <Link to='/signup'>
+                            <button className="create-account-btn">Create Account</button>
                             </Link>
-                            <Link to="/login">
-                                <button className="login-btn">Login</button>
+                            <Link to ="/login">
+                            <button className="login-btn">Login</button>
                             </Link>
                         </div>
                     )}
                 </div>
             </div>
+
         </nav>
     );
 }; 

@@ -155,7 +155,7 @@ const Notification = () => {
       </div>
 
       {/* Filter tabs */}
-      <div className="filter-tabs">
+      {/* <div className="filter-tabs">
         <button 
           className={`filter-tab ${filter === 'all' ? 'active' : ''}`}
           onClick={() => setFilter('all')}
@@ -186,7 +186,7 @@ const Notification = () => {
         >
           System
         </button>
-      </div>
+      </div> */}
 
       {/* Loading state */}
       {loading && (

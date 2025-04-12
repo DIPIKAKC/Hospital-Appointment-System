@@ -62,8 +62,9 @@
 }
   
 .dept-item.active {
-    background-color: #5b91c5;
+    background-color: #10B8B9;
     color: white;
+    border-radius: 10px;
 }
   
 /* Content Area Styles */
