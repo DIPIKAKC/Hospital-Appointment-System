@@ -52,6 +52,7 @@
   
   
   .nav-item::after {
+    text-decoration: none;
     content: '';
     position: absolute;
     bottom: -3px;
@@ -64,6 +65,7 @@
   
   /* Show underline on hover */
   .nav-item:hover::after {
+    text-decoration: none;
     width: 100%;
   }
   

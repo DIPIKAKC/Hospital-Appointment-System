@@ -3,6 +3,7 @@ const {Department} = require("../Schema/departmentSchema")
 const {Appointment} = require("../Schema/appointmentSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const { default: mongoose } = require("mongoose")
 
 
 
@@ -303,6 +304,7 @@ const adminDeleteDoctors = async (req, res) => {
 const getAdminDepartments = async (req, res) => {
   try {
     const doctors = await Department.find();
+    console.log(doctors)
     res.status(200).json(doctors);
   } catch (error) {
     res.status(500).json({ message: "Error fetching departments", error: error.message });

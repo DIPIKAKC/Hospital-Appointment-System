@@ -10,7 +10,7 @@ const DoctorProfileCard = () => {
         fullName: "",
         department: "",
         experience: "",
-        description: ""
+        description: "" 
     });
 
     useEffect(() => {        
@@ -51,7 +51,7 @@ const DoctorProfileCard = () => {
             <div className="experience">Experience</div>
             <div className="experience-value">{doctor.experience}</div><br/>
             <div className="name">{doctor.fullName}</div>
-            <div className="specialty">{doctor.department}</div>
+            <div className="specialty">{doctor.department?.name}</div>
             </div>
             <div className="doctor-image">
                 <img src={doctorImg} alt="Doctor"></img>

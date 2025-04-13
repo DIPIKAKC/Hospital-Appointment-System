@@ -199,7 +199,7 @@ const AdminAddDoctor = () => {
                   value={formData.contact}
                   onChange={handleChange}
                   required
-                  placeholder="********"
+                  placeholder="contact info"
                 />
               </div>
 
@@ -212,7 +212,7 @@ const AdminAddDoctor = () => {
                   value={formData.description}
                   onChange={handleChange}
                   required
-                  placeholder="********"
+                  placeholder="doctor's description"
                 />
               </div>
 
@@ -225,7 +225,7 @@ const AdminAddDoctor = () => {
                   value={formData.experience}
                   onChange={handleChange}
                   required
-                  placeholder="********"
+                  placeholder="experience"
                 />
               </div>
             <div className="form-footer">

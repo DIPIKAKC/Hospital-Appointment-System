@@ -18,7 +18,7 @@
   }
   
   .content h1 {
-    color: #1976d2;
+    color: #10B8B9;
     font-size: 36px;
     margin-bottom: 10px;
   }
@@ -47,7 +47,7 @@
   form button {
     width: 100%;
     padding: 12px;
-    background-color: #1976d2;
+    background-color: #10B8B9;
     color: white;
     border: none;
     border-radius: 6px;
@@ -57,11 +57,11 @@
   }
   
   form button:hover {
-    background-color: #1565c0;
+    background-color: #089d9d;
   }
   
   a {
-    color: #1976d2;
+    color: #10B8B9;
     text-decoration: none;
   }
   

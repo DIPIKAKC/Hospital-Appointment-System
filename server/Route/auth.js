@@ -50,7 +50,7 @@ router.get("/:doctorId/available-slots",  getAvailableSlots) //auth
 router.get("/all-doctors", getAllDoctors)
 //get departments
 router.get("/departments", getDepartments)
-//get doctor by id
+//get doctor by id / individual
 router.get("/doctor/:doctorId",getDoctorById)
 
 

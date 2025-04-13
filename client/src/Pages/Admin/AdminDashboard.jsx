@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AdminDashboard.css';
+import './AdminDashboard.css'; // updated CSS import
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -15,11 +15,10 @@ const AdminDashboard = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    // Fetch admin info
     const fetchAdmin = async () => {
       try {
         const res = await fetch('http://localhost:5000/auth/me-admin', {
-          method : "GET",
+          method: "GET",
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -31,11 +30,10 @@ const AdminDashboard = () => {
       }
     };
 
-    // Fetch dashboard stats
     const fetchStats = async () => {
       try {
         const res = await fetch('http://localhost:5000/auth/admin/stats', {
-          method : "GET",
+          method: "GET",
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -66,56 +64,53 @@ const AdminDashboard = () => {
   const handleAddDepartment = () => navigate('/admin/add-department');
 
   return (
-    <div className="admin-container">
-      {/* Sidebar */}
-      <div className="sidebar">
-        <h2 className="panel-title">Admin Panel</h2>
-        <div className="sidebar-menu">
-          <div className="menu-item active" onClick={() => handleNavigate('/admin/dashboard')}>Dashboard</div>
-          <div className="menu-item" onClick={() => handleNavigate('/admin/users')}>Users</div>
-          <div className="menu-item" onClick={() => handleNavigate('/admin/doctors')}>Doctors</div>
-          <div className="menu-item" onClick={() => handleNavigate('/admin/appointments')}>Appointments</div>
-          <div className="menu-item" onClick={() => handleNavigate('/admin/departments')}>Departments</div>
+    <div className="admin-home-container">
+      <div className="admin-home-sidebar">
+        <h2 className="admin-home-panel-title">Admin Panel</h2>
+        <div className="admin-home-sidebar-menu">
+          <div className="admin-home-menu-item active" onClick={() => handleNavigate('/admin/dashboard')}>Dashboard</div>
+          <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/users')}>Users</div>
+          <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/doctors')}>Doctors</div>
+          <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/appointments')}>Appointments</div>
+          <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/departments')}>Departments</div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="main-content">
-        <header className="header">
-          <h1 className="dashboard-title">Admin Dashboard</h1>
-          <div className="user-actions">
-            <span className="welcome-text">Welcome, {username}</span>
-            <button className="logout-btn" onClick={handleLogout}>Logout</button>
+      <div className="admin-home-main-content">
+        <header className="admin-home-header">
+          <h1 className="admin-home-dashboard-title">Admin Dashboard</h1>
+          <div className="admin-home-user-actions">
+            <span className="admin-home-welcome-text">Welcome, {username}</span>
+            <button className="admin-home-logout-btn" onClick={handleLogout}>Logout</button>
           </div>
         </header>
 
-        <div className="dashboard-content">
-          <div className="stats-container">
-            <div className="stat-card blue">
+        <div className="admin-home-dashboard-content">
+          <div className="admin-home-stats-container">
+            <div className="admin-home-stat-card blue">
               <h3>Total Users</h3>
-              <p className="stat-value">{stats.users}</p>
-              <a className="view-link" onClick={() => handleNavigate('/admin/users')}>View All Users →</a>
+              <p className="admin-home-stat-value">{stats.users}</p>
+              <a className="admin-home-view-link" onClick={() => handleNavigate('/admin/users')}>View All Users →</a>
             </div>
 
-            <div className="stat-card green">
+            <div className="admin-home-stat-card green">
               <h3>Total Doctors</h3>
-              <p className="stat-value">{stats.doctors}</p>
-              <a className="view-link" onClick={() => handleNavigate('/admin/doctors')}>View All Doctors →</a>
+              <p className="admin-home-stat-value">{stats.doctors}</p>
+              <a className="admin-home-view-link" onClick={() => handleNavigate('/admin/doctors')}>View All Doctors →</a>
             </div>
 
-            <div className="stat-card purple">
+            <div className="admin-home-stat-card purple">
               <h3>Total Appointments</h3>
-              <p className="stat-value">{stats.appointments}</p>
-              <a className="view-link" onClick={() => handleNavigate('/admin/appointments')}>View All Appointments →</a>
+              <p className="admin-home-stat-value">{stats.appointments}</p>
+              <a className="admin-home-view-link" onClick={() => handleNavigate('/admin/appointments')}>View All Appointments →</a>
             </div>
           </div>
 
-          <div className="quick-actions">
+          <div className="admin-home-quick-actions">
             <h3>Quick Actions</h3>
-            <div className="action-buttons">
-              <button className="action-btn add-doctor" onClick={handleAddDoctor}>Add New Doctor</button>
-              <button className="action-btn add-doctor" onClick={handleAddDepartment}>Add New Department</button>
-              {/* <button className="action-btn add-user">Add New User</button> */}
+            <div className="admin-home-action-buttons">
+              <button className="admin-home-action-btn add-doctor" onClick={handleAddDoctor}>Add New Doctor</button>
+              <button className="admin-home-action-btn add-doctor" onClick={handleAddDepartment}>Add New Department</button>
             </div>
           </div>
         </div>

@@ -44,7 +44,7 @@ const SignupForm = ({ onClose }) => {
     <div className="content">
       <h1>MedEase</h1>
       <p>A hospital Appointment Booking System</p>
-      <h2>Login to your account</h2>
+      <h2>Create a new account</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -70,7 +70,7 @@ const SignupForm = ({ onClose }) => {
           onChange={handleChange}
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit">Create account</button>
       </form>
       <p>
         Already have an account? <a href="/login">Login</a>

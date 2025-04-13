@@ -240,20 +240,13 @@ const getMyAppointments = async (req, res) => {
   try {
     const userId = req.userId;
     const userRole = req.userRole;
-    
-    let query = {};
-    
-    // If user is patient, get their appointments
-    if (userRole === "user") {
-      query.user = userId;
-    } 
-    // If user is doctor, get appointments they need to handle
-    else if (userRole === "doctor") {
-      query.doctor = userId;
-    }
-    // Admin can see all appointments
 
-    const appointments = await Appointment.find(query)
+        // Only allow if role is 'user'
+        if (userRole !== "patient") {
+          return res.status(403).json({ message: "Access denied. Only users can view their appointments." });
+        }
+
+    const appointments = await Appointment.find({user: userId})
       .populate("user", "fullName email")
       .populate("doctor", "fullName department")
       .sort({ createdAt: -1 });
@@ -367,8 +360,7 @@ const getDoctorById = async(req,res) => {
   try{
     const doctorId = req.params.doctorId;
 
-    const doctor = await RegisterDoctor.findById(doctorId);
-
+    const doctor = await RegisterDoctor.findById(doctorId).populate("department","name");
     if (!doctor) {
       return res.status(404).json({ message: "Doctor not found" });
     }

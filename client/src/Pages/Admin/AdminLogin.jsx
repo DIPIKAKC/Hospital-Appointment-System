@@ -50,7 +50,7 @@ const LoginAdmin = () => {
     <div className="content">
       <h1>MedEase</h1>
       <p>A hospital Appointment Booking System</p>
-      <h2>Login to your account</h2>
+      <h2>Admin Login</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
