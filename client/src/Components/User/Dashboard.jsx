@@ -4,9 +4,6 @@ import aboutImg from "../../assets/about3.jpg"
 
 import { useParams, useNavigate } from "react-router-dom";
 import DoctorHomeCard from "./DoctorProfileCard";
-import { toast } from "sonner";
-
-
 
 
 const DashboardComponent = () => {
