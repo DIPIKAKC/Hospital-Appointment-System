@@ -1,8 +1,26 @@
 const mongoose = require("mongoose")
 
+
+// Full name validator:
+// - Must start with a letter
+// - Can include letters and numbers
+// - No spaces allowed
+// - Cannot be only numbers
+const registerValidator = {
+    validator: function (value) {
+        return /^[A-Za-z][A-Za-z0-9]*$/.test(value); 
+        // ^           → start of string
+        // [A-Za-z]    → first character must be a letter
+        // [A-Za-z0-9]* → rest can be letters or numbers (zero or more times)
+        // $           → end of string
+    },
+    message: "Full name must start with a letter and cannot contain spaces or be only numbers"
+};
+
+
 //register schema for user
 const register1 = mongoose.Schema({
-    fullName: { type: String, required: true },
+    fullName: { type: String, required: true, validate: registerValidator },
     email: { 
         type: String,
         required: true,     // Ensures the email field is required
@@ -29,7 +47,7 @@ const register1 = mongoose.Schema({
 
 //register schema for doctor
 const register2 = mongoose.Schema({
-    fullName: { type: String, required: true },
+    fullName: { type: String, required: true, validate: registerValidator },
     email: { 
         type: String,
         required: true,     
@@ -41,8 +59,8 @@ const register2 = mongoose.Schema({
     password: {  
         type: String,
         required: true,
-        minlength: [8, "Password must be at least 8 characters long"] 
-    },
+        minlength: [8, "Password must be at least 8 characters long"]
+        },
     role: { 
         type: String,
         enum: ["doctor", "patient"],
@@ -67,7 +85,7 @@ const register2 = mongoose.Schema({
 
 //register schema for admin
 const register3 = mongoose.Schema({
-    fullName: { type: String, required: true },
+    fullName: { type: String, required: true, validate: registerValidator },
     email: { 
         type: String,
         required: true,     // Ensures the email field is required
@@ -79,7 +97,7 @@ const register3 = mongoose.Schema({
     password: {  
         type: String,
         required: true,
-        minlength: 8 // Minimum password length requirement
+        minlength: 8, // Minimum password length requirement
     },
     role: { type: String, default: "admin" }
     },

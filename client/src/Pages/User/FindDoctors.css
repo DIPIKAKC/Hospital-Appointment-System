@@ -98,6 +98,38 @@
     flex: 1;
 }
 
+/*  */
+.availability-legend {
+    display: flex;
+    gap: 20px;
+    margin: 10px 0 20px 0;
+    padding-left: 10px;
+    font-size: 14px;
+    color: #444;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+  
+  .available {
+    background-color: green;
+  }
+  
+  .unavailable {
+    background-color: goldenrod;
+  }
+  
+/*  */
+
 /* Doctor Cards Layout */
 .doctor-grid {
     display: grid;

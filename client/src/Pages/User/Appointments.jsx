@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { MdAccessAlarms } from "react-icons/md";
+
 import './Appointments.css';
 import NavBar from "../../Components/User/Navbar";
 import Resources from "../../Components/User/Resources";
@@ -159,7 +161,7 @@ const AppointmentList = () => {
                   <div className="appt-department">
                     <p className="appt-label">Department</p>
                     <p className="appt-value">
-                      {appointment.doctor ? appointment.doctor.department || 'Not Specified' : 'Not Specified'}
+                      {appointment.doctor ? appointment.doctor.department?.name || 'Not Specified' : 'Not Specified'}
                     </p>
                   </div>
                   <div className="appt-actions">
@@ -168,6 +170,13 @@ const AppointmentList = () => {
                         className="btn-cancel"
                         onClick={() => cancelAppointment(appointment._id)}>
                         Cancel
+                      </button>
+                    </p>
+                    <p className="appt-value">
+                      <button
+                        className="btn-appt">
+                        {/* // onClick={() => cancelAppointment(appointment._id)}> */}
+                        <MdAccessAlarms size={15} /> set reminder
                       </button>
                     </p>
                   </div>

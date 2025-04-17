@@ -142,6 +142,16 @@ const FindDoctors = () => {
                     />
                 </div>
 
+                <div className="availability-legend">
+                    <div className="legend-item">
+                        <span className="dot available"></span> Available
+                    </div><p>|</p>
+                    <div className="legend-item">
+                        <span className="dot unavailable"></span> Not Available
+                    </div>
+                </div>
+
+
                 <div className="doctor-grid">
                     {loading ? (
                         <p>Loading doctors...</p>

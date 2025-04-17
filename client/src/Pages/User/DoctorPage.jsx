@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { toast, Toaster } from "sonner";
 
 import './DoctorPage.css';
 import DoctorProfileCard from "../../Components/User/DoctorProfile";
@@ -143,7 +144,9 @@ const DoctorPage = () => {
                 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error("Failed to book appointment",errorData);
+                    // alert(`Failed to book appointment: ${errorData.message}`);
+                    toast.error(`Failed to book appointment: ${errorData.message}`)
+                    return;
                 }
                 
                 const data = await response.json();
@@ -181,7 +184,7 @@ const DoctorPage = () => {
                     />           
 
                 </div>
-                <div className="timeslot-section>">
+                <div className="timeslot-section">
                     <h3> Available Hours</h3>
 
                     {availableTimes.length > 0 ? (

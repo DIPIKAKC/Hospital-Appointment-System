@@ -21,13 +21,21 @@ const DoctorCard = ({ doctor }) => {
     navigate(`doctor/${doctor._id}`);
   }
 
+  const isAvailable = doctor.availableSlots && doctor.availableSlots.length > 0;
+
   return (
     <div className="doctor-card-container">
       <div className="doctor-card" onClick={handleCardClick}>
         <div className="doctor-details">
           <div className="experience-label">Experience</div>
           <div className="experience-value">{doctor.experience}</div>
-          <div className="doctor-name">{doctor.fullName}</div>
+          <div className="doctor-name">
+            {doctor.fullName}
+            <span
+              className={`availability-indicator ${isAvailable ? 'available' : 'unavailable'}`}
+              title={isAvailable ? 'Available' : 'Not Available'}
+            />
+          </div>
           <div className="doctor-specialty">{doctor.department?.name}</div>
           <button className="book-appointment-btn" onClick={handleBookAppointment}>Book Appointment</button>
         </div>

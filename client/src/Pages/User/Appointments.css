@@ -301,6 +301,16 @@
     cursor: pointer;
   }
   
+  .btn-appt {
+    margin-top:7px;
+    background-color: #6ecb81;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+
   .status-canceled {
     background-color: #282bc6;
     color: white;

@@ -195,23 +195,23 @@ const bookAppointment = async (req, res) => {
       return res.status(400).json({ message: "Invalid doctor" });
     }
 
-    // // Check if the doctor has the requested slot available
+    // // Check if the doctor has the date and slot available
     // const dateSlot = doctor.availableSlots.find(slot => slot.date === date);
     // if (!dateSlot || !dateSlot.times.includes(time)) {
     //   return res.status(400).json({ message: "This slot is not available" });
     // }
 
-    // // Check if the appointment slot is already booked
-    // const existingAppointment = await Appointment.findOne({ 
-    //   doctor: doctorId,
-    //   date, 
-    //   time,
-    //   status: { $in: ["pending", "confirmed"] }
-    // });
+    // Check if the appointment slot is already booked
+    const existingAppointment = await Appointment.findOne({ 
+      doctor: doctorId,
+      date, 
+      time,
+      status: { $in: ["pending", "confirmed"] }
+    });
     
-    // if (existingAppointment) {
-    //   return res.status(400).json({ message: "This slot is already booked. Please choose another time." });
-    // }
+    if (existingAppointment) {
+      return res.status(400).json({ message: "This slot is already booked. Please choose another time." });
+    }
 
     // Create new appointment
     const newAppointment = new Appointment({ 
@@ -248,8 +248,14 @@ const getMyAppointments = async (req, res) => {
 
     const appointments = await Appointment.find({user: userId})
       .populate("user", "fullName email")
-      .populate("doctor", "fullName department")
-      .sort({ createdAt: -1 });
+      .populate({
+        path: "doctor",
+        select: "fullName department",
+        populate: {
+          path: "department",
+          select: "name" // Make sure your Department schema has a 'name' field
+        }
+      })      .sort({ createdAt: -1 });
 
     res.status(200).json(appointments);
   } catch (error) {
