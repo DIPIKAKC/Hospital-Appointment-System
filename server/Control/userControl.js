@@ -5,6 +5,7 @@ const {Notification} = require("../Schema/notificationSchema")
 
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const { Reminder } = require("../Schema/reminderSchema")
 
 
 //Register function for user
@@ -387,8 +388,35 @@ const getDepartments = async(req,res) => {
     res.status(500).json( {message: "Error fetching departments", error: error.message} )
   }
 }
+
+
+//REMINDERS
+const setReminders = async (req, res) => {
+  try {
+    const { userEmail, doctorName, date, time, sendAt } = req.body;
+
+    if (!userEmail || !doctorName || !date || !time || !sendAt) {
+      return res.status(400).json({ message: 'All fields are required.' });
+    }
+
+    const reminder = await Reminder.create({
+      userEmail,
+      doctorName,
+      date,
+      time,
+      sendAt: new Date(sendAt), // should be a valid ISO date
+    });
+
+    await reminder.save();
+    res.status(201).json({ message: 'Reminder created successfully!', reminder });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+
 module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData,
                  bookAppointment, cancelAppointment, getAvailableSlots, getAllDoctors,
-                  getDepartments, getDoctorById, getMyAppointments};
+                  getDepartments, getDoctorById, getMyAppointments, setReminders};
 
 

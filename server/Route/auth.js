@@ -5,7 +5,8 @@ const { auth, authorize } = require('../Middleware/authentication');
 const { registerUser, loginUser, getUserById, 
     editUserData, deleteUserData, bookAppointment, 
     cancelAppointment, getAvailableSlots, getAllDoctors, getDepartments,
-    getDoctorById, getMyAppointments} = require("../Control/userControl");
+    getDoctorById, getMyAppointments,
+    setReminders} = require("../Control/userControl");
 const { doctorSlotsPost, 
     appointmentStatus, getMeDoctor, getAppointments} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor, 
@@ -52,6 +53,8 @@ router.get("/all-doctors", getAllDoctors)
 router.get("/departments", getDepartments)
 //get doctor by id / individual
 router.get("/doctor/:doctorId",getDoctorById)
+//set Reminders
+router.post("/reminder", auth, setReminders)
 
 
 
