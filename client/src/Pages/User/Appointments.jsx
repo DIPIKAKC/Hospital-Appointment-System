@@ -20,6 +20,14 @@ const AppointmentList = () => {
     setShowReminderModal(true);
   };
 
+    // Helper function to check if appointment is in the future
+    const isFutureAppointment = (date, time) => {
+      if (!date || !time) return false;
+      const appointmentDateTime = new Date(`${date} ${time}`);
+      const now = new Date();
+      return appointmentDateTime > now;
+    };
+  
   useEffect(() => {
     const fetchAppointments = async () => {
       const token = localStorage.getItem("token")
@@ -96,18 +104,17 @@ const AppointmentList = () => {
 
   // Filter appointments based on active tab
   const filteredAppointments = appointments.filter(appointment => {
-    const today = new Date();
-    const appointmentDate = new Date(appointment.date);
+    const isFuture = isFutureAppointment(appointment.date, appointment.time);
 
     switch (activeTab) {
       case 'upcoming':
-        return appointmentDate >= today;
+        return appointment.status !== 'canceled' && isFuture;
       case 'past':
-        return appointmentDate < today && appointment.status !== 'cancelled';
+        return appointment.status !== 'canceled' && !isFuture;
       case 'cancelled':
         return appointment.status === 'canceled';
       default:
-        return true; // 'all' tab shows everything
+        return true;
     }
   });
 
