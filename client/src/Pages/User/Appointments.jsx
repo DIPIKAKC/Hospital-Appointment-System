@@ -5,10 +5,20 @@ import './Appointments.css';
 import NavBar from "../../Components/User/Navbar";
 import Resources from "../../Components/User/Resources";
 import Footer from "../../Components/User/Footer";
+import ReminderModal from "../../Components/User/Reminder";
 
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
   const [activeTab, setActiveTab] = useState('all');
+
+  const [showReminderModal, setShowReminderModal] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+
+  // Function to open modal for specific appointment
+  const handleOpenReminder = (appointment) => {
+    setSelectedAppointment(appointment);
+    setShowReminderModal(true);
+  };
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -173,11 +183,12 @@ const AppointmentList = () => {
                       </button>
                     </p>
                     <p className="appt-value">
-                      <button
-                        className="btn-appt">
-                        {/* // onClick={() => cancelAppointment(appointment._id)}> */}
-                        <MdAccessAlarms size={15} /> set reminder
+                      <button 
+                        className="btn-appt" 
+                        onClick={() => handleOpenReminder(appointment)}>
+                          <MdAccessAlarms size={15} /> set reminder
                       </button>
+
                     </p>
                   </div>
                 </div>
@@ -193,6 +204,17 @@ const AppointmentList = () => {
 
       <Resources />
       <Footer />
+
+      {showReminderModal && selectedAppointment && (
+        <ReminderModal
+          appointment={selectedAppointment}
+          onClose={() => {
+            setShowReminderModal(false);
+            setSelectedAppointment(null);
+          }}
+        />
+      )}
+
     </>
   );
 }
