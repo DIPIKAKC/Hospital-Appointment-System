@@ -393,26 +393,28 @@ const getDepartments = async(req,res) => {
 //REMINDERS
 const setReminders = async (req, res) => {
   try {
-    const { userEmail, doctorName, date, time, sendAt } = req.body;
+    const { userEmail, patientName, doctorName, department, date, time, sendAt } = req.body;
 
-    if (!userEmail || !doctorName || !date || !time || !sendAt) {
+    if (!userEmail || !patientName || !doctorName || !department || !date || !time || !sendAt) {
       return res.status(400).json({ message: 'All fields are required.' });
     }
 
     const reminder = await Reminder.create({
       userEmail,
+      patientName,
       doctorName,
+      department,
       date,
       time,
-      sendAt               //: new Date(sendAt), // should be a valid ISO date
+      sendAt
     });
 
-    await reminder.save();
     res.status(201).json({ message: 'Reminder created successfully!', reminder });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
+
 
 
 module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData,

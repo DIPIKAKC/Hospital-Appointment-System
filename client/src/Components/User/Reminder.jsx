@@ -122,7 +122,7 @@
 
 import { useState } from 'react';
 import './Reminder.css';
-// import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 // import { IoCalendarOutline } from "react-icons/io5";
 // import { PiClock } from "react-icons/pi";
 
@@ -142,8 +142,10 @@ const ReminderModal = ({ appointment, onClose }) => {
           Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
-          userEmail: appointment.user.email, // assuming you fetch email with user
+          userEmail: appointment.user.email,
+          patientName: appointment.user.fullName,   // include patient name
           doctorName: appointment.doctor.fullName,
+          department: appointment.doctor.department?.name, // include department
           date,
           time,
           sendAt
@@ -168,8 +170,8 @@ const ReminderModal = ({ appointment, onClose }) => {
     <div className="modal-overlay">
       <div className="modal">
         <div className="modal-header">
-          <h3 className="modal-title">Set Reminder for Dr. {appointment.doctor.fullName}</h3>
-          <button onClick={onClose} className="close-button">X</button>
+          <h3 className="modal-title">Set Reminder for the appointment with Dr. {appointment.doctor.fullName}</h3>
+          <button onClick={onClose} className="close-button"><AiOutlineClose size= {20} /></button>
         </div>
         <div className="modal-body">
           <div className="input-group">

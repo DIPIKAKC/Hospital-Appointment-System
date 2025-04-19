@@ -1,15 +1,19 @@
+// reminderSchema.js
 const mongoose = require('mongoose');
 
 const reminderSchema = new mongoose.Schema({
-    userEmail: { type: String, required: true },
-    doctorName: { type: String, required: true },
-    date: { type: String, required: true },      
-    time: { type: String, required: true },      
-    isSent: { type: Boolean, default: false },
-    createdAt: { type: Date, default: Date.now },
-    sendAt: { type: Date, required: true }        
+  userEmail: String,
+  patientName: String,
+  doctorName: String,
+  department: String,
+  date: String,
+  time: String,
+  sendAt: Date,
+  isSent: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const Reminder = mongoose.model('Reminder', reminderSchema);
-
-module.exports={Reminder}
+module.exports = { Reminder };
