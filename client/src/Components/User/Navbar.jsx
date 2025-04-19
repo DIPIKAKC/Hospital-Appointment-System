@@ -1,31 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate} from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { HiOutlineBell } from "react-icons/hi2";
-
+import { RiUser3Line, RiLockPasswordLine, RiLogoutBoxLine } from "react-icons/ri";
 import './Navbar.css';
 import userImg from '../../assets/user.jpg'
 
 const NavBar = () => {
-
-    const [username, setUsername] = useState ("");
+    const [username, setUsername] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-
+    const [showDropdown, setShowDropdown] = useState(false);
+    const dropdownRef = useRef(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const userId = localStorage.getItem("id");
-        const username= localStorage.getItem("user");
+        const username = localStorage.getItem("user");
         const token = localStorage.getItem("token");
-        
-        // Check if user is logged in
+
         if (userId && token) {
             setIsLoggedIn(true);
             fetchUserData(userId, token, username);
         } else {
             setIsLoggedIn(false);
         }
+    }, []);
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setShowDropdown(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
     const fetchUserData = async (userId, token) => {
@@ -35,7 +45,7 @@ const NavBar = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${token}`
-                }, 
+                },
             });
 
             if (!response.ok) {
@@ -50,100 +60,89 @@ const NavBar = () => {
     };
 
     const handleLogout = () => {
-        // Clear local storage
         localStorage.removeItem("id");
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        
-        // Update state
         setIsLoggedIn(false);
         setUsername("");
-        
-        // Redirect to login page or home
         navigate("/");
     };
 
-    return(
-
+    return (
         <nav className="nav-bar">
+            <div className="nav-container">
+                <Link to="/" className="logo">
+                    MedEase
+                </Link>
 
-            <div className="Nav-container">
-                    {/* <button className="logo">
-                        <Link to= "/" > MedEase</Link>
-                    </button> */}
-
-                    <Link to="/">
-                        <button className="logo">MedEase</button>
-                    </Link>
-
-                    <div className="navbar-menu">
+                <div className="navbar-menu">
                     <NavLink to="/" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
                         Home
                     </NavLink>
-
                     <NavLink to="/appointments" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
                         Appointments
                     </NavLink>
-
                     <NavLink to="/find-doctors" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
                         Find Doctors
                     </NavLink>
-
                     <NavLink to="/contact-us" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
                         Contact Us
                     </NavLink>
+                </div>
 
-                    </div>
-
-                    <div className="divider"></div>
-
-
-                    {/* <div className="nav-actions">
-                        <NavLink to="/notification" >
-                             <HiOutlineBell size={22}/>
-                        </NavLink>
-
-                    <div className="user-profile">
-                        <img className='user-photo' src={userImg} alt="User"></img>
-                        <div className="username">
-                            {username ? `Welcome, ${username}` : `Welcome, Guest`}
-                        </div>
-                        <MdOutlineArrowDropDown size={22}/>
-                    </div>                    
-                    </div> */}
-                    <div className="nav-actions">
+                <div className="nav-actions">
                     {isLoggedIn ? (
                         <>
-                            <NavLink to="/notification">
+                            <NavLink to="/notification" className="notification-icon">
                                 <HiOutlineBell size={22} />
                             </NavLink>
 
-                            <div className="user-profile">
-                                <img className='user-photo' src={userImg} alt="User" />
-                                <div className="username">
-                                    Welcome, {username}
+                            <div className="user-profile" ref={dropdownRef}>
+                                <div 
+                                    className="profile-trigger" 
+                                    onClick={() => setShowDropdown(!showDropdown)}
+                                >
+                                    <img className='user-photo' src={userImg} alt={username} />
+                                    <span className="username">{username}</span>
+                                    <MdOutlineArrowDropDown 
+                                        size={20} 
+                                        className={`dropdown-arrow ${showDropdown ? 'active' : ''}`} 
+                                    />
                                 </div>
-                                <button className="logout-btn" onClick={handleLogout}>
-                                    Logout
-                                </button>
+
+                                {showDropdown && (
+                                    <div className="dropdown-menu">
+                                        <Link to="/profile" className="dropdown-item" onClick={() => setShowDropdown(false)}>
+                                            <RiUser3Line size={18} />
+                                            <span>My Profile</span>
+                                        </Link>
+                                        <Link to="/change-password" className="dropdown-item" onClick={() => setShowDropdown(false)}>
+                                            <RiLockPasswordLine size={18} />
+                                            <span>Change Password</span>
+                                        </Link>
+                                        <div className="dropdown-divider"></div>
+                                        <button className="dropdown-item logout" onClick={handleLogout}>
+                                            <RiLogoutBoxLine size={18} />
+                                            <span>Logout</span>
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </>
                     ) : (
                         <div className="auth-buttons">
-
                             <Link to='/signup'>
-                            <button className="create-account-btn">Create Account</button>
+                                <button className="btn btn-outline">Create Account</button>
                             </Link>
-                            <Link to ="/login">
-                            <button className="login-btn">Login</button>
+                            <Link to="/login">
+                                <button className="btn btn-primary">Login</button>
                             </Link>
                         </div>
                     )}
                 </div>
             </div>
-
         </nav>
     );
-}; 
+};
 
 export default NavBar;
