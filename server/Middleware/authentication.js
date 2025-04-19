@@ -45,7 +45,7 @@ const auth = async (req, res, next) => {
     next();
   } catch (error) {
     console.error('Auth middleware error:', error);
-    res.status(401).json({ message: 'Not authorized' });
+    res.status(401).json({ message: 'Not autorized' });
   }
 };
 
@@ -55,7 +55,7 @@ const authorize = (role) => {
     if (req.user.role !== role) {
       return res.status(403).json({ 
         message: 'You do not have permission to perform this action' 
-      });
+      });w
     }
     next();
   };

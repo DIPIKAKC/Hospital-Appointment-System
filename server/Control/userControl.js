@@ -404,7 +404,7 @@ const setReminders = async (req, res) => {
       doctorName,
       date,
       time,
-      sendAt: new Date(sendAt), // should be a valid ISO date
+      sendAt               //: new Date(sendAt), // should be a valid ISO date
     });
 
     await reminder.save();

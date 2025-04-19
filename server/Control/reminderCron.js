@@ -3,14 +3,14 @@ const cron = require('node-cron');
 const sendEmail = require('./sendEmail');
 const { Reminder } = require('../Schema/reminderSchema');
 
-const mongoURI = "mongodb+srv://dipikak0323:MedEase@cluster0.a8q9w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-console.log(mongoURI);
+// const mongoURI = "mongodb+srv://dipikak0323:MedEase@cluster0.a8q9w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// console.log(mongoURI);
 
-mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }).then(() => console.log("Connected to MongoDB"))
-    .catch(err => console.log("Error connecting to MongoDB:", err));
+// mongoose.connect(mongoURI, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+//   }).then(() => console.log("Connected to MongoDB  for reminder scheduler"))
+//     .catch(err => console.log("Error connecting to MongoDB:", err));
 
 // Cron job
 cron.schedule('* * * * *', async () => {
