@@ -68,6 +68,10 @@ const NavBar = () => {
         navigate("/");
     };
 
+    // const handleProfile = () =>{
+    //     navigate('/my-profile');
+    // }
+
     return (
         <nav className="nav-bar">
             <div className="nav-container">
@@ -112,7 +116,7 @@ const NavBar = () => {
 
                                 {showDropdown && (
                                     <div className="dropdown-menu">
-                                        <Link to="/profile" className="dropdown-item" onClick={() => setShowDropdown(false)}>
+                                        <Link to="/my-profile" className="dropdown-item">
                                             <RiUser3Line size={18} />
                                             <span>My Profile</span>
                                         </Link>

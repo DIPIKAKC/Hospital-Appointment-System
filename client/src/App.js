@@ -11,7 +11,6 @@ import ManageSchedule from "./Pages/Doctor/ManageSchedule";
 // import LoginDoctor from "./Pages/Doctor/login";
 import ContactUs from "./Pages/User/ContactUs";
 import Home from "./Pages/User/UserDashboard";
-import UserProfile from "./Pages/User/UserProfile";
 import Notification from "./Pages/User/Notification";
 import AppointmentsList from "./Pages/Doctor/MyAssignedAppointments";
 
@@ -29,6 +28,7 @@ import AdminUserManagement from "./Pages/Admin/AdminUserManagement";
 import SignupForm from "./Pages/User/Signup";
 import DocContact from "./Pages/Doctor/DoctorContactus";
 import SignupAdmin from "./Pages/Admin/AdminSignup";
+import PatientProfile from "./Pages/User/UserProfile";
 
 
 
@@ -56,7 +56,7 @@ const App = () => {
           <Route path= "/doctor/:doctorId" element={<DoctorPage />} />
           <Route path= "/appointments" element= {<AppointmentList />} />
           <Route path= "/contact-us" element= {<ContactUs />} />
-          <Route path="/my-profile" element={<UserProfile />} />
+          <Route path="/my-profile" element={<PatientProfile />} />
           <Route path="/notification" element={<Notification/>} />
 
           {/* Doctor */}
