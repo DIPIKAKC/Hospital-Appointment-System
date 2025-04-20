@@ -100,15 +100,20 @@ const loginUser = async (req, res) => {
 const getUserById = async (req,res) => {
 
   try {
-    const user = await RegisterUser.findById({ _id: req.params.userId });
+    const user = await RegisterUser.findById(req.userId);
 
     if (!user) {
-        return res.status(404).send({ message: "User does not exist", sucess: false });
+        return res.status(404).send({ message: "User does not exist", success: false });
     }
 
     user.password = undefined; // Hide password before sending response
 
-    res.status(200).send({ success: true, data: user });
+    res.status(200).send({ success: true, data: user,
+      id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      role: req.userRole,
+     });
     
   } catch (error) {
       return res.status(500).send({ message: "Error getting user info", success: false, error });
@@ -416,9 +421,40 @@ const setReminders = async (req, res) => {
 };
 
 
+//change password
+const changePassword = async (req, res) => {
+  try {
+    const userId = req.userId; 
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: "Both current and new passwords are required" });
+    }
+
+    const user = await RegisterUser.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Current password is incorrect" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Password change error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData,
                  bookAppointment, cancelAppointment, getAvailableSlots, getAllDoctors,
-                  getDepartments, getDoctorById, getMyAppointments, setReminders};
+                  getDepartments, getDoctorById, getMyAppointments, setReminders, changePassword};
 
 

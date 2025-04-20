@@ -38,9 +38,11 @@ const NavBar = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const fetchUserData = async (userId, token) => {
+    const token = localStorage.getItem("token")
+
+    const fetchUserData = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/auth/get-user-by-id/${userId}`, {
+            const response = await fetch(`http://localhost:5000/auth/me-user`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

@@ -6,7 +6,8 @@ const { registerUser, loginUser, getUserById,
     editUserData, deleteUserData, bookAppointment, 
     cancelAppointment, getAvailableSlots, getAllDoctors, getDepartments,
     getDoctorById, getMyAppointments,
-    setReminders} = require("../Control/userControl");
+    setReminders,
+    changePassword} = require("../Control/userControl");
 const { doctorSlotsPost, 
     appointmentStatus, getMeDoctor, getAppointments} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor, 
@@ -34,7 +35,7 @@ router.post("/signup", registerUser);
 //user and doctor login
 router.post("/login", loginUser);
 //get user by id
-router.get("/get-user-by-id/:userId", auth, getUserById)
+router.get("/me-user", auth, getUserById)
 //update user data
 router.put("/edit-user-by-id/:userId", editUserData)
 //delete user
@@ -55,6 +56,8 @@ router.get("/departments", getDepartments)
 router.get("/doctor/:doctorId",getDoctorById)
 //set Reminders
 router.post("/reminder", auth, setReminders)
+//change password
+router.patch("/change-password", auth, changePassword)
 
 
 

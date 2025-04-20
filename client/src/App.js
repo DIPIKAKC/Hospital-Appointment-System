@@ -29,6 +29,7 @@ import SignupForm from "./Pages/User/Signup";
 import DocContact from "./Pages/Doctor/DoctorContactus";
 import SignupAdmin from "./Pages/Admin/AdminSignup";
 import PatientProfile from "./Pages/User/UserProfile";
+import ChangePasswordPage from "./Pages/User/ChangePassword";
 
 
 
@@ -58,6 +59,7 @@ const App = () => {
           <Route path= "/contact-us" element= {<ContactUs />} />
           <Route path="/my-profile" element={<PatientProfile />} />
           <Route path="/notification" element={<Notification/>} />
+          <Route path="/change-password" element={<ChangePasswordPage/>} />
 
           {/* Doctor */}
           {/* <Route path = "/login-doc" element={<LoginDoctor />} /> */}
