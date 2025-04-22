@@ -24,6 +24,7 @@ const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor,
     adminDeleteUsers,
     getStats} = require("../Control/adminControl");
 const { createNotification, getNotification } = require("../Control/notificationControl");
+const khaltiPayment = require("../Control/paymentControl");
 
 
 
@@ -106,5 +107,9 @@ router.get("/admin/stats", auth, authorize("admin"), getStats)
 //NOtification
 router.post('/create', createNotification)
 router.get("/my-notification/:userType/:id", getNotification)
+
+
+//payment
+router.post('/payment/khalti', khaltiPayment)
 
 module.exports = router;
