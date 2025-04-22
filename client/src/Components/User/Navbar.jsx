@@ -103,7 +103,7 @@ const NavBar = () => {
                                 <HiOutlineBell size={22} />
                             </NavLink>
 
-                            <div className="user-profile" ref={dropdownRef}>
+                            <div className="user-profile-section" ref={dropdownRef}>
                                 <div 
                                     className="profile-trigger" 
                                     onClick={() => setShowDropdown(!showDropdown)}
@@ -136,7 +136,7 @@ const NavBar = () => {
                             </div>
                         </>
                     ) : (
-                        <div className="auth-buttons">
+                        <div className="authbuttons">
                             <Link to='/signup'>
                                 <button className="btn btn-outline">Create Account</button>
                             </Link>

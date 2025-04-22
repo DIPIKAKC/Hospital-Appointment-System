@@ -96,7 +96,7 @@
   justify-content: center;
 } */
 
-.user-profile {
+.user-profile-section {
   position: relative;
 }
 
@@ -192,7 +192,7 @@
   margin: 8px 0;
 }
 
-.auth-buttons {
+.authbuttons {
   display: flex;
   gap: 12px;
 }
