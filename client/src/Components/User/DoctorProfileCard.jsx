@@ -34,3 +34,5 @@ const DoctorHomeCard = ({doctor}) => {
 };
 
 export default DoctorHomeCard;
+
+

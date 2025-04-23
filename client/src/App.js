@@ -30,6 +30,8 @@ import DocContact from "./Pages/Doctor/DoctorContactus";
 import SignupAdmin from "./Pages/Admin/AdminSignup";
 import PatientProfile from "./Pages/User/UserProfile";
 import ChangePasswordPage from "./Pages/User/ChangePassword";
+// import PaymentPage from "./Pages/User/KhaltiPaymentPage";
+// import PaymentStatus from "./Pages/User/KhaltiStatusPayment";
 
 
 
@@ -60,6 +62,12 @@ const App = () => {
           <Route path="/my-profile" element={<PatientProfile />} />
           <Route path="/notification" element={<Notification/>} />
           <Route path="/change-password" element={<ChangePasswordPage/>} />
+
+{/* payment */}
+          {/* <Route path="/payment/:appointmentId" element={<PaymentPage />} />
+          <Route path="/payment-status" element={<PaymentStatus />} /> */}
+
+
 
           {/* Doctor */}
           {/* <Route path = "/login-doc" element={<LoginDoctor />} /> */}

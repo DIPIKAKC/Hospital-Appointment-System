@@ -12,7 +12,14 @@ const appointmentSchema = new mongoose.Schema({
   },
   notes: { type: String },
   reason: { type: String, required: true },
-  reminder: {type: String, }
+  reminder: {type: String, },
+  paymentStatus: { //FOR PAY
+    type: String,
+    enum: ["unpaid", "paid"],
+    default: "unpaid"
+  },
+  transactionId: String
+  
 }, { timestamps: true });
 
 const Appointment = mongoose.model("Appointment", appointmentSchema);

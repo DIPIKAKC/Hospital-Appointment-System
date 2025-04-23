@@ -25,6 +25,7 @@ const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor,
     getStats} = require("../Control/adminControl");
 const { createNotification, getNotification } = require("../Control/notificationControl");
 const khaltiPayment = require("../Control/paymentControl");
+//const verifyKhaltiPayment = require("../Control/verifyKhaltiPayment");
 
 
 
@@ -72,7 +73,7 @@ router.post("/add-time-slot", auth, authorize("doctor"),  doctorSlotsPost)
 //getting doctor's assigned appointment
 router.get("/my-assigned-appointments", auth, authorize("doctor"), getAppointments)
 //updating user appointment status - reject/confirm
-router.patch("/:id/status", auth, authorize("doctor"),  appointmentStatus)
+router.patch("/:id/status", auth, authorize('doctor'), appointmentStatus)
 //get profile
 router.get("/me", auth, getMeDoctor)
 
@@ -111,5 +112,7 @@ router.get("/my-notification/:userType/:id", getNotification)
 
 //payment
 router.post('/payment/khalti', khaltiPayment)
+// router.post("/khalti/verify", verifyKhaltiPayment);
+
 
 module.exports = router;
