@@ -114,7 +114,7 @@ const NavBar = () => {
                                         size={20} 
                                         className={`dropdown-arrow ${showDropdown ? 'active' : ''}`} 
                                     />
-                                </div>
+                            </div>
 
                                 {showDropdown && (
                                     <div className="dropdown-menu">

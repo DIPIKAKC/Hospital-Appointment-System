@@ -66,6 +66,7 @@ const App = () => {
 {/* payment */}
           {/* <Route path="/payment/:appointmentId" element={<PaymentPage />} />
           <Route path="/payment-status" element={<PaymentStatus />} /> */}
+          
 
 
 

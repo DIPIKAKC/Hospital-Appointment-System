@@ -6,14 +6,14 @@ import NavBar from "../../Components/User/Navbar";
 import Resources from "../../Components/User/Resources";
 import Footer from "../../Components/User/Footer";
 import ReminderModal from "../../Components/User/Reminder";
-
+import InitiatingKhaltiPayment from "../User/InitiatingKhaltiPayment"
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
   const [activeTab, setActiveTab] = useState('all');
 
   const [showReminderModal, setShowReminderModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-
+  const [showKhaltiPayment, setShowKhaltiPayment] = useState();
   // Function to open modal for specific appointment
   const handleOpenReminder = (appointment) => {
     setSelectedAppointment(appointment);
@@ -102,6 +102,12 @@ const AppointmentList = () => {
     }
   };
 
+  //for khalti
+  const initiateKhaltiPayment = () =>{
+    window.location.href = '/khalti/payment/initiate';
+  };
+//
+  
   // Filter appointments based on active tab
   const filteredAppointments = appointments.filter(appointment => {
     const isFuture = isFutureAppointment(appointment.date, appointment.time);
@@ -195,8 +201,29 @@ const AppointmentList = () => {
                         onClick={() => handleOpenReminder(appointment)}>
                           <MdAccessAlarms size={15} /> set reminder
                       </button>
-
                     </p>
+
+                    {/* after confirmation */}
+                    {appointment.status === "confirmed" && (
+                      <div className="appt-payment">
+                        <button
+                          className="btn-payment"
+                          onClick={() => setShowKhaltiPayment(true)} // Show the component to initiate payment
+                        >
+                          Pay with Khalti
+                        </button>
+
+                        {showKhaltiPayment && (
+                          <InitiatingKhaltiPayment
+                            appointmentId={appointment._id}
+                            doctorId={appointment.doctorId}
+                            amount={appointment.price}
+                            appointments={[appointment]} // pass the appointment details if needed
+                          />
+                        )}
+                      </div>
+                    )}
+
                   </div>
                 </div>
               </div>

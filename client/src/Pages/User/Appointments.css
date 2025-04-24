@@ -320,3 +320,22 @@
     cursor: pointer;
   }
   
+/* payment btn */
+
+.btn-payment {
+  background-color: #5f259f;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn-payment:hover {
+  background-color: #482080;
+}
+
+.appt-payment {
+  margin-top: 10px;
+}
