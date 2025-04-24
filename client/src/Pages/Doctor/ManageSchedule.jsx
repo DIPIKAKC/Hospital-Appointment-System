@@ -43,7 +43,7 @@ const ManageSchedule = () => {
         // if (data.userRole !== "doctor") {
         // setError("Only doctors can access this page");
         // }
-        navigate("/dashboard");
+        navigate("/schedules");
         
         setDoctorSlots(data.availableSlots || []);
         setLoading(false);
@@ -144,7 +144,7 @@ const ManageSchedule = () => {
 <DocBar />
     <div className="back-link">
     <button 
-      onClick={() => navigate("/dashboard")} 
+      onClick={() => navigate("/schedules")} 
       className="back-button"
     >
       Back to Dashboard
