@@ -17,8 +17,9 @@ const appointmentSchema = new mongoose.Schema({
     type: String,
     enum: ["unpaid", "paid"],
     default: "unpaid"
-  },
-  transactionId: String
+  }
+  // },
+  // transactionId: String
   
 }, { timestamps: true });
 

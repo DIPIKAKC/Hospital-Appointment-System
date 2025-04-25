@@ -38,7 +38,11 @@ const register1 = mongoose.Schema({
         type: String,
         enum: ["doctor", "patient"],
         default: "patient"
-    }
+    },
+    verified: {
+        type: Boolean,
+        default: false
+      }      
     },
 
  { timestamps: true 

@@ -124,27 +124,6 @@ const appointmentStatus = async (req, res) => {
     if(appointment.status ==="confirmed" || appointment.status==="rejected"){
       (await createNoti).save()
     }
-
-
-    if (status === "confirmed") {
-      const paymentResult = await khaltiPayment({
-        id: appointment._id,
-        name: `Appointment with Dr. ${appointment.doctor.fullName}`,
-        amount: 500 // or use appointment.fee
-      });
-
-      if (paymentResult.success) {
-        await sendPaymentEmail(
-          appointment.user.email,
-          appointment.doctor.fullName,
-          appointment._id,
-          appointment.user.fullName,
-          paymentResult.payment_url
-        );
-      } else {
-        console.error("Error creating Khalti payment:", paymentResult.error);
-      }
-    }
     
     res.status(200).json({ 
       success:true,

@@ -7,7 +7,8 @@ const { registerUser, loginUser, getUserById,
     cancelAppointment, getAvailableSlots, getAllDoctors, getDepartments,
     getDoctorById, getMyAppointments,
     setReminders,
-    changePassword} = require("../Control/userControl");
+    changePassword,
+    verifyEmail} = require("../Control/userControl");
 const { doctorSlotsPost, 
     appointmentStatus, getMeDoctor, getAppointments} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor, 
@@ -24,7 +25,8 @@ const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor,
     adminDeleteUsers,
     getStats} = require("../Control/adminControl");
 const { createNotification, getNotification } = require("../Control/notificationControl");
-const khaltiPayment = require("../Control/paymentControl");
+const { khaltiPaymentInitiation, verifyKhaltiPayment } = require("../Control/paymentControl");
+const { verifyEmailMail } = require("../Control/sendEmail");
 //const verifyKhaltiPayment = require("../Control/verifyKhaltiPayment");
 
 
@@ -39,7 +41,7 @@ router.post("/login", loginUser);
 //get user by id
 router.get("/me-user", auth, getUserById)
 //update user data
-router.put("/edit-user-by-id/:userId", editUserData)
+router.patch("/edit-user-by-id/:userId", editUserData)
 //delete user
 router.delete("/delete-user-by-id/:userId", deleteUserData)
 //book an appointment
@@ -60,7 +62,10 @@ router.get("/doctor/:doctorId",getDoctorById)
 router.post("/reminder", auth, setReminders)
 //change password
 router.patch("/change-password", auth, changePassword)
-
+//verify email
+router.post("/verify-email", verifyEmailMail)
+//verification
+router.patch("/verify-email/:token",verifyEmail)
 
 
 
@@ -111,8 +116,8 @@ router.get("/my-notification/:userType/:id", getNotification)
 
 
 //payment
-router.post('/payment/khalti', khaltiPayment)
-// router.post("/khalti/verify", verifyKhaltiPayment);
+router.post('/payment/khalti/initiate', khaltiPaymentInitiation)
+router.post("/payment/khalti/verify", verifyKhaltiPayment);
 
 
 module.exports = router;

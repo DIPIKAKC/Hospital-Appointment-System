@@ -6,6 +6,7 @@ const {Notification} = require("../Schema/notificationSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { Reminder } = require("../Schema/reminderSchema")
+const { verifyEmailMail } = require("./sendEmail")
 
 
 //Register function for user
@@ -35,6 +36,18 @@ const registerUser = async(req,res)=>{
             // address: address
             role: "patient"
         })
+
+        const verifyToken = await jwt.sign(
+          { id: user._id},
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+
+        verifyEmailMail(
+          user.email,
+          verifyToken
+        )
+
         await user.save();
 
         if(user){
@@ -47,6 +60,37 @@ const registerUser = async(req,res)=>{
         res.status(500).json({message: err.message})
     }
 }
+
+
+const verifyEmail = async (req, res) => {
+  try{
+  const { token } = req.params;
+  if (!token) {
+      throw new ApiError(400, "Token is required");
+      
+  }
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  if (!decoded) {
+    res.status(400).json({success: false, message: "Token is required"});
+  }
+
+  
+
+  const user = await RegisterUser.findById(decoded.id);
+  if (!user) {
+    res.status(404).json({success: false, message: "User not found"});
+  }
+
+  user.verified = true;
+  await user.save();
+
+  res.status(200).json({success:true, message:"Email verified Successfully"})
+  }catch(error){
+    res.status(500).json({success:false, message: error.message})
+  }
+
+};
 
 //login function for User
 const loginUser = async (req, res) => {
@@ -66,6 +110,11 @@ const loginUser = async (req, res) => {
     
         if (!account) {
           return res.status(404).json({ message: 'Email not found' });
+        }
+
+        if(!account.verified){
+          return res.status(404).json({success:false, message: 'Email not verified' });
+
         }
 
           // Check password
@@ -126,16 +175,19 @@ const editUserData = async(req,res)=>{
     try {
         const userId = req.params.userId
         // console.log(userId)
-        const {fullName,email} = req.body
+        const {fullName,email, contactInfo, address, dateOfBirth, gender} = req.body
 
-        if (password) {
-          const salt = await bcrypt.genSalt(10);
-          password = await bcrypt.hash(password, salt);
-        }
+        const updateFields = {};
+        if (fullName) updateFields.fullName = fullName;
+        if (email) updateFields.email = email;
+        if (contactInfo) updateFields.contactInfo = contactInfo;
+        if (address) updateFields.address = address;
+        if (dateOfBirth) updateFields.dateOfBirth = dateOfBirth;
+        if (gender) updateFields.gender = gender;
 
         const editUser = await RegisterUser.findByIdAndUpdate(
           userId,
-          {fullName,email},
+          updateFields,
           { new: true, runValidators: true } // Return updated document and apply validators
         );
 
@@ -453,7 +505,7 @@ const changePassword = async (req, res) => {
   }
 };
 
-module.exports={registerUser, loginUser, getUserById, editUserData, deleteUserData,
+module.exports={registerUser, verifyEmail, loginUser, getUserById, editUserData, deleteUserData,
                  bookAppointment, cancelAppointment, getAvailableSlots, getAllDoctors,
                   getDepartments, getDoctorById, getMyAppointments, setReminders, changePassword};
 
