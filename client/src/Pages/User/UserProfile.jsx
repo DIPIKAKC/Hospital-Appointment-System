@@ -10,6 +10,15 @@ const PatientProfile = () => {
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    contactInfo: "",
+    address: "",
+    dateOfBirth: "",
+    gender: ""
+  });
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -27,6 +36,14 @@ const PatientProfile = () => {
 
         const data = await response.json();
         setPatient(data);
+        setFormData({
+          fullName: data.fullName || "",
+          email: data.email || "",
+          contactInfo: data.contactInfo || "",
+          address: data.address || "",
+          dateOfBirth: data.dateOfBirth ? data.dateOfBirth.slice(0, 10) : "",
+          gender: data.gender || ""
+        });
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -43,14 +60,58 @@ const PatientProfile = () => {
     });
   };
 
-  if (loading) {
-    return (
-      <div className="profile-loading">
-        <div className="profile-loading__spinner"></div>
-        <p>Loading patient data...</p>
-      </div>
-    );
-  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const updatedData = {};
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] !== patient[key]) {
+        updatedData[key] = formData[key];
+      }
+    });
+
+    if (Object.keys(updatedData).length === 0) {
+      alert("No changes detected.");
+      return;
+    }
+    if (loading) {
+      return (
+        <div className="profile-loading">
+          <div className="profile-loading__spinner"></div>
+          <p>Loading patient data...</p>
+        </div>
+      );
+    }
+    const userId = localStorage.getItem("id")
+    try {
+      const response = await fetch(`http://localhost:5000/auth/edit-user-by-id/${userId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(updatedData)
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        alert("Profile updated successfully!");
+        setPatient((prev) => ({ ...prev, ...updatedData }));
+        setModalOpen(false);
+
+      } else {
+        alert(result.message || "Update failed.");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Something went wrong.");
+    }
+  };
 
   if (error) {
     return (
@@ -80,7 +141,9 @@ const PatientProfile = () => {
               <p className="user-profile__id">ID: {patient.id || 'no id'}</p>
             </div>
           </div>
-          <button className="user-profile__edit-btn">Edit Profile</button>
+          <button className="user-profile__edit-btn" onClick={() => setModalOpen(true)}>
+            Edit Profile
+          </button>
         </div>
 
         <div className="user-profile__grid">
@@ -119,6 +182,44 @@ const PatientProfile = () => {
           </div>
         </div>
       </div>
+
+      {modalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Edit Profile</h2>
+            <form onSubmit={handleSubmit}>
+              <label>Full Name</label>
+              <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
+
+              <label>Email</label>
+              <input type="email" name="email" value={formData.email} onChange={handleChange} />
+
+              <label>Contact Info</label>
+              <input type="text" name="contactInfo" value={formData.contactInfo} onChange={handleChange} />
+
+              <label>Address</label>
+              <input type="text" name="address" value={formData.address} onChange={handleChange} />
+
+              <label>Date of Birth</label>
+              <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} />
+
+              <label>Gender</label>
+              <select name="gender" value={formData.gender} onChange={handleChange}>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+
+              <div className="modal-buttons">
+                <button type="submit" className="modal-save">Save</button>
+                <button type="button" className="modal-close" onClick={() => setModalOpen(false)}>Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       <Resources />
       <Footer />
     </>
