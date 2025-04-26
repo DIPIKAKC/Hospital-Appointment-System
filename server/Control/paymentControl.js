@@ -1,55 +1,78 @@
 const dotenv = require("dotenv");
 dotenv.config();
-
 const fetch = require('node-fetch');
 
 // Khalti Payment Initiation API (after appointment confirmation)
 const khaltiPaymentInitiation = async (req, res) => {
-  const { id, name, amount, appointmentId} = req.body;
-  console.log("Khalti payload:", req.body)
+  const {appointmentId} = req.body;
+  const amount = 500;
 
-  // Parse amount to integer (Khalti requires amount in paisa)
-  const getAmount = amount || '100'; // assuming amount is in NPR
-  const validAmount = parseInt(getAmount); // Must be string for API
+  if (!appointmentId) {
+    return res.status(400).json({ success: false, message: "No appointments provided." });
+  }
 
   try {
+
+    // Fetch appointment details including user info
+    const appointment = await Appointment.findById(appointmentId).populate('user doctor');  // Populate user and doctor fields
+
+    if (!appointment) {
+      return res.status(404).json({ success: false, message: "Appointment not found." });
+    }
+
+    const payload = {
+      return_url: "http://localhost:3000/khalti/payment/verify",  // Page where Khalti will redirect after payment
+      website_url: "http://localhost:3000/khalti/payment/verify",
+      amount: amount * 100, // Convert to paisa (100 paisa = 1 NPR)
+      purchase_order_id: `APPT-${appointmentId}`,
+      purchase_order_name: "MedEase Appointment Payment",
+    };
+
+    console.log("Khalti payload:", payload);
+
     const response = await fetch("https://a.khalti.com/api/v2/epayment/initiate/", {
       method: "POST",
       headers: {
         Authorization: `Key ${process.env.KHALTI_SECRET_KEY}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        return_url: "http://localhost:3000/payment-status", // Page where Khalti will redirect after payment
-        website_url: "http://localhost:3000/",
-        amount: validAmount,
-        purchase_order_id: id,
-        purchase_order_name: name,
-        appointmentId: appointmentId
-        // ,
-        // customer_info: {
-        //   name: name,
-        //   email: "testuser@email.com", // optional
-        //   phone: "9800000000" // optional
-        // }
-      })
+      body: JSON.stringify(payload)
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      return res.status(200).json({
-        success: true,
-        message: "Payment URL generated successfully",
-        payment_url: data.payment_url
-      });
-    } else {
-      const error = await response.text();
-      return res.status(500).json({
+    const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(400).json({
         success: false,
-        message: "Khalti API error",
-        error: error
+        message: data.detail || "Khalti error during initiation",
+        errorFromKhalti: data // log full response from Khalti
       });
     }
+
+
+    //Store in DB (or update existing appointment)
+    const newAppointment = await AppointmentPayment.create({
+      appointment: appointmentId,
+      user: appointment.user._id,
+      doctor: appointment.doctor._id,
+      amount: amount * 100,  // Convert to paisa
+      paymentMethod: "khalti",
+      paymentStatus: "pending",
+      pidx: data.pidx,
+      paymentUrl: data.payment_url,
+      department: appointment.doctor.department, 
+      appointmentDate: appointment.date,
+      appointmentTime: appointment.time,
+    });
+
+    await newAppointment.save();
+  
+    return res.status(200).json({
+      success: true,
+      message: "Khalti payment initiated",
+      paymentUrl: data.payment_url,
+      pidx: data.pidx
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -62,7 +85,8 @@ const khaltiPaymentInitiation = async (req, res) => {
 
 
 
-const {Appointment} = require("../Schema/appointmentSchema")
+const {Appointment} = require("../Schema/appointmentSchema");
+const { AppointmentPayment } = require("../Schema/paymentSchema");
 
 const verifyKhaltiPayment = async (req, res) => {
   const { pidx } = req.body;
@@ -82,36 +106,39 @@ const verifyKhaltiPayment = async (req, res) => {
     });
 
     const result = await verifyRes.json();
+    console.log("Khalti verification result:", result);
 
     if (result.status === "Completed") {
-      const updatedAppointment = await Appointment.findByIdAndUpdate(
+      const updatedPayment = await AppointmentPayment.findOneAndUpdate(
         { pidx },
-        { paymentStatus: "paid" },
+        { paymentStatus: "completed" },
         { new: true }
       );
 
-      if (!updatedAppointment) {
+      if (!updatedPayment) {
         return res.status(404).json({
           success: false,
-          message: "Appointment not found for the provided pidx",
+          message: "Payment record not found for provided pidx.",
         });
       }
 
       return res.status(200).json({
         success: true,
         message: "Payment verified and information posted successfully",
-        appointment: updatedAppointment,
+        appointment: updatedPayment,
       });
     } else {
       return res.status(400).json({
         success: false,
         message: "Payment not completed",
+        KhaltiResponse: result
       });
     }
   } catch (err) {
     return res.status(500).json({
       success: false,
-      message: err.message || "Server error during payment verification",
+      message:"Server error during payment verification",
+      error: err.message
     });
   }
 };
