@@ -6,7 +6,7 @@ const {Notification} = require("../Schema/notificationSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { Reminder } = require("../Schema/reminderSchema")
-const { verifyEmailMail } = require("./sendEmail")
+const { verifyEmailMail, passwordResetMail } = require("./sendEmail")
 
 
 //Register function for user
@@ -112,7 +112,7 @@ const loginUser = async (req, res) => {
           return res.status(404).json({ message: 'Email not found' });
         }
 
-        if(!account.verified){
+        if(role ==='patient' && !account.verified){
           return res.status(404).json({success:false, message: 'Email not verified' });
 
         }
@@ -376,22 +376,6 @@ const cancelAppointment = async (req, res) => {
 };
 
 
-
-// //get available-doctors and slots
-// const getAvailableDoctorsForUser = async (req, res) => {
-//   try {
-    
-//     // const doctors = await RegisterDoctor.find({ role: "doctor", availableSlots: { $exists: true, $not: { $size: 0 } } })
-//     const doctors = await RegisterDoctor.find({ role: "doctor"})
-//       .select("fullName department availableSlots");
-
-//     res.status(200).json(doctors);
-//   } catch (error) {
-//     res.status(500).json({ message: "Error fetching available doctors", error: error.message });
-//   }
-// };
-
-
 //get date and time for selected doctor
 const getAvailableSlots = async (req, res) => {
   try {
@@ -505,8 +489,84 @@ const changePassword = async (req, res) => {
   }
 };
 
+
+//forgot password
+const forgotPassword = async(req,res) => {
+  console.log(req.body)
+  try{
+
+    const {email} = req.body
+
+    if(!email){
+      return res.status(404).json({success:false, message:"Email not found"})
+      
+    }
+
+    const findEmail = await RegisterUser.findOne({
+      email:email
+    })
+
+    if(!findEmail){
+      return res.status(404).json({success:false, message:"User not found"})
+    }
+
+    //rest link send
+
+    //generating token
+    const token = jwt.sign({id:findEmail._id}, process.env.JWT_SECRET, {expiresIn:'5m'});
+
+    //sendingmail
+    passwordResetMail(findEmail.email, token)
+    res.status(200).json({success:true, message: "Verification link has been sent to your email", token})
+
+
+    
+
+  }catch(error){
+    res.status(500).json({success:false, message:"server error", error: error.message})
+  }
+}
+
+//forgot password- change
+const pwChange = async(req, res) => {
+  try{
+    const {password} =req.body;
+    const {token} = req.params;
+
+    if(!password && !token){
+      res.status(400).json({sucess:false, message:"All fields are required"})
+    }
+
+    //verifying token
+    const decoded= jwt.verify(token,process.env.JWT_SECRET);
+
+    if(!decoded){
+      res.status(400).json({sucess:false, message:"invalid token"})
+    }
+
+    const userId= decoded.id;
+
+    const existingUser = await RegisterUser.findById(userId);
+
+    if(!existingUser){
+      res.status(400).json({sucess:false, message:"User not found"})
+    }
+
+    const hashedPassword = bcrypt.hashSync(password,10)
+
+    existingUser.password = hashedPassword;
+
+    await existingUser.save();
+    res.status(200).json({success:true, message: "Password reset successfully"})
+
+  }catch{
+    res.status(500).json({success:false, message:"server error", error: error.message})
+  }
+}
+
+
 module.exports={registerUser, verifyEmail, loginUser, getUserById, editUserData, deleteUserData,
                  bookAppointment, cancelAppointment, getAvailableSlots, getAllDoctors,
-                  getDepartments, getDoctorById, getMyAppointments, setReminders, changePassword};
+                  getDepartments, getDoctorById, getMyAppointments, setReminders, changePassword, forgotPassword, pwChange};
 
 

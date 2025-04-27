@@ -8,7 +8,9 @@ const { registerUser, loginUser, getUserById,
     getDoctorById, getMyAppointments,
     setReminders,
     changePassword,
-    verifyEmail} = require("../Control/userControl");
+    verifyEmail,
+    forgotPassword,
+    pwChange} = require("../Control/userControl");
 const { doctorSlotsPost, 
     appointmentStatus, getMeDoctor, getAppointments} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor, 
@@ -62,10 +64,13 @@ router.get("/doctor/:doctorId",getDoctorById)
 router.post("/reminder", auth, setReminders)
 //change password
 router.patch("/change-password", auth, changePassword)
-//verify email
-router.post("/verify-email", verifyEmailMail)
-//verification
+//email verification
 router.patch("/verify-email/:token",verifyEmail)
+//forgot password
+router.post("/forgot-password", forgotPassword)
+//reset pw
+router.patch("/password-reset/:token", pwChange)
+
 
 
 
