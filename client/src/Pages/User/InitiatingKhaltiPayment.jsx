@@ -16,14 +16,7 @@ const InitiatingKhaltiPayment = ({ appointment}) => {
       }
 
       const payload = {
-        purchaseOrderId: `ORDER-${Date.now()}`,
-        appointmentId: appointment._id,
-        userId: appointment.user._id,
-        doctorId: appointment.doctor._id,
-        department: appointment.doctor.department.name,
-        appointmentDate: appointment.date,
-        appointmentTime: appointment.time,
-        reason: appointment.reason,
+        appointmentId: appointment._id
       };
 
 

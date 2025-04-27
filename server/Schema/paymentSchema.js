@@ -31,7 +31,12 @@ const appointmentPaymentSchema = new mongoose.Schema(
     },
     paidAt: {
       type: Date
-    }
+    },
+    patientName: String,          
+    doctorName: String,        
+    department: String,    
+    appointmentDate: String,   
+    appointmentTime: String,
   },
   { timestamps: true }
 );

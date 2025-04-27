@@ -14,8 +14,13 @@ const khaltiPaymentInitiation = async (req, res) => {
   try {
 
     // Fetch appointment details including user info
-    const appointment = await Appointment.findById(appointmentId).populate('user doctor');  // Populate user and doctor fields
-
+    const appointment = await Appointment.findById(appointmentId)
+    .populate('user')
+    .populate({
+      path: 'doctor',
+      populate: { path: 'department' } // populate department inside doctor
+    });
+  
     if (!appointment) {
       return res.status(404).json({ success: false, message: "Appointment not found." });
     }
@@ -53,14 +58,16 @@ const khaltiPaymentInitiation = async (req, res) => {
     //Store in DB (or update existing appointment)
     const newAppointment = await AppointmentPayment.create({
       appointment: appointmentId,
-      user: appointment.user._id,
-      doctor: appointment.doctor._id,
-      amount: amount * 100,  // Convert to paisa
+      amount: amount * 100,  // converting to paisa
       paymentMethod: "khalti",
       paymentStatus: "pending",
       pidx: data.pidx,
       paymentUrl: data.payment_url,
-      department: appointment.doctor.department, 
+    
+      // Now store populated data:
+      patientName: appointment.user.fullName,      
+      doctorName: appointment.doctor.fullName,      
+      department: appointment.doctor.department.name,    
       appointmentDate: appointment.date,
       appointmentTime: appointment.time,
     });
@@ -125,7 +132,16 @@ const verifyKhaltiPayment = async (req, res) => {
       return res.status(200).json({
         success: true,
         message: "Payment verified and information posted successfully",
-        appointment: updatedPayment,
+        appointment: {
+          patientName: updatedPayment.patientName,
+          doctorName: updatedPayment.doctorName,
+          department: updatedPayment.department,
+          appointmentDate: updatedPayment.appointmentDate,
+          appointmentTime: updatedPayment.appointmentTime,
+          amount: updatedPayment.amount,
+          paymentStatus: updatedPayment.paymentStatus,
+          paymentMethod: updatedPayment.paymentMethod
+        }
       });
     } else {
       return res.status(400).json({

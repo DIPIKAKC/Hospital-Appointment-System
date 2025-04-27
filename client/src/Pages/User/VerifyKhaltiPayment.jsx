@@ -58,7 +58,14 @@ useEffect(() => {
       <h2>Payment Successful!</h2>
       <p>Amount Paid: {paymentDetails.amount / 100} NPR</p>
       <p>Payment Status: {paymentDetails.paymentStatus}</p>
-      <p>Appointment ID: {paymentDetails.appointment}</p>
+      <div className='appointment-details'>
+        <h3> Appointment Details: </h3>
+        <p>{paymentDetails.patientName}</p>
+        <p>{paymentDetails.doctorName}</p>
+        <p>{paymentDetails.department}</p>
+        <p>{paymentDetails.appointmentDate}</p>        
+        <p>{paymentDetails.appointmentTime}</p>
+      </div>
       <p>Payment Method: {paymentDetails.paymentMethod}</p>
     </div>
   );

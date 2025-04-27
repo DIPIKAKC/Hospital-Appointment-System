@@ -102,11 +102,7 @@ const AppointmentList = () => {
     }
   };
 
-  //for khalti
-  const initiateKhaltiPayment = () =>{
-    window.location.href = '/khalti/payment/initiate';
-  };
-//
+
   
   // Filter appointments based on active tab
   const filteredAppointments = appointments.filter(appointment => {
@@ -214,12 +210,7 @@ const AppointmentList = () => {
                         </button>
 
                         {showKhaltiPayment && (
-                          <InitiatingKhaltiPayment
-                            appointmentId={appointment._id}
-                            doctorId={appointment.doctorId}
-                            amount={appointment.price}
-                            appointments={[appointment]} // pass the appointment details if needed
-                          />
+                          <InitiatingKhaltiPayment appointment={appointment} />
                         )}
                       </div>
                     )}
