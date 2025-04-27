@@ -30,6 +30,10 @@ import DocContact from "./Pages/Doctor/DoctorContactus";
 import SignupAdmin from "./Pages/Admin/AdminSignup";
 import PatientProfile from "./Pages/User/UserProfile";
 import ChangePasswordPage from "./Pages/User/ChangePassword";
+import PaymentStatus from "./Pages/User/VerifyKhaltiPayment";
+import { VerifyUserEmail } from "./Pages/User/VerifyUserEmail";
+import { ForgotPassword } from "./Pages/User/ForgotPassword";
+import { ResetPassword } from "./Pages/User/ResetPassword";
 // import PaymentPage from "./Pages/User/KhaltiPaymentPage";
 // import PaymentStatus from "./Pages/User/KhaltiStatusPayment";
 
@@ -62,11 +66,14 @@ const App = () => {
           <Route path="/my-profile" element={<PatientProfile />} />
           <Route path="/notification" element={<Notification/>} />
           <Route path="/change-password" element={<ChangePasswordPage/>} />
+          <Route path="/forgot-password" element={<ForgotPassword/>} />
+          <Route path="/reset-password" element={<ResetPassword/>} />
+          <Route path="/verify-email" element={<VerifyUserEmail/>} />
+
+
 
 {/* payment */}
-          {/* <Route path="/payment/:appointmentId" element={<PaymentPage />} />
-          <Route path="/payment-status" element={<PaymentStatus />} /> */}
-          
+          <Route path="/khalti/payment/verify" element={<PaymentStatus />} /> */
 
 
 

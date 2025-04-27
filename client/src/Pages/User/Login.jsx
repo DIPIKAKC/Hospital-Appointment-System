@@ -33,6 +33,7 @@ const LoginForm = () => {
         localStorage.setItem("user", JSON.stringify(data.user.fullName));
         localStorage.setItem("id", data.user.userId); // Store user ID
         localStorage.setItem("role", data.user.role); // Store role
+        localStorage.setItem("userData", JSON.stringify(data.user)); // Store entire user object
 
         alert("Login successful!");
 
@@ -75,6 +76,7 @@ const LoginForm = () => {
             onChange={handleChange}
             required
           />
+          <a href= '/forgot-password'>Forgot password?</a>
           <button type="submit">Login</button>
         </form>
         <p>

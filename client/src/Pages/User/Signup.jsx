@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Login.css';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const SignupForm = ({ onClose }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
      email: "",
      password: "" ,
   });
+  const [successMessage, setSuccessMessage] =useState();
+  const[errorMessage,setErrorMessage] =useState()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,18 +27,25 @@ const SignupForm = ({ onClose }) => {
       });
       const data = await response.json();
       if (response.ok) {
-        alert("Account created successfully");
-        setTimeout(()=>{
-            navigate('/');
-        },1000);
+        // alert("Account created successfully");
+        setSuccessMessage('please check your email to verify account')
+        
             
       } else {
-        alert(data.message);
+        setErrorMessage(data.message || 'error ')
+
       }
     } catch (error) {
       console.error("Error signing up:", error);
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSuccessMessage("")
+      setErrorMessage("")
+    }, 5000)
+  }, [setSuccessMessage])
 
   return (
 
@@ -45,6 +54,36 @@ const SignupForm = ({ onClose }) => {
       <h1>MedEase</h1>
       <p>A hospital Appointment Booking System</p>
       <h2>Create a new account</h2>
+
+      <div>
+        {successMessage && (
+          <div
+            style={{
+              backgroundColor: "#d1fae5", // light green background
+              color: "#047857",          // dark green text
+              padding: "1rem",
+              borderRadius: "0.5rem",
+              marginBottom: "1rem"
+            }}
+          >
+            {successMessage}
+          </div>
+        )}
+        {errorMessage && (
+          <div
+            style={{
+              backgroundColor: "#fee2e2", // light red background
+              color: "#b91c1c",          // dark red text
+              padding: "1rem",
+              borderRadius: "0.5rem",
+              marginBottom: "1rem"
+            }}
+          >
+            {errorMessage}
+          </div>
+        )}
+      </div>
+
       <form onSubmit={handleSubmit}>
         <input
           type="text"
