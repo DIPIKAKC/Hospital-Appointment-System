@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminAppointmentManagement.css';
+import AdminBar from '../../Components/Admin/SideBar';
 
 export default function AdminAppointmentManagement() {
 
@@ -116,6 +117,9 @@ export default function AdminAppointmentManagement() {
 
 
   return (
+
+    <>
+    <AdminBar />
     <div className="container">
       <div className="header">
         <h1 className="title">Appointment Management</h1>
@@ -190,5 +194,6 @@ export default function AdminAppointmentManagement() {
         </table>
       </div>
     </div>
+    </>
   );
 }

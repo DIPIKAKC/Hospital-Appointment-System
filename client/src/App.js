@@ -34,6 +34,7 @@ import PaymentStatus from "./Pages/User/VerifyKhaltiPayment";
 import { VerifyUserEmail } from "./Pages/User/VerifyUserEmail";
 import { ForgotPassword } from "./Pages/User/ForgotPassword";
 import { ResetPassword } from "./Pages/User/ResetPassword";
+import AdminBar from "./Components/Admin/SideBar";
 // import PaymentPage from "./Pages/User/KhaltiPaymentPage";
 // import PaymentStatus from "./Pages/User/KhaltiStatusPayment";
 
@@ -85,6 +86,7 @@ const App = () => {
           <Route path= "/contact" element= {<DocContact />} />
 
           {/* Admin */}
+
           <Route path="/login/admin" element={<LoginAdmin/>} />
           <Route path="/register/admin" element={<SignupAdmin/>} />
           <Route path= "/admin/dashboard" element= {<AdminDashboard />} />

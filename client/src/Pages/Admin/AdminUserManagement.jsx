@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminUserManagement.css';
+import AdminBar from '../../Components/Admin/SideBar';
 
 export default function AdminUserManagement() {
   const navigate = useNavigate();
@@ -127,6 +128,8 @@ export default function AdminUserManagement() {
   if (error) return <div className="error">Error: {error}</div>;
 
   return (
+    <>
+    <AdminBar />
     <div className="container">
       <div className="header">
         <h1 className="title">User Management</h1>
@@ -193,5 +196,6 @@ export default function AdminUserManagement() {
         </table>
       </div>
     </div>
+    </>
   );
 }

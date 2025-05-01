@@ -1,0 +1,79 @@
+/* Admin Home Container */
+.admin-nav-container {
+    background-color: #dcfbfb;
+    display: flex;
+  }
+  
+  /* Sidebar */
+  .admin-home-sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .logo-admin{
+    margin-top: 40px;
+    font-size: 27px;
+    font-weight: 500;
+    text-align: center;
+    color: #10B8B9;
+    font-style: italic;
+  }
+  
+  .admin-home-panel-title {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0px 0 20px;
+  }
+  
+  .admin-home-sidebar-menu {
+    margin-top: 45px;
+  }
+  
+  .admin-home-menu-item {
+    padding: 12px 30px;
+    margin-bottom: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .admin-home-menu-item:hover,
+  .admin-home-menu-item.active {
+    background-color: #e6f0ff;
+    color: #10B8B9;
+  }
+  
+  .admin-home-welcome-text {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 35px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 17px;
+  }
+  
+  .admin-home-logout-btn {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #FEF2F2;
+    color: #E53E3E;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .admin-home-logout-btn:hover {
+    background-color: #FECACA;
+  }
+  

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDoctorManagement.css';
+import AdminBar from '../../Components/Admin/SideBar';
 
 export default function AdminDoctorManagement() {
   const navigate = useNavigate();
@@ -134,6 +135,8 @@ export default function AdminDoctorManagement() {
   if (error) return <div className="error">Error: {error}</div>;
 
   return (
+    <>
+    <AdminBar />
     <div className="container">
       <div className="header">
         <h1 className="title">Doctor Management</h1>
@@ -208,5 +211,6 @@ export default function AdminDoctorManagement() {
         </table>
       </div>
     </div>
+    </>
   );
 }

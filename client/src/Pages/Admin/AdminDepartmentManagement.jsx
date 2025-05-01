@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDepartmentManagement.css';
+import AdminBar from '../../Components/Admin/SideBar';
+import { Search, Plus, Edit2, Trash2, X, ArrowLeft, Check } from 'lucide-react';
+import { toast, Toaster } from 'sonner';
 
 export default function AdminDepartmentManagement() {
   const navigate = useNavigate();
@@ -12,6 +15,7 @@ export default function AdminDepartmentManagement() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentDepartment, setCurrentDepartment] = useState({ name: '', description: '' });
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -56,9 +60,7 @@ export default function AdminDepartmentManagement() {
     setFilteredDepartments(filtered);
   }, [departments, searchTerm]);
 
-  const handleDelete = async (departmentId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this department?");
-    if (!confirmDelete) return;
+  const handleSubmitDelete = async (departmentId) => {
 
     try {
       const response = await fetch(`http://localhost:5000/auth/admin/departments/delete/${departmentId}`, {
@@ -75,8 +77,9 @@ export default function AdminDepartmentManagement() {
         throw new Error(result.message || "Failed to delete department");
       }
 
-      setDepartments(prev => prev.filter(department => department._id !== departmentId));
-      alert(result.message);
+      setShowDeleteConfirm(null);
+      toast.success("Department deleted successfully!");
+      setDepartments(prev => prev.filter(dept => dept._id !== departmentId));      
     } catch (error) {
       console.error("Delete error:", error.message);
       alert("Error deleting department: " + error.message);
@@ -86,6 +89,11 @@ export default function AdminDepartmentManagement() {
   const handleEdit = (department) => {
     setCurrentDepartment(department);
     setShowEditModal(true);
+  };
+
+  const handleDeleteDepartment = (department) => {
+    setCurrentDepartment(department);
+    setShowDeleteConfirm(true);
   };
 
   const handleAddNew = () => {
@@ -104,7 +112,7 @@ export default function AdminDepartmentManagement() {
   const handleSubmitAdd = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/auth/admin/departments/add', {
+      const response = await fetch('http://localhost:5000/auth/add-department', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -119,9 +127,9 @@ export default function AdminDepartmentManagement() {
         throw new Error(result.message || "Failed to add department");
       }
 
-      await fetchDepartments();
       setShowAddModal(false);
-      alert("Department added successfully!");
+      toast.success("Department added successfully!");
+      await fetchDepartments();      
     } catch (error) {
       console.error("Add error:", error.message);
       alert("Error adding department: " + error.message);
@@ -147,83 +155,104 @@ export default function AdminDepartmentManagement() {
         throw new Error(result.message || "Failed to update department");
       }
 
-      await fetchDepartments();
       setShowEditModal(false);
-      alert("Department updated successfully!");
+      toast.success("Department updated successfully!");
+      await fetchDepartments();
+      
     } catch (error) {
       console.error("Update error:", error.message);
       alert("Error updating department: " + error.message);
     }
   };
 
-  if (loading) return <div className="loading">Loading departments...</div>;
+  // if (loading) return <div className="loading">Loading departments...</div>;
   if (error) return <div className="error">Error: {error}</div>;
 
   return (
-    <div className="container">
-      <div className="header">
-        <h1 className="title">Department Management</h1>
-        <button className="back-button" onClick={() => navigate('/admin/dashboard')}>Back to Dashboard</button>
+    <>
+    <AdminBar />
+      <div className="department-container">
+      <div className="department-header">
+        <div className='heading'>
+          <h1 className="department-title">Department Management</h1>
+          <p >Manage all hospital departments and their details</p>
+        </div>
+        <button className="department-back-btn" onClick={() => navigate('/admin/dashboard')}><ArrowLeft size={20} className='back-icon'/> Back to Dashboard</button>
       </div>
 
-      <div className="content-box">
-        <div className="filters">
+      <div className="department-content">
+        <div className="department-search-filter">
+        <Search size={18} className="search-icon" />
           <input
             type="text"
             placeholder="Search departments..."
-            className="search-input"
+            className="department-search-bar"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button className="add-button" onClick={handleAddNew}>Add New Department</button>
+          <button className="add-new-dept" onClick={handleAddNew} > <Plus size={20} className='plus-icon'/>Add New Department</button>
         </div>
 
-        <table className="departments-table">
-          <thead>
-            <tr>
-              <th>NAME</th>
-              <th>DESCRIPTION</th>
-              <th>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredDepartments.length > 0 ? (
-              filteredDepartments.map(department => (
-                <tr key={department._id}>
-                  <td>{department.name}</td>
-                  <td>{department.description}</td>
-                  <td className="action-buttons">
-                    <button
-                      className="edit-button"
-                      onClick={() => handleEdit(department)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="delete-button"
-                      onClick={() => handleDelete(department._id)}
-                    >
-                      Delete
-                    </button>
+        {loading ? (
+          <div className="table-loading">Loading departments...</div>
+        ) : (
+          <table className="department-table">
+            <thead>
+              <tr>
+                <th>NAME</th>
+                <th>DESCRIPTION</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredDepartments.length > 0 ? (
+                filteredDepartments.map(department => (
+                  <tr key={department._id}>
+                    <td>{department.name}</td>
+                    <td>{department.description}</td>
+                    <td className="department-actions">
+                      <button
+                        className="edit-department-btn"
+                        onClick={() => handleEdit(department)}
+                      ><Edit2 size={15} className='edit-icon'/>
+                        Edit
+                      </button>
+                      <button
+                        className="delete-department-btn"
+                        onClick={() => handleDeleteDepartment(department)}
+                      >
+                        <Trash2 size={15} className='delete-icon'/>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3">
+                    <div className="no-department-data">No departments found</div>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" className="no-data">No departments found</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        )}
+
       </div>
 
       {/* Add Department Modal */}
       {showAddModal && (
-        <div className="modal-overlay">
-          <div className="modal">
+        <div className="u-modal-overlay">
+          <div className="u-modal">
+            <div className='u-head'>
             <h2>Add New Department</h2>
+            <button onClick={() => setShowAddModal(false)} className='wrong'>
+                <X size={25} />
+              </button>
+            </div>
+
             <form onSubmit={handleSubmitAdd}>
-              <div className="form-group">
+              <div className="u-form-group">
                 <label>Name:</label>
                 <input
                   type="text"
@@ -233,7 +262,7 @@ export default function AdminDepartmentManagement() {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="u-form-group">
                 <label>Description:</label>
                 <textarea
                   name="description"
@@ -242,9 +271,9 @@ export default function AdminDepartmentManagement() {
                   required
                 />
               </div>
-              <div className="modal-buttons">
-                <button type="submit" className="save-button">Save</button>
-                <button type="button" className="cancel-button" onClick={() => setShowAddModal(false)}>Cancel</button>
+              <div className="u-modal-btns">
+                <button type="submit" className="u-s-btn">Save</button>
+                <button type="button" className="u-c-btn" onClick={() => setShowAddModal(false)}>Cancel</button>
               </div>
             </form>
           </div>
@@ -253,11 +282,16 @@ export default function AdminDepartmentManagement() {
 
       {/* Edit Department Modal */}
       {showEditModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h2>Edit Department</h2>
+        <div className="u-modal-overlay">
+          <div className="u-modal">
+            <div className='u-head-edit'>
+              <h2>Edit Department</h2>
+              <button onClick={() => setShowEditModal(false)} className='wrong'>
+                  <X size={25} />
+                </button>
+            </div>
             <form onSubmit={handleSubmitEdit}>
-              <div className="form-group">
+              <div className="u-form-group">
                 <label>Name:</label>
                 <input
                   type="text"
@@ -267,7 +301,7 @@ export default function AdminDepartmentManagement() {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="u-form-group">
                 <label>Description:</label>
                 <textarea
                   name="description" 
@@ -276,14 +310,45 @@ export default function AdminDepartmentManagement() {
                   required
                 />
               </div>
-              <div className="modal-buttons">
-                <button type="submit" className="save-button">Update</button>
-                <button type="button" className="cancel-button" onClick={() => setShowEditModal(false)}>Cancel</button>
+              <div className="u-modal-btns">
+                <button type="submit" className="u-u-btn" >Update</button>
+                <button type="button" className="u-c-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
               </div>
             </form>
           </div>
         </div>
       )}
+
+      {/* delete modal */}
+      {showDeleteConfirm && (
+        <div className="delete-modal-overlay">
+          <div className="delete-modal">
+            <div className="delete-modal-header">
+              <div className="delete-icon">
+                <Trash2 size={24} className="delete-icon-inner" />
+              </div>
+              <h3 className="delete-title">Delete Department</h3>
+            </div>
+            <p className="delete-message">
+              Are you sure you want to delete <strong>{currentDepartment.name}</strong> department? This action cannot be undone.
+            </p>
+            <div className="delete-modal-buttons">
+              <button onClick={() => setShowDeleteConfirm(null)} className="cancel-button">
+                Cancel
+              </button>
+              <button onClick={() => handleSubmitDelete(currentDepartment._id)} className="delete-button">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
+
+    </>
   );
 }
+
+
+

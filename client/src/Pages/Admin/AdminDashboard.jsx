@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AdminDashboard.css'; // updated CSS import
+import './AdminDashboard.css';
+import AdminBar from '../../Components/Admin/SideBar';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-
-  const [username, setUsername] = useState("");
   const [stats, setStats] = useState({
     users: 0,
     doctors: 0,
@@ -15,20 +14,6 @@ const AdminDashboard = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const fetchAdmin = async () => {
-      try {
-        const res = await fetch('http://localhost:5000/auth/me-admin', {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        const data = await res.json();
-        setUsername(data.fullName);
-      } catch (err) {
-        console.error("Failed to fetch admin details", err);
-      }
-    };
 
     const fetchStats = async () => {
       try {
@@ -49,42 +34,17 @@ const AdminDashboard = () => {
       }
     };
 
-    fetchAdmin();
     fetchStats();
   }, [token]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate('/login/admin');
-  };
 
   const handleNavigate = (path) => navigate(path);
   const handleAddDoctor = () => navigate('/admin/add-doctor');
   const handleAddDepartment = () => navigate('/admin/add-department');
 
   return (
-    <div className="admin-home-container">
-      <div className="admin-home-sidebar">
-        <h2 className="admin-home-panel-title">Admin Panel</h2>
-        <div className="admin-home-sidebar-menu">
-          <div className="admin-home-menu-item active" onClick={() => handleNavigate('/admin/dashboard')}>Dashboard</div>
-          <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/users')}>Users</div>
-          <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/doctors')}>Doctors</div>
-          <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/appointments')}>Appointments</div>
-          <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/departments')}>Departments</div>
-        </div>
-      </div>
-
-      <div className="admin-home-main-content">
-        <header className="admin-home-header">
-          <h1 className="admin-home-dashboard-title">Admin Dashboard</h1>
-          <div className="admin-home-user-actions">
-            <span className="admin-home-welcome-text">Welcome, {username}</span>
-            <button className="admin-home-logout-btn" onClick={handleLogout}>Logout</button>
-          </div>
-        </header>
-
+      <>
+      <AdminBar />
         <div className="admin-home-dashboard-content">
           <div className="admin-home-stats-container">
             <div className="admin-home-stat-card blue">
@@ -114,8 +74,7 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+    </>
   );
 };
 
