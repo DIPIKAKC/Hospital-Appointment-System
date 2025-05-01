@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "./AdminAddDoctor.css";
 
-const AdminAddDoctor = () => {
+const AdminAddDoctor = ({ onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -19,7 +18,6 @@ const AdminAddDoctor = () => {
   const [success, setSuccess] = useState("");
   const [loadingDepartments, setLoadingDepartments] = useState(true);
 
-  const navigate = useNavigate();
 
     // Fetch departments from separate database
     useEffect(() => {
@@ -99,11 +97,10 @@ const AdminAddDoctor = () => {
         description: "",
         contact: ""
       });
-      
-      // Redirect after success
-      setTimeout(() => {
-        navigate("/admin/doctors");
-      }, 2000);
+      if (onSuccess) {
+        onSuccess(data);
+      }
+
     } catch (err) {
       setError(err.message || "Error adding doctor");
     }
@@ -111,13 +108,9 @@ const AdminAddDoctor = () => {
 
 
   return (
-    <div className="admin-add-doctor-container">
       <div className="content-wrapper">
         <div className="header">
           <h1>Add New Doctor</h1>
-          <a href="/admin/dashboard" className="back-button">
-            Back to Dashbaord
-          </a>
         </div>
 
         {error && <div className="error-message">{error}</div>}
@@ -228,6 +221,7 @@ const AdminAddDoctor = () => {
                   placeholder="experience"
                 />
               </div>
+              
             <div className="form-footer">
               <button
                 type="submit"
@@ -235,12 +229,12 @@ const AdminAddDoctor = () => {
                 className={loading ? "submit-button loading" : "submit-button"}
               >
                 {loading ? "Adding..." : "Add Doctor"}
+                se
               </button>
             </div>
           </form>
         </div>
       </div>
-    </div>
   );
 };
 

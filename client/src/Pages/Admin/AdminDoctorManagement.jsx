@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDoctorManagement.css';
 import AdminBar from '../../Components/Admin/SideBar';
+import { Search, Edit2, Trash2, X, ArrowLeft, Plus } from 'lucide-react';
+import { toast } from 'sonner';
+import AdminAddDoctor from './AdminAddDoctor';
 
 export default function AdminDoctorManagement() {
   const navigate = useNavigate();
@@ -13,6 +16,9 @@ export default function AdminDoctorManagement() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [departmentMap, setDepartmentMap] = useState({});
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -97,9 +103,6 @@ export default function AdminDoctorManagement() {
   
 
   const handleDelete = async (doctorId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this doctor?");
-    if (!confirmDelete) return;
-
     try {
       const response = await fetch(`http://localhost:5000/auth/admin/doctors/delete/${doctorId}`, {
         method: "DELETE",
@@ -115,8 +118,9 @@ export default function AdminDoctorManagement() {
         throw new Error(result.message || "Failed to delete doctor");
       }
 
+      setShowDeleteConfirm(false);
+      toast.success("Doctor removed successfully");
       setDoctors(prev => prev.filter(doctor => doctor._id !== doctorId));
-      alert(result.message);
     } catch (error) {
       console.error("Delete error:", error.message);
       alert("Error deleting doctor: " + error.message);
@@ -129,7 +133,13 @@ export default function AdminDoctorManagement() {
     navigate(`/admin/doctors/edit/${doctorId}`);
   };
   
-  
+  // Handle successful doctor addition
+  const handleDoctorAdded = (newDoctorData) => {
+    // Close the modal
+    setShowAddModal(false);
+    toast.success("Doctor added successfully!");
+    fetchDoctors();
+  };  
 
   if (loading) return <div className="loading">Loading doctors...</div>;
   if (error) return <div className="error">Error: {error}</div>;
@@ -137,24 +147,28 @@ export default function AdminDoctorManagement() {
   return (
     <>
     <AdminBar />
-    <div className="container">
-      <div className="header">
-        <h1 className="title">Doctor Management</h1>
-        <button className="back-button" onClick={() => navigate('/admin/dashboard')}>Back to Dashboard</button>
+    <div className="doctor-container">
+      <div className="doctor-header">
+        <div className='doctor-heading'>
+          <h1 className="doctor-head-title">Doctor Management</h1>
+          <p >Manage all hospital doctors and their details</p>
+        </div>
+        <button className="doctor-back-button" onClick={() => navigate('/admin/dashboard')}><ArrowLeft size={20} className='back-doc'/>Back to Dashboard</button>
       </div>
 
-      <div className="content-box">
-        <div className="filters">
+      <div className="doctor-content-box">
+        <div className="searching-doctor">
+          <Search size={18} className="search-doc" />
           <input
             type="text"
             placeholder="Search by doctor name or department..."
-            className="search-input"
+            className="doctor-search-in"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-
+    
           <select
-            className="department-select"
+            className="doctor-department-select"
             value={selectedDepartment}
             onChange={(e) => setSelectedDepartment(e.target.value)}
           >
@@ -165,9 +179,13 @@ export default function AdminDoctorManagement() {
               </option>
             ))}
           </select>
+          <button className='add-new-doc' onClick={() => setShowAddModal(true)}> 
+            <Plus size={18} className='plus-doc'/>
+            Add New Doctor
+          </button>
         </div>
 
-        <table className="doctors-table">
+        <table className="doctor-information-table">
           <thead>
             <tr>
               <th>NAME</th>
@@ -185,18 +203,18 @@ export default function AdminDoctorManagement() {
                   <td>{doctor.email}</td>
                   <td>{departmentMap[doctor.department] || doctor.department}</td>
                   <td>{doctor.contact}</td>
-                  <td className="action-buttons">
+                  <td className="doctor-action-buttons">
 
                     <button
-                      className="edit-button"
+                      className="doctor-edit-button"
                       onClick={() => handleEdit(doctor._id)}  // Edit button triggers the handleEdit function
-                    >
+                    ><Edit2 size={15} className='edit-doc'/>
                       Edit
                     </button>
                     <button
-                      className="delete-button"
-                      onClick={() => handleDelete(doctor._id)}
-                    >
+                      className="doctor-delete-button"
+                      onClick={() => setShowDeleteConfirm(doctor)}
+                    ><Trash2 size={15} className='delete-doc'/>
                       Delete
                     </button>
                   </td>
@@ -204,12 +222,56 @@ export default function AdminDoctorManagement() {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="no-data">No doctors found</td>
+                <td colSpan="4" className="doctor-no-data">No doctors found</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
+
+      {/* Add modal */}
+      {showAddModal && (
+        <div className="adddoc-modal-overlay">
+          <div className="adddoc-modal-content">
+            <button className="adddoc-close-modal" onClick={() => setShowAddModal(false)}><X /></button>
+            <AdminAddDoctor 
+              onClose={() => setShowAddModal(false)} 
+              onSuccess={handleDoctorAdded} 
+            />          
+          </div>
+        </div>
+      )}
+
+
+      {/* delete modal */}
+      {showDeleteConfirm && (
+        <div className="delete-modal-overlay">
+          <div className="delete-modal">
+            <div className="delete-modal-header">
+              <h3 className="delete-title">Delete Doctor</h3>
+            </div>
+            <p className="delete-message">
+              Are you sure you want to remove <strong>{showDeleteConfirm.fullName}</strong> as a doctor? This action cannot be undone.
+            </p>
+            <div className="delete-modal-buttons">
+              <button onClick={() => setShowDeleteConfirm(null)} className="cancel-dlt-button">
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  handleDelete(showDeleteConfirm._id);
+                  setShowDeleteConfirm(null); // Close modal after deleting
+                }}
+                className="ok-delete-button"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
     </div>
     </>
   );

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './AdminDepartmentManagement.css';
 import AdminBar from '../../Components/Admin/SideBar';
 import { Search, Plus, Edit2, Trash2, X, ArrowLeft, Check } from 'lucide-react';
-import { toast, Toaster } from 'sonner';
+import { toast } from 'sonner';
 
 export default function AdminDepartmentManagement() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function AdminDepartmentManagement() {
 
   useEffect(() => {
     fetchDepartments();
-  }, []);
+  },[]);
 
   const fetchDepartments = async () => {
     try {
@@ -325,7 +325,6 @@ export default function AdminDepartmentManagement() {
           <div className="delete-modal">
             <div className="delete-modal-header">
               <div className="delete-icon">
-                <Trash2 size={24} className="delete-icon-inner" />
               </div>
               <h3 className="delete-title">Delete Department</h3>
             </div>
@@ -333,10 +332,10 @@ export default function AdminDepartmentManagement() {
               Are you sure you want to delete <strong>{currentDepartment.name}</strong> department? This action cannot be undone.
             </p>
             <div className="delete-modal-buttons">
-              <button onClick={() => setShowDeleteConfirm(null)} className="cancel-button">
+              <button onClick={() => setShowDeleteConfirm(null)} className="cancel-dlt-button">
                 Cancel
               </button>
-              <button onClick={() => handleSubmitDelete(currentDepartment._id)} className="delete-button">
+              <button onClick={() => handleSubmitDelete(currentDepartment._id)} className="ok-delete-button">
                 Delete
               </button>
             </div>

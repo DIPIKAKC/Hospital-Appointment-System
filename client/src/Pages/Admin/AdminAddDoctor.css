@@ -110,8 +110,9 @@
     border-color: #10B8B9;
     box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.25);
   }
-  
-.department-select{
+
+.modal-content-wrapper input,
+.modal-content-wrapper .department-select {
     width: 100%;
     padding: 0.625rem 0.75rem;
     border: 1px solid #cbd5e0;
@@ -181,3 +182,40 @@
     text-decoration: underline;
   }
   
+
+/* Modal specific styling */
+.adddoc-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.adddoc-modal-content {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 700px;
+  max-width: 90%;
+  max-height: 90vh;
+  position: relative;
+  overflow-y: visible;
+}
+
+.adddoc-close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #666;
+}
+
