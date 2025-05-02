@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import './SideBar.css'
 
 const AdminBar = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [username, setUsername] = useState("");
   const token = localStorage.getItem("token");
 
@@ -34,18 +34,20 @@ const AdminBar = () => {
         },[token]);
 
     const handleNavigate = (path) => navigate(path);
-    return(
+    const currentPath = location.pathname;
 
+
+    return(
         <div className="admin-nav-container">
             <div className="admin-home-sidebar">
                 <div className='logo-admin'>MedEase</div>
                 <h2 className="admin-home-panel-title">Admin Panel</h2>
                 <div className="admin-home-sidebar-menu">
-                <div className="admin-home-menu-item active" onClick={() => handleNavigate('/admin/dashboard')}>Dashboard</div>
-                <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/users')}>Users</div>
-                <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/doctors')}>Doctors</div>
-                <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/appointments')}>Appointments</div>
-                <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/departments')}>Departments</div>
+                  <div className={`admin-home-menu-item ${currentPath === '/admin/dashboard' ? 'active' : ''}`} onClick={() => handleNavigate('/admin/dashboard')}>Dashboard</div>
+                  <div className={`admin-home-menu-item ${currentPath === '/admin/users' ? 'active' : ''}`} onClick={() => handleNavigate('/admin/users')}>Users</div>
+                  <div className={`admin-home-menu-item ${currentPath === '/admin/doctors' ? 'active' : ''}`} onClick={() => handleNavigate('/admin/doctors')}>Doctors</div>
+                  <div className={`admin-home-menu-item ${currentPath === '/admin/appointments' ? 'active' : ''}`} onClick={() => handleNavigate('/admin/appointments')}>Appointments</div>
+                  <div className={`admin-home-menu-item ${currentPath === '/admin/departments' ? 'active' : ''}`} onClick={() => handleNavigate('/admin/departments')}>Departments</div>
                 </div>
 
                 <span className="admin-home-welcome-text">Welcome, {username}</span>

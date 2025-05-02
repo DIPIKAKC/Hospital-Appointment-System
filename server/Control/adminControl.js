@@ -169,8 +169,15 @@ const registerDoctor = async(req,res)=>{
 const getAllAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.find()
-      .populate("user", "fullName email")
-      .populate("doctor", "fullName department")
+    .populate("user", "fullName email")
+      .populate({
+        path: "doctor",
+        select: "fullName department",
+        populate: {
+          path: "department",
+          select: "name", 
+        }
+      })
       .sort({ createdAt: -1 });
       
     res.status(200).json(appointments);

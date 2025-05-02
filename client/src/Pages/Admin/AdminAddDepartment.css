@@ -1,0 +1,123 @@
+.dept-add-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .dept-add-modal {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    animation: slideDown 0.3s ease;
+  }
+  
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .dept-add-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .dept-add-head h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  .wrong {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dept-add-form-group {
+    margin-bottom: 20px;
+  }
+  
+  .dept-add-form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  
+  .dept-add-form-group input,
+  .dept-add-form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    resize: vertical;
+  }
+  
+  .dept-add-modal-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .dept-add-s-btn {
+    background-color:#10B8B9;
+    color: white;
+    padding: 8px 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .dept-add-s-btn:hover {
+    background-color: #067a7a;
+  }
+  
+  .dept-add-c-btn {
+    background-color: #ccc;
+    color: black;
+    padding: 8px 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .dept-add-c-btn:hover {
+    background-color: #999;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .success-message {
+    color: green;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  

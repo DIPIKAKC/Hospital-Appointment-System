@@ -56,7 +56,7 @@ export default function AdminAppointmentManagement() {
     const filtered = appointments.filter(appointment => {
       const patientName = appointment.user?.fullName?.toLowerCase() || '';
       const doctorName = appointment.doctor?.fullName?.toLowerCase() || '';
-      const department = appointment.doctor?.department?.toLowerCase() || '';
+      const department = appointment.doctor?.department?.name?.toLowerCase() || '';
       const status = appointment.status?.toLowerCase() || '';
   
       const matchesSearch = search
@@ -177,7 +177,7 @@ export default function AdminAppointmentManagement() {
                 <tr key={appointment._id}>
                   <td>{appointment.user?.fullName || 'Unknown'}</td>
                   <td>{appointment.doctor?.fullName || 'Unknown'}</td>
-                  <td>{appointment.doctor?.department || 'Unknown'}</td>
+                  <td>{appointment.doctor?.department?.name || 'Unknown'}</td>
                   <td>{formatDate(appointment.date)}</td>
                   <td>{appointment.time}</td>
                   <td>

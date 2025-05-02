@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AdminAddDoctor.css";
+import "./AdminAddDepartment.css";
+import { X } from "lucide-react";
 
 const AdminAddDepartment = () => {
   const [formData, setFormData] = useState({
     name: "",
     description: ""
   });
-
-  const navigate = useNavigate();
+  const [showAddModal, setShowAddModal] = useState(true); // Modal shown by default
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,66 +56,55 @@ const AdminAddDepartment = () => {
                 setError(err.message || "Error adding doctor");
                 }
             };
-  
-
-
-  return (
-    <div className="admin-add-doctor-container">
-      <div className="content-wrapper">
-        <div className="header">
-          <h1>Add New Department</h1>
-          <a href="/admin/dashboard" className="back-button">
-            Back to Dashbaord
-          </a>
-        </div>
-
-        {error && <div className="error-message">{error}</div>}
-        {success && <div className="success-message">{success}</div>}
-
-        <div className="form-container">
-          <form onSubmit={handleAddDepartments}>
-            <div className="form-grid">
-              <div className="form-group">
-                <label htmlFor="name">Department's Name *</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  placeholder=""
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="description">Description *</label>
-                <input
-                  type="description"
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  required
-                  placeholder="********"
-                />
-              </div>
-            </div>
-            <div className="form-footer">
-              <button
-                type="submit"
-                disabled={loading}
-                className={loading ? "submit-button loading" : "submit-button"}
-              >
-                {loading ? "Adding..." : "Add Department"}
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-    };
-
+            return (
+              <>
+                {showAddModal && (
+                  <div className="dept-add-modal-overlay">
+                    <div className="dept-add-modal">
+                      <div className="dept-add-head">
+                        <h2>Add New Department</h2>
+                        <button onClick={() => setShowAddModal(false)} className="wrong">
+                          <X size={25} />
+                        </button>
+                      </div>
+          
+                      {error && <div className="error-message">{error}</div>}
+                      {success && <div className="success-message">{success}</div>}
+          
+                      <form onSubmit={handleAddDepartments}>
+                        <div className="dept-add-form-group">
+                          <label>Name:</label>
+                          <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                        <div className="dept-add-form-group">
+                          <label>Description:</label>
+                          <textarea
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                        <div className="dept-add-modal-btns">
+                          <button type="submit" className="dept-add-s-btn" disabled={loading}>
+                            {loading ? "Adding..." : "Save"}
+                          </button>
+                          <button type="button" className="dept-add-c-btn" onClick={() => setShowAddModal(false)}>
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
+              </>
+            );
+          };
 
 export default AdminAddDepartment;
