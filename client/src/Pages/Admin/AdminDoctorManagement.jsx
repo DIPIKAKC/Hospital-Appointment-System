@@ -5,6 +5,7 @@ import AdminBar from '../../Components/Admin/SideBar';
 import { Search, Edit2, Trash2, X, ArrowLeft, Plus } from 'lucide-react';
 import { toast } from 'sonner';
 import AdminAddDoctor from './AdminAddDoctor';
+import AdminUpdateDoctor from './AdminEditDoctor';
 
 export default function AdminDoctorManagement() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function AdminDoctorManagement() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
 
   const token = localStorage.getItem("token");
 
@@ -128,13 +130,14 @@ export default function AdminDoctorManagement() {
   };
 
 
-  const handleEdit = (doctorId) => {
-    // Redirect to the edit page with doctorId
-    navigate(`/admin/doctors/edit/${doctorId}`);
+  const handleEdited = () => {
+    setShowEditModal(false);
+    toast.success("Doctor updated successfully!");
+    fetchDoctors();
   };
   
   // Handle successful doctor addition
-  const handleDoctorAdded = (newDoctorData) => {
+  const handleDoctorAdded = () => {
     // Close the modal
     setShowAddModal(false);
     toast.success("Doctor added successfully!");
@@ -207,7 +210,10 @@ export default function AdminDoctorManagement() {
 
                     <button
                       className="doctor-edit-button"
-                      onClick={() => handleEdit(doctor._id)}  // Edit button triggers the handleEdit function
+                      onClick={() =>{ 
+                        setSelectedDoctor(doctor)
+                        setShowEditModal(true)
+                      }}  // Edit button triggers the handleEdit function
                     ><Edit2 size={15} className='edit-doc'/>
                       Edit
                     </button>
@@ -242,6 +248,19 @@ export default function AdminDoctorManagement() {
         </div>
       )}
 
+      {/* edit modal */}
+      {showEditModal && (
+        <div className="editdoc-modal-overlay">
+          <div className="editdoc-modal-content">
+            <button className="editdoc-close-modal" onClick={() => setShowEditModal(false)}><X /></button>
+            <AdminUpdateDoctor 
+              doctorId={selectedDoctor._id}       // Pass doctor ID directly
+              onClose={() => setShowEditModal(false)} 
+              onSuccess={handleEdited}     
+            />    
+          </div>
+        </div>
+      )}
 
       {/* delete modal */}
       {showDeleteConfirm && (

@@ -39,7 +39,7 @@ const AdminBar = () => {
         <div className="admin-nav-container">
             <div className="admin-home-sidebar">
                 <div className='logo-admin'>MedEase</div>
-                <h2 className="admin-home-panel-title">Admin Dashboard</h2>
+                <h2 className="admin-home-panel-title">Admin Panel</h2>
                 <div className="admin-home-sidebar-menu">
                 <div className="admin-home-menu-item active" onClick={() => handleNavigate('/admin/dashboard')}>Dashboard</div>
                 <div className="admin-home-menu-item" onClick={() => handleNavigate('/admin/users')}>Users</div>

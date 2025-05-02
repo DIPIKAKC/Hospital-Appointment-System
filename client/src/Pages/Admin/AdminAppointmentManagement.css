@@ -1,95 +1,121 @@
-/* Main Container Styles */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+/* Main Container */
+.admin-appt-container {
+  width: 1100px;
+  min-height: 100vh;
+  margin-left: 250px;
 }
 
 /* Header Section */
-.header {
+.admin-appt-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
 }
 
-.title {
+.admin-appt-title {
   font-size: 24px;
   color: #333;
-  margin: 0;
+  margin-left: 65px;
 }
 
-.back-button {
-  padding: 8px 15px;
-  background-color: #f1f1f1;
+.admin-appt-heading p{
+  margin-left: 65px;
+}
+
+.admin-appt-back-button {
+  padding: 12px 27px;
+  display: flex;
+  align-items: center;
+  gap:8px;
+  background-color: #10B8B9;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 10px;
   cursor: pointer;
-  color: #333;
+  color: #fff;
+  margin-right: 70px ;
+  font-size: 14px;
 }
 
 /* Content Box */
-.content-box {
+.admin-appt-content-box {
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 90px;
+  padding-right: 90px;
+  min-height: 400px;
 }
 
-/* Filters Section */
-.filters {
+/* Filters */
+.admin-appt-search-filters {
+  position: relative;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
-  gap: 10px;
+  align-items: center;
+  margin-bottom: 30px;
+  max-width: 60%;
 }
 
-.search-input {
+.admin-appt-search {
+  position: absolute;
+  left: 10px;
+  color: #888;
+}
+
+.admin-appt-search-input {
   flex: 1;
-  padding: 10px;
+  padding: 8px 15px 9px 45px;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  font-size: 16px;
 }
 
-.status-select {
+.admin-appt-status-select {
   width: 25%;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
+  margin-left: 20px;
 }
 
-.add-button {
-  padding: 10px 20px;
-  background-color: #10B8B9;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-/* Table Styles */
-.appointments-table {
+/* Table */
+.admin-appt-table {
   width: 100%;
   border-collapse: collapse;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.appointments-table th {
-  text-align: left;
-  padding: 15px 10px;
-  border-bottom: 1px solid #ddd;
-  color: #666;
-  font-weight: 500;
-}
-
-.appointments-table td {
-  padding: 15px 10px;
+.admin-appt-table th, .admin-appt-table td{
+  padding: 16px 12px;
   border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.admin-appt-table th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: 600;
+}
+
+.admin-appt-table td {
+  vertical-align: top;
+}
+
+.admin-appt-table tr:last-child td{
+  border-bottom: none;
 }
 
 /* Status Badge */
-.status-badge {
+.admin-appt-status {
   padding: 5px 10px;
   border-radius: 12px;
   font-size: 12px;
@@ -111,44 +137,33 @@
   color: #1e40af;
 }
 
-.cancelled {
+.canceled {
   background-color: #fee2e2;
   color: #b91c1c;
 }
 
-/* Action Buttons */
-.action-buttons {
+/* Actions */
+.admin-appt-action-buttons {
   display: flex;
-  gap: 5px;
+  gap:10px;
 }
 
-.edit-button {
-  padding: 5px 10px;
-  background: none;
+.admin-appt-delete-button {
+  padding: 8px 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #b91c1c;
   border: none;
-  color: #10B8B9;
+  color: #ffffff;
+  border-radius: 7px;
   cursor: pointer;
 }
 
-.view-button {
-  padding: 5px 10px;
-  background: none;
-  border: none;
-  color: #16a34a;
-  cursor: pointer;
-}
-
-.delete-button {
-  padding: 5px 10px;
-  background-color: #16a34a;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* Loading and Error States */
-.loading, .error, .no-data {
+/* No Data, Loading, Error */
+.admin-appt-no-data,
+.loading,
+.error {
   text-align: center;
   padding: 20px;
   color: #666;
@@ -156,4 +171,54 @@
 
 .error {
   color: #b91c1c;
+}
+
+/* Delete Confirmation Modal */
+.delete-appointment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-appointment-modal {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 400px;
+  text-align: center;
+}
+
+.delete-title {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  padding: 8px 16px;
+  background-color: #ccc;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirm-delete-btn {
+  padding: 8px 16px;
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }

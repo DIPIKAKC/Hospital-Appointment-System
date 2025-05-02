@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminAppointmentManagement.css';
+import { Search, Trash2, ArrowLeft } from 'lucide-react';
 import AdminBar from '../../Components/Admin/SideBar';
+import { toast } from 'sonner';
 
 export default function AdminAppointmentManagement() {
 
@@ -9,15 +11,19 @@ export default function AdminAppointmentManagement() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [filteredAppointments, setFilteredAppointments] = useState ([])
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('All Status');
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const statusOptions = ['All Status', 'Pending', 'Confirmed', 'Completed', 'Canceled'];
 
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    fetchAppointments();
+  }, []);
+
     const fetchAppointments = async () => {
       try {
         setLoading(true);
@@ -42,9 +48,6 @@ export default function AdminAppointmentManagement() {
         setLoading(false);
       }
     };
-
-    fetchAppointments();
-  }, []);
 
 
   useEffect(() => {
@@ -79,17 +82,13 @@ export default function AdminAppointmentManagement() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  if (loading) return <div className="loading">Loading appointments...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
-
-
+  
+  
+  
   //delete
   const handleDelete = async (appointmentId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
-    if (!confirmDelete) return;
-  
     const token = localStorage.getItem("token");
-  
+    
     try {
       const response = await fetch(`http://localhost:5000/auth/admin/appointments/delete/${appointmentId}`, {
         method: "DELETE",
@@ -98,46 +97,59 @@ export default function AdminAppointmentManagement() {
           Authorization: `Bearer ${token}`
         }
       });
-  
+      
       const result = await response.json();
-  
+      
       if (!response.ok) {
         throw new Error(result.message || "Failed to delete appointment");
       }
-  
+      
       // Remove deleted appointment from state
+      setShowDeleteConfirm(null);
+      fetchAppointments();
+      toast.success("Appointment deleted successfully!");
       setAppointments(prev => prev.filter(appointment => appointment._id !== appointmentId));
-      alert(result.message);
     } catch (error) {
       console.error("Delete error:", error.message);
       alert("Error deleting appointment: " + error.message);
     }
   };
   
+  const handleDeleteAppointment = (appointment) => {
+    setSelectedAppointment(appointment);
+    setShowDeleteConfirm(true);
+  };
 
-
+  if (loading) return <div className="loading">Loading appointments...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
+  
+  
   return (
-
+    
     <>
     <AdminBar />
-    <div className="container">
-      <div className="header">
-        <h1 className="title">Appointment Management</h1>
-        <button className="back-button" onClick={() => navigate('/admin/dashboard')}>Back to Dashboard </button>
+    <div className="admin-appt-container">
+      <div className="admin-appt-header">
+      <div className='admin-appt-heading'>
+        <h1 className="admin-appt-title">Appointment Management</h1>
+        <p >Manage all hospital appointment and their details</p>
+      </div>
+        <button className="admin-appt-back-button" onClick={() => navigate('/admin/dashboard')}> <ArrowLeft size={20} />Back to Dashboard </button>
       </div>
 
-      <div className="content-box">
-        <div className="filters">
+      <div className="admin-appt-content-box">
+        <div className="admin-appt-search-filters">
+        <Search size={18} className="admin-appt-search" />
           <input
             type="text"
             placeholder="Search by patient or doctor name..."
-            className="search-input"
+            className="admin-appt-search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
           <select
-            className="status-select"
+            className="admin-appt-status-select"
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
           >
@@ -147,7 +159,7 @@ export default function AdminAppointmentManagement() {
           </select>
         </div>
 
-        <table className="appointments-table">
+        <table className="admin-appt-table">
           <thead>
             <tr>
               <th>PATIENT NAME</th>
@@ -169,17 +181,16 @@ export default function AdminAppointmentManagement() {
                   <td>{formatDate(appointment.date)}</td>
                   <td>{appointment.time}</td>
                   <td>
-                    <span className={`status-badge ${appointment.status?.toLowerCase()}`}>
+                    <span className={`admin-appt-status ${appointment.status?.toLowerCase()}`}>
                       {appointment.status}
                     </span>
                   </td>
-                  <td className="action-buttons">
-                    {/* <button className="edit-button">Edit</button>
-                    <button className="view-button">View</button> */}
+                  <td className="admin-appt-action-buttons">
                     <button 
-                      className="delete-button"
-                      onClick={() => handleDelete(appointment._id)}
+                      className="admin-appt-delete-button"
+                      onClick={() => handleDeleteAppointment(appointment)}
                     >
+                      <Trash2 size={15} />
                       Delete
                     </button>
                   </td>
@@ -187,11 +198,31 @@ export default function AdminAppointmentManagement() {
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="no-data">No appointments found</td>
+                <td colSpan="7" className="admin-appt-no-data">No appointments found</td>
               </tr>
             )}
           </tbody>
         </table>
+
+        {/* Delete Confirmation Modal */}
+          {showDeleteConfirm && (
+            <div className="delete-appointment-modal-overlay">
+              <div className="delete-appointment-modal">
+                <h3 className="delete-title">Delete Appointment</h3>
+                <p>
+                  Are you sure you want to delete the appointment for <strong>{selectedAppointment?.user?.fullName}</strong> on <strong>{selectedAppointment?.date}</strong> at <strong>{selectedAppointment?.time}</strong>? This action cannot be undone.
+                </p>
+                <div className="modal-buttons">
+                  <button className="cancel-btn" onClick={() => setShowDeleteConfirm(false)}>Cancel</button>
+                  <button className="confirm-delete-btn" 
+                    onClick={() => {
+                      handleDelete(selectedAppointment._id);
+                      setShowDeleteConfirm(false);
+                    }}>Delete</button>
+                </div>
+              </div>
+            </div>
+          )}
       </div>
     </div>
     </>

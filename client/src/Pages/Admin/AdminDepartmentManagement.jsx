@@ -173,7 +173,7 @@ export default function AdminDepartmentManagement() {
     <AdminBar />
       <div className="department-container">
       <div className="department-header">
-        <div className='heading'>
+        <div className='department-heading'>
           <h1 className="department-title">Department Management</h1>
           <p >Manage all hospital departments and their details</p>
         </div>

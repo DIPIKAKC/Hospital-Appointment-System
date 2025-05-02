@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import "./AdminAddDoctor.css";
 
-const AdminUpdateDoctor = () => {
-  const { doctorId } = useParams(); // Get the doctorId from URL params
+const AdminUpdateDoctor = ({ doctorId, onClose, onSuccess }) => {
   
   const [formData, setFormData] = useState({
     fullName: "",
@@ -20,7 +18,6 @@ const AdminUpdateDoctor = () => {
   const [success, setSuccess] = useState("");
   const [loadingDepartments, setLoadingDepartments] = useState(true);
 
-  const navigate = useNavigate();
 
   // Fetch departments
   useEffect(() => {
@@ -53,7 +50,7 @@ const AdminUpdateDoctor = () => {
           setFormData({
             fullName: data.fullName || "",
             email: data.email || "",
-            department: data.department || "",
+            department: data.department?._id || "", //department as an object
             experience: data.experience || "",
             description: data.description || "",
             contact: data.contact || ""
@@ -83,7 +80,7 @@ const AdminUpdateDoctor = () => {
     setLoading(true);
     setError("");
     setSuccess("");
-
+ 
     try {
       const doctorData = {
         fullName: formData.fullName,
@@ -111,24 +108,20 @@ const AdminUpdateDoctor = () => {
 
       // Handle success
       setSuccess("Doctor updated successfully!");
+      if(onSuccess){
+        onSuccess(data);
+      }
 
-      // Redirect after success
-      setTimeout(() => {
-        navigate("/admin/doctors");
-      }, 2000);
+
     } catch (err) {
       setError(err.message || "Error updating doctor data");
     }
   };
 
   return (
-    <div className="admin-update-doctor-container">
       <div className="content-wrapper">
         <div className="header">
           <h1>Edit Doctor</h1>
-          <a href="/admin/dashboard" className="back-button">
-            Back to Dashboard
-          </a>
         </div>
 
         {error && <div className="error-message">{error}</div>}
@@ -238,7 +231,6 @@ const AdminUpdateDoctor = () => {
           </form>
         </div>
       </div>
-    </div>
   );
 };
 
