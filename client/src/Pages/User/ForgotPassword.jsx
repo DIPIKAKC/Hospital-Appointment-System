@@ -84,7 +84,7 @@ export const ForgotPassword = () => {
       color: "#4b5563",
       fontSize: "0.875rem"
     }}>
-      Enter your email address and we'll send you an OTP to reset your password.
+      Enter your email address and we'll send you a link to reset your password.
     </p>
     {error && 
     (<p style ={{

@@ -51,7 +51,7 @@ const verifyEmailMail = async (email, token) => {
                 
                 <!-- Header with logo -->
                 <tr>
-                  <td style="background-color: #1E40AF; padding: 20px 30px; text-align: center;">
+                  <td style="background-color: #10B8B9; padding: 20px 30px; text-align: center;">
                     <img src="${process.env.LOGO_URL}" alt="MedEase" width="180" style="display: block; margin: 0 auto;">
                   </td>
                 </tr>
@@ -59,7 +59,7 @@ const verifyEmailMail = async (email, token) => {
                 <!-- Main content -->
                 <tr>
                   <td style="padding: 40px 30px;">
-                    <h2 style="margin: 0 0 20px; color: #1E40AF; font-size: 24px;">Email Verification</h2>
+                    <h2 style="margin: 0 0 20px; color: #10B8B9; font-size: 24px;">Email Verification</h2>
                     
                     <p style="margin: 0 0 20px; font-size: 16px;">Dear User,</p>
                     
@@ -67,7 +67,7 @@ const verifyEmailMail = async (email, token) => {
                     
                     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
                       <tr>
-                        <td style="background-color: #1E40AF; border-radius: 6px; text-align: center; padding: 15px;">
+                        <td style="background-color: #10B8B9; border-radius: 6px; text-align: center; padding: 15px;">
                           <a href="http://localhost:3000/verify-email?t=${token}" style="color: #ffffff; text-decoration: none; font-weight: bold; font-size: 16px; display: block;">Verify Email</a>
                         </td>
                       </tr>
@@ -116,16 +116,16 @@ const verifyEmailMail = async (email, token) => {
 //forgot password
 const passwordResetMail = async (email, token) => {
   const mailOptions = {
-    from: `Guide Me Nepal <${process.env.NODE_MAILER_EMAIL}>`,
+    from: `MedEase <${process.env.NODE_MAILER_EMAIL}>`,
     to: email,
-    subject: 'Password Reset Request - Guide Me Nepal',
+    subject: 'Password Reset Request - MedEase',
     html: `
       <!DOCTYPE html>
       <html lang="en">
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Password Reset - Guide Me Nepal</title>
+        <title>Password Reset - MedEase</title>
         <style>
           body {
             margin: 0;
@@ -143,7 +143,7 @@ const passwordResetMail = async (email, token) => {
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
           }
           .header {
-            background-color: #1E40AF;
+            background-color: #10B8B9;
             padding: 20px 30px;
             text-align: center;
           }
@@ -155,7 +155,7 @@ const passwordResetMail = async (email, token) => {
             padding: 40px 30px;
           }
           .content h2 {
-            color: #1E40AF;
+            color: #10B8B9;
             font-size: 24px;
             margin-bottom: 20px;
           }
@@ -168,8 +168,9 @@ const passwordResetMail = async (email, token) => {
             margin: 30px 0;
           }
           .button {
-            background-color: #1E40AF;
-            color: #ffffff;
+            background-color: #10B8B9;
+            color: #ffffff !important;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.2);
             text-decoration: none;
             padding: 12px 24px;
             border-radius: 6px;
@@ -202,12 +203,12 @@ const passwordResetMail = async (email, token) => {
             </div>
             
             <p>This link will expire in 5 minutes for your security.</p>
-            <p>Thank you,<br>Guide Me Nepal Team</p>
+            <p>Thank you,<br>MedEase Team</p>
           </div>
           
           <!-- Footer -->
           <div class="footer">
-            © ${new Date().getFullYear()} Guide Me Nepal. All rights reserved.
+            © ${new Date().getFullYear()} MedEase. All rights reserved.
           </div>
           
         </div>

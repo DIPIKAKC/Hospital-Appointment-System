@@ -491,78 +491,89 @@ const changePassword = async (req, res) => {
 
 
 //forgot password
-const forgotPassword = async(req,res) => {
-  console.log(req.body)
-  try{
+const forgotPassword = async (req, res) => {
+  console.log(req.body);
+  try {
+    const { email } = req.body;
 
-    const {email} = req.body
-
-    if(!email){
-      return res.status(404).json({success:false, message:"Email not found"})
-      
+    if (!email) {
+      return res.status(400).json({ success: false, message: "Email is required" });
     }
 
-    const findEmail = await RegisterUser.findOne({
-      email:email
-    })
+    let account = await RegisterUser.findOne({ email });
+    let role = 'patient';
 
-    if(!findEmail){
-      return res.status(404).json({success:false, message:"User not found"})
+    if (!account) {
+      account = await RegisterDoctor.findOne({ email });
+      role = 'doctor';
     }
 
-    //rest link send
+    if (!account) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
 
-    //generating token
-    const token = jwt.sign({id:findEmail._id}, process.env.JWT_SECRET, {expiresIn:'5m'});
+    const token = jwt.sign({ id: account._id, role }, process.env.JWT_SECRET, { expiresIn: '5m' });
 
-    //sendingmail
-    passwordResetMail(findEmail.email, token)
-    res.status(200).json({success:true, message: "Verification link has been sent to your email", token})
+    // send mail with token
+    passwordResetMail(account.email, token);
 
+    res.status(200).json({
+      success: true,
+      message: "Verification link has been sent to your email",
+      token
+    });
 
-    
-
-  }catch(error){
-    res.status(500).json({success:false, message:"server error", error: error.message})
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
   }
-}
+};
 
-//forgot password- change
-const pwChange = async(req, res) => {
-  try{
-    const {password} =req.body;
-    const {token} = req.params;
 
-    if(!password && !token){
-      res.status(400).json({sucess:false, message:"All fields are required"})
+//reset password- change
+const pwChange = async (req, res) => {
+  try {
+    const { password } = req.body;
+    const { token } = req.params;
+
+    if (!password || !token) {
+      return res.status(400).json({ success: false, message: "All fields are required" });
     }
 
-    //verifying token
-    const decoded= jwt.verify(token,process.env.JWT_SECRET);
+    // verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    if(!decoded){
-      res.status(400).json({sucess:false, message:"invalid token"})
+    if (!decoded) {
+      return res.status(400).json({ success: false, message: "Invalid or expired token" });
     }
 
-    const userId= decoded.id;
+    const { id, role } = decoded;
 
-    const existingUser = await RegisterUser.findById(userId);
+    let account;
 
-    if(!existingUser){
-      res.status(400).json({sucess:false, message:"User not found"})
+    if (role === 'patient') {
+      account = await RegisterUser.findById(id);
+    } else if (role === 'doctor') {
+      account = await RegisterDoctor.findById(id);
+    } else {
+      return res.status(400).json({ success: false, message: "Invalid user role" });
     }
 
-    const hashedPassword = bcrypt.hashSync(password,10)
+    if (!account) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
 
-    existingUser.password = hashedPassword;
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    account.password = hashedPassword;
 
-    await existingUser.save();
-    res.status(200).json({success:true, message: "Password reset successfully"})
+    await account.save();
 
-  }catch{
-    res.status(500).json({success:false, message:"server error", error: error.message})
+    res.status(200).json({ success: true, message: "Password reset successfully" });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
   }
-}
+};
+
 
 
 module.exports={registerUser, verifyEmail, loginUser, getUserById, editUserData, deleteUserData,
