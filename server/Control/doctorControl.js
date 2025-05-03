@@ -186,8 +186,45 @@ const getAppointments = async (req, res) => {
   }
 };
 
+//Get appointment stats
+const getAppointmentStats = async (req, res) => {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to start of day
+
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1); // Start of next day
+
+    //Appointments on today
+    const todayCount = await Appointment.countDocuments({
+      date: {
+        $gte: today,
+        $lt: tomorrow
+      }
+    });
+
+    //Upcoming appointments (after today)
+    const upcomingCount = await Appointment.countDocuments({
+      date: { $gt: tomorrow }
+    });
+
+    // Unique patients who booked any appointments
+    const uniquePatients = await Appointment.distinct('user');
+    const totalPatients = uniquePatients.length;
+
+    res.status(200).json({
+      todayAppointments: todayCount,
+      upcomingAppointments: upcomingCount,
+      totalPatientsWithAppointments: totalPatients
+    });
+
+  } catch (err) {
+    console.error('Error fetching appointment stats:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
 
 
 
 
-module.exports = { doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments};
+module.exports = { doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments,getAppointmentStats};
