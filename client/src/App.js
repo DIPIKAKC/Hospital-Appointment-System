@@ -35,6 +35,8 @@ import { VerifyUserEmail } from "./Pages/User/VerifyUserEmail";
 import { ForgotPassword } from "./Pages/User/ForgotPassword";
 import { ResetPassword } from "./Pages/User/ResetPassword";
 import AdminBar from "./Components/Admin/SideBar";
+import DoctorDashboard from "./Pages/Doctor/DocDashboard";
+import DoctorProfile from "./Pages/Doctor/DocProfile";
 // import PaymentPage from "./Pages/User/KhaltiPaymentPage";
 // import PaymentStatus from "./Pages/User/KhaltiStatusPayment";
 
@@ -80,10 +82,13 @@ const App = () => {
 
           {/* Doctor */}
           {/* <Route path = "/login-doc" element={<LoginDoctor />} /> */}
+          <Route path= "/doc-dashboard" element= {<DoctorDashboard />} />
           <Route path= "/schedules" element= {<ManageSchedule />} />
           <Route path= "/my-assigned-appointments" element= {<AppointmentsList />} />
           <Route path="/my-notifications" element={<MyNotifications/>} />
           <Route path= "/contact" element= {<DocContact />} />
+          <Route path= "/profile-doc" element= {<DoctorProfile />} />
+
 
           {/* Admin */}
 

@@ -13,7 +13,9 @@ const { registerUser, loginUser, getUserById,
     pwChange} = require("../Control/userControl");
 const { doctorSlotsPost, 
     appointmentStatus, getMeDoctor, getAppointments,
-    getAppointmentStats} = require("../Control/doctorControl")
+    getAppointmentStats,
+    getMyPatients,
+    editDoctorData} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor, 
     getAllAppointments,
     getAllUsers,
@@ -87,8 +89,14 @@ router.get("/my-assigned-appointments", auth, authorize("doctor"), getAppointmen
 router.patch("/:id/status", auth, authorize('doctor'), appointmentStatus)
 //get profile
 router.get("/me", auth, getMeDoctor)
+//edit profile
+router.patch('/edit-doc', auth, authorize("doctor"), editDoctorData)
 //get appointments stats
 router.get("/stats-appointments", auth, authorize("doctor"), getAppointmentStats)
+//get my pattients
+router.get("/my-patients", getMyPatients)
+
+
 
 
 //ADMIN

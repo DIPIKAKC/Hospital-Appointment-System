@@ -161,6 +161,36 @@ const getMeDoctor = async (req, res) => {
   }
 };
 
+//Update doctor data by id
+const editDoctorData = async(req,res)=>{
+  try {
+      const doctorId = req.userId
+      // console.log(userId)
+      const {fullName,email, contactInfo, expereince, gender} = req.body
+
+      const updateFields = {};
+      if (fullName) updateFields.fullName = fullName;
+      if (email) updateFields.email = email;
+      if (contactInfo) updateFields.contactInfo = contactInfo;
+      if (expereince) updateFields.dateOfBirth = expereince;
+      if (gender) updateFields.gender = gender;
+
+      const editDoctor = await RegisterDoctor.findByIdAndUpdate(
+        doctorId,
+        updateFields,
+        { new: true, runValidators: true } // Return updated document and apply validators
+      );
+
+      if(!editDoctor){
+          return res.status(404).json({success:false,message:"Unable to edit the profile"})
+      }else{
+          return res.status(200).json({success:true,message:"Edited successfully"})
+      }
+  } catch (error) {
+      return res.status(400).json({success:false,message:"error",error})
+  }
+}
+
 
 //Get Assigned Appointments
 const getAppointments = async (req, res) => {
@@ -189,6 +219,8 @@ const getAppointments = async (req, res) => {
 //Get appointment stats
 const getAppointmentStats = async (req, res) => {
   try {
+    const now = new Date(); // Current date and time
+
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Set to start of day
 
@@ -212,10 +244,16 @@ const getAppointmentStats = async (req, res) => {
     const uniquePatients = await Appointment.distinct('user');
     const totalPatients = uniquePatients.length;
 
+    //Pending requests from now (current date and time onward)
+    const pendingRequestsCount = await Appointment.countDocuments({
+      date: { $gte: now },
+      status: 'pending'
+    });
     res.status(200).json({
       todayAppointments: todayCount,
       upcomingAppointments: upcomingCount,
-      totalPatientsWithAppointments: totalPatients
+      totalPatientsWithAppointments: totalPatients,
+      pendingReqFromNow:pendingRequestsCount,
     });
 
   } catch (err) {
@@ -224,7 +262,54 @@ const getAppointmentStats = async (req, res) => {
   }
 };
 
+//get patient records
+const getMyPatients = async (req, res) => {
+  try {
+    const doctorId = req.id; // Assuming JWT middleware sets this
+
+    // for only full name and email
+    // Get distinct user IDs who booked appointments with this doctor
+    // const patientIds = await Appointment.distinct('user', {
+    //   doctorId: doctorId
+    // });
+// 
+    // // Fetch user details for those IDs
+    // const patients = await RegisterUser.find(
+    //   { _id: { $in: patientIds } },
+    //   { fullName: 1, email: 1 } // return only necessary fields
+    // );
+
+    //For patients and appt info
+    // Find all appointments for this doctor
+    const appointments = await Appointment.find({doctorId}).populate('user', 'fullName email');
+
+    // Group by unique patients and find their latest appointment
+    const patientMap = new Map();
+
+    for (const appt of appointments) {
+      const id = appt.user._id.toString();
+      if (!patientMap.has(id) || new Date(appt.date) > new Date(patientMap.get(id).lastVisit)) {
+        patientMap.set(id, {
+          name: appt.user.fullName,
+          email: appt.user.email,
+          lastVisit: appt.date,
+          condition: appt.reason || 'General Checkup' // Customize as needed
+        });
+      }
+    }
+
+    // Convert to array and sort by lastVisit descending
+    const patients = Array.from(patientMap.values())
+    .sort((a, b) => new Date(b.lastVisit) - new Date(a.lastVisit))
+    .slice(0, 2); // Get only the 2 most recent
+
+    res.status(200).json({ patients });
+  } catch (err) {
+    console.error('Error fetching my patients:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
 
 
 
-module.exports = { doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments,getAppointmentStats};
+module.exports = { doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments,getAppointmentStats, getMyPatients, editDoctorData};

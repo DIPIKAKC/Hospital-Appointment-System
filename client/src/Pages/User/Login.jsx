@@ -39,7 +39,7 @@ const LoginForm = () => {
 
         setTimeout(() => {
           if (data.user.role === 'doctor') {
-            navigate("/schedules"); // Doctor dashboard
+            navigate("/doc-dashboard"); // Doctor dashboard
           } else {
             navigate("/"); // Patient homepage
           }

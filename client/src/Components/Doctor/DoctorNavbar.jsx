@@ -82,11 +82,15 @@ const DocBar = () => {
                         <Link to= "/" > MedEase</Link>
                     </button> */}
 
-                    <Link to="/schedules" className="logo">
+                    <Link to="/doc-dashboard" className="logo">
                         MedEase
                     </Link>
 
                     <div className="doc-navbar-menu">
+                        <NavLink to="/doc-dashboard" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
+                            Dashboard
+                        </NavLink>
+
                         <NavLink to="/schedules" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
                             Manage Schedule
                         </NavLink>
@@ -123,7 +127,7 @@ const DocBar = () => {
 
                                 {showDropdown && (
                                     <div className="doc-dropdown-menu">
-                                        <Link to="/my-profile" className="doc-dropdown-item">
+                                        <Link to="/profile-doc" className="doc-dropdown-item">
                                             <RiUser3Line size={18} />
                                             <span>My Profile</span>
                                         </Link>
