@@ -4,6 +4,7 @@ const {Notification} = require("../Schema/notificationSchema")
 
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const { registerDoctor } = require("./adminControl")
 
 
 // //login Doctor
@@ -310,6 +311,36 @@ const getMyPatients = async (req, res) => {
   }
 };
 
+//change password
+const changePwDoc = async (req, res) => {
+  try {
+    const doctorId = req.userId; 
+    const { currentPassword, newPassword } = req.body;
 
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: "Both current and new passwords are required" });
+    }
 
-module.exports = { doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments,getAppointmentStats, getMyPatients, editDoctorData};
+    const doctor = await RegisterDoctor.findById(doctorId);
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, doctor.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Current password is incorrect" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    doctor.password = await bcrypt.hash(newPassword, salt);
+
+    await doctor.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Password change error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments,getAppointmentStats, getMyPatients, editDoctorData, changePwDoc};

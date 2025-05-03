@@ -15,7 +15,8 @@ const { doctorSlotsPost,
     appointmentStatus, getMeDoctor, getAppointments,
     getAppointmentStats,
     getMyPatients,
-    editDoctorData} = require("../Control/doctorControl")
+    editDoctorData,
+    changePwDoc} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor, 
     getAllAppointments,
     getAllUsers,
@@ -95,6 +96,8 @@ router.patch('/edit-doc', auth, authorize("doctor"), editDoctorData)
 router.get("/stats-appointments", auth, authorize("doctor"), getAppointmentStats)
 //get my pattients
 router.get("/my-patients", getMyPatients)
+//change password
+router.patch("/change-pw-doc", auth, changePwDoc)
 
 
 

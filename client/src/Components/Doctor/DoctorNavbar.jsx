@@ -131,7 +131,7 @@ const DocBar = () => {
                                             <RiUser3Line size={18} />
                                             <span>My Profile</span>
                                         </Link>
-                                        <Link to="/change-password" className="doc-dropdown-item" onClick={() => setShowDropdown(false)}>
+                                        <Link to="/change-pw-doc" className="doc-dropdown-item" onClick={() => setShowDropdown(false)}>
                                             <RiLockPasswordLine size={18} />
                                             <span>Change Password</span>
                                         </Link>
