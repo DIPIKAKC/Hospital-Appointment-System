@@ -94,8 +94,8 @@ const DoctorAppointmentsList = () => {
 
   const filteredAppointments = sortedAppointments.filter((appointment) => {
     const apptDate = new Date(appointment.date);
-    const isUpcoming = apptDate >= today;
-    const isPast = apptDate < today;
+    const isUpcoming = apptDate >= new Date(new Date().setHours(0, 0, 0, 0));
+    const isPast = apptDate < new Date(new Date().setHours(0, 0, 0, 0));
 
     // Calculate past date limits (7 or 30 days ago)
     const pastDateLimit = new Date(today);
