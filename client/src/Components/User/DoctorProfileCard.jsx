@@ -14,7 +14,7 @@ const DoctorHomeCard = ({doctor}) => {
             <div className="experience">Experience</div>
             <div className="experience-value">{doctor.experience}</div><br/>
             <div className="name">{doctor.fullName}</div>
-            <div className="specialty">{doctor.department.name}</div>
+            <div className="doc-specialty">{doctor.department.name}</div>
             </div>
             <div className="doctor-image">
                 <img src={doctorImg} alt="Doctor"></img>

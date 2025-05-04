@@ -38,6 +38,7 @@ import AdminBar from "./Components/Admin/SideBar";
 import DoctorDashboard from "./Pages/Doctor/DocDashboard";
 import DoctorProfile from "./Pages/Doctor/DocProfile";
 import ChangePasswordDoc from "./Pages/Doctor/ChangeDocPw";
+import PaymentSuccess from "./Pages/User/KhaltiSuccess";
 // import PaymentPage from "./Pages/User/KhaltiPaymentPage";
 // import PaymentStatus from "./Pages/User/KhaltiStatusPayment";
 
@@ -78,6 +79,7 @@ const App = () => {
 
 {/* payment */}
           <Route path="/khalti/payment/verify" element={<PaymentStatus />} /> */
+          <Route path="/khalti/payment/success" element={<PaymentSuccess />} /> */
 
 
 

@@ -1,4 +1,4 @@
-
+/* 
  body {
   margin: 0;
   display: flex;
@@ -7,9 +7,9 @@
   min-height: 100vh;
   background-color: #f3f4f6;
   font-family: Arial, sans-serif;
-}
+} */
 
-.doctor-card-container {
+.doctor-personal-card-container{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,14 +17,14 @@
   height: 100vh; */
 }
 
-.doctor-card {
+.doctor-personal-card {
   display: flex;
   align-items: center;
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 25px;
-  width: 350px;
+  width: 100%;
   padding-left: 30px;
   padding-right: 30px;
 }
@@ -33,59 +33,62 @@
   margin-right: 20px;
 } */
 
-.doctor-photo img {
+.doctor-personal-card-photo img {
   width: 120px;
-  height: 140px;
+  height: 150px;
   /* object-fit: cover; */
   border-radius: 10px;
 }
 
-.doctor-details {
+.doctor-personal-card-details {
   margin-right: 30px;
   flex-grow: 1;
 }
 
-.experience-label {
+.experience-personal-card-label {
   color: #6b7280;
   margin-bottom: 5px;
 }
 
-.experience-value {
+.experience-personal-card-value {
   font-weight: 600;
   margin-bottom: 10px;
 }
 
-.doctor-name {
+.doctor-personal-card-name {
   color: #1f2937;
   font-weight: 500;
   margin-bottom: 5px;
 }
 
-.doctor-specialty {
+.doctor-personal-card-specialty {
   color: #6b7280;
   font-size: 0.875rem;
   margin-bottom: 15px;
 }
 
-.book-appointment-btn {
-  width: 100%;
+.book-personal-card-appointment-btn {
+  white-space: nowrap; /* Prevents text from wrapping */
+  width: fit-content;
   background-color: #10B8B9;
   color: white;
   border: none;
-  padding: 10px;
+  padding: 15px 50px;
+  /* padding-left: 40px;
+  padding-right: 40px; */
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.book-appointment-btn:hover {
+.book-personal-card-appointment-btn:hover {
   background-color: #089d9d;
 }
 
 
 /* indicator */
 
-.availability-indicator {
+.availability-personal-card-indicator {
   display: inline-block;
   width: 10px;
   height: 10px;
@@ -99,16 +102,16 @@
 }
 
 .unavailable {
-  background-color: rgb(214, 173, 68);
+  background-color: rgb(143, 143, 143);
 }
 
-.availability-badge {
+/* .availability-badge {
   position: absolute;
   top: 10px;
   right: 10px;
-}
+} */
 
-.dot {
+/* .dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -121,6 +124,6 @@
 
 .unavailable {
   background-color: rgb(201, 201, 201);
-}
+} */
 
 

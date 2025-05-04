@@ -24,22 +24,22 @@ const DoctorCard = ({ doctor }) => {
   const isAvailable = doctor.availableSlots && doctor.availableSlots.length > 0;
 
   return (
-    <div className="doctor-card-container">
-      <div className="doctor-card" onClick={handleCardClick}>
-        <div className="doctor-details">
-          <div className="experience-label">Experience</div>
-          <div className="experience-value">{doctor.experience}</div>
-          <div className="doctor-name">
+    <div className="doctor-personal-card-container">
+      <div className="doctor-personal-card" onClick={handleCardClick}>
+        <div className="doctor-personal-card-details">
+          <div className="experience-personal-card-label">Experience</div>
+          <div className="experience-personal-card-value">{doctor.experience}</div>
+          <div className="doctor-personal-card-name">
             {doctor.fullName}
             <span
-              className={`availability-indicator ${isAvailable ? 'available' : 'unavailable'}`}
+              className={`availability-personal-card-indicator ${isAvailable ? 'available' : 'unavailable'}`}
               title={isAvailable ? 'Available' : 'Not Available'}
             />
           </div>
-          <div className="doctor-specialty">{doctor.department?.name}</div>
-          <button className="book-appointment-btn" onClick={handleBookAppointment}>Book Appointment</button>
+          <div className="doctor-personal-card-specialty">{doctor.department?.name}</div>
+          <button className="book-personal-card-appointment-btn" onClick={handleBookAppointment}>Book Appointment</button>
         </div>
-        <div className="doctor-photo">
+        <div className="doctor-personal-card-photo">
           <img src={doctorImg} alt="Doctor" />
         </div>
       </div>
