@@ -98,13 +98,13 @@ const FindDoctors = () => {
         <>
         <NavBar/> 
 
-        <main className="doctor-dashboard">
-            <div className="doctor-sidebar">
-                <div className="dept-container">
+        <main className="find-doctor-container">
+            <div className="find-doctor-sidebar">
+                <div className="find-doctor-dept-container">
                     <h2>Departments</h2>
-                    <p className="dept-subtitle">Find by speciality</p>
+                    <p className="find-doctor-dept-subtitle">Find by speciality</p>
                     
-                    <div className="dept-list">
+                    <div className="find-doctor-dept-list">
                         {departments.length > 0 ? (
                             departments.map((department, index) => (
                                 <div 
@@ -116,13 +116,13 @@ const FindDoctors = () => {
                                 </div>
                             ))
                         ) : (
-                            <div className="dept-item">Loading departments...</div>
+                            <div className="find-doctor-dept-item">Loading departments...</div>
                         )}
                     </div>
                     
                     {(selectedDepartment || searchTerm) && (
                         <button 
-                            className="btn-show-all"
+                            className="find-doctor-btn-show-all"
                             onClick={clearFilters}
                         >
                             Show All
@@ -131,9 +131,9 @@ const FindDoctors = () => {
                 </div>
             </div>
 
-            <div className="doctor-content">
-                <div className="search-wrapper">
-                    <i className="search-icon"><GoSearch size={22}/></i>
+            <div className="find-doctor-content">
+                <div className="find-doctor-search-wrapper">
+                    <i className="find-doctor-search-icon"><GoSearch size={22}/></i>
                     <input 
                         type="text" 
                         placeholder="Search by name" 
@@ -142,17 +142,17 @@ const FindDoctors = () => {
                     />
                 </div>
 
-                <div className="availability-legend">
-                    <div className="legend-item">
-                        <span className="dot available"></span> Available
+                <div className="find-doctor-availability-legend">
+                    <div className="find-doctor-legend-item">
+                        <span className="find-doctor-dot available"></span> Available
                     </div><p>|</p>
-                    <div className="legend-item">
-                        <span className="dot unavailable"></span> Not Available
+                    <div className="find-doctor-legend-item">
+                        <span className="find-doctor-dot unavailable"></span> Not Available
                     </div>
                 </div>
 
 
-                <div className="doctor-grid">
+                <div className="find-doctor-doctor-grid">
                     {loading ? (
                         <p>Loading doctors...</p>
                     ) : displayedDoctors.length > 0 ? (

@@ -164,35 +164,35 @@ const DoctorPage = () => {
 
         <>
         <NavBar />
-        <div className="main-container">
+        <div className="doctor-personal-container">
 
-            <div className="doctor">
-                <aside className="info-card">
+            <div className="doctor-personal">
+                <aside className="doctor-personal-info-card">
                     <DoctorProfileCard />
                 </aside>
             </div>
 
-            <div className="booking-section">
+            <div className="doctor-personal-booking-section">
 
-                <div className="calendar">
+                <div className="doctor-personal-calendar">
                     <h3>Select Appointment Date</h3>
                     <Calendar 
-                        className="appointment-calendar"
+                        className="doctor-personal-appointment-calendar"
                         onChange={handleDateChange}
                         value={selectedDate}
                         minDate={new Date()}
                     />           
 
                 </div>
-                <div className="timeslot-section">
+                <div className="doctor-personal-timeslot-section">
                     <h3> Available Hours</h3>
 
                     {availableTimes.length > 0 ? (
-                        <div className="time-grid">
+                        <div className="doctor-personal-time-grid">
                             {availableTimes.map((time, index) => (
                                 <button
                                     key={index}
-                                    className={`time-slot ${selectedTime === time ? 'selected' : ''}`}
+                                    className={`doctor-personal-time-slot ${selectedTime === time ? 'selected' : ''}`}
                                     onClick={() => setSelectedTime(time)}
                                 >
                                     {time}
@@ -205,7 +205,7 @@ const DoctorPage = () => {
 
                 </div>
                 
-                <div className="reason-input">
+                <div className="doctor-input-reasons">
                     <h3>Appointment Reason</h3>
                     <input 
                         type="text"
@@ -215,7 +215,7 @@ const DoctorPage = () => {
                     />
                 </div>
 
-                <button className="continue-button"
+                <button className="doctor-personal-continue-button"
                     onClick={handleBookAppointment}
                     disabled={!selectedTime}
                 >

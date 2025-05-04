@@ -1,178 +1,191 @@
-* {
-    margin-top: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+/* FindDoctors.css */
+
+/* Main container styles */
+.find-doctor-container {
+  display: flex;
+  max-width: 1300px;
+  margin: 2rem auto;
+  gap: 2rem;
+  padding: 0 1rem;
 }
-  
-/* Main Content Styles */
-.doctor-dashboard {
-    margin-top: 120px;
-    margin-left: 190px;
-    display: flex;
-    min-height: calc(100vh - 70px);
-    width: 100%;
-    position: relative;
+
+/* Sidebar styles */
+.find-doctor-sidebar {
+  flex: 0 0 280px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: fit-content;
 }
-  
-/* Sidebar Styles */
-.doctor-sidebar {
-    margin-top: 50px;
-    width: 240px;
-    min-width: 240px; /* Ensures sidebar maintains its width */
-    border-right: 1px solid #e0e0e0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 20px 0;
-    position: sticky;
-    top: 120px; /* Adjusts for the margin-top of main-content */
-    height: fit-content;
+
+.find-doctor-dept-container {
+  padding: 1.5rem;
 }
-  
-.dept-container {
-    padding: 0 20px;
+
+.find-doctor-dept-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #0a3d62;
 }
-  
-.dept-container h2 {
-    font-size: 18px;
-    margin-bottom: 5px;
+
+.find-doctor-dept-subtitle {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
 }
-  
-.dept-subtitle {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 35px;
+
+.find-doctor-dept-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
-  
-.dept-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-height: 250px;
-    width: 170px;
-    overflow-y: auto;
-}
-  
+
 .dept-item {
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    cursor: pointer;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  color: #444;
 }
-  
+
+.dept-item:hover {
+  background-color: #e9ecef;
+}
+
 .dept-item.active {
-    background-color: #10B8B9;
-    color: white;
-    border-radius: 10px;
-}
-  
-/* Content Area Styles */
-.doctor-content {
-    margin-left: 50px;
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    max-width: calc(100% - 240px); /* Ensures content respects sidebar width */
-}
-  
-.search-wrapper {
-    display: flex;
-    align-items: center;
-    background-color: #eaeaea;
-    border-radius: 20px;
-    padding: 0px 15px;
-    margin-bottom: 20px;
-    width: 25%;
-}
-  
-.search-icon {
-    margin-right: 10px;
-}
-  
-.search-wrapper input {
-    border: none;
-    background: transparent;
-    outline: none;
-    flex: 1;
+  background-color: #0a3d62;
+  color: white;
+  font-weight: 500;
 }
 
-/*  */
-.availability-legend {
-    display: flex;
-    gap: 20px;
-    margin: 10px 0 20px 0;
-    padding-left: 10px;
-    font-size: 14px;
-    color: #444;
-  }
-  
-  .legend-item {
-    display: flex;
-    align-items: center;
-  }
-  
-  .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-right: 6px;
-  }
-  
-  .available {
-    background-color: green;
-  }
-  
-  .unavailable {
-    background-color: goldenrod;
-  }
-  
-/*  */
-
-/* Doctor Cards Layout */
-.doctor-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 0.3fr);
-    gap: 40px;
+.find-doctor-btn-show-all {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: white;
+  border: 1px solid #0a3d62;
+  color: #0a3d62;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
-.btn-show-all {
-    padding: 8px 16px;
-    background-color: #10B8B9;
-    color: white;
-    border: none;
-    border-radius: 7px;
-    cursor: pointer;
-    margin-top: 20px;
+.find-doctor-btn-show-all:hover {
+  background-color: #0a3d62;
+  color: white;
 }
-  
-/* Responsive layout for smaller screens */
+
+/* Content area styles */
+.find-doctor-content {
+  flex: 1;
+}
+
+/* Search input styles */
+.find-doctor-search-wrapper {
+  position: relative;
+  /* margin-bottom: 1.5rem; */
+}
+
+.find-doctor-search-wrapper input {
+  width: 50%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.find-doctor-search-wrapper input:focus {
+  outline: none;
+  border-color: #0a3d62;
+  box-shadow: 0 0 0 2px rgba(10, 61, 98, 0.2);
+}
+
+.find-doctor-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+/* Availability legend styles */
+.find-doctor-availability-legend {
+  display: flex;
+  align-items: center;
+  /* margin-bottom: 1.5rem; */
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.find-doctor-legend-item {
+  display: flex;
+  align-items: center;
+}
+
+.find-doctor-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.find-doctor-dot.available {
+  background-color: #28a745;
+}
+
+.find-doctor-dot.unavailable {
+  background-color: rgb(143, 143, 143);
+}
+
+/* Doctor grid styles */
+.find-doctor-doctor-grid {
+
+  display: grid;
+  grid-template-columns: repeat(2, 0.3fr);
+  gap: 1.5rem;
+}
+
+/* Loading and empty states */
+.find-doctor-content p {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Responsive styles */
 @media (max-width: 992px) {
-    .doctor-content {
-        margin-right: 0;
-        max-width: 100%;
-    }
-    
-    .doctor-dashboard {
-        flex-direction: column;
-    }
-    
-    .doctor-sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #e0e0e0;
-        margin-bottom: 20px;
-        position: static;
-    }
-    
-    .doctor-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .find-doctor-container {
+    flex-direction: column;
+  }
+  
+  .find-doctor-sidebar {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+  
+  .find-doctor-dept-list {
+    max-height: 300px;
+    overflow-y: auto;
+  }
 }
 
-@media (max-width: 768px) {
-    .doctor-grid {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 576px) {
+  .find-doctor-doctor-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .find-doctor-availability-legend {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .find-doctor-availability-legend p {
+    display: none;
+  }
 }

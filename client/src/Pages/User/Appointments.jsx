@@ -7,6 +7,7 @@ import Resources from "../../Components/User/Resources";
 import Footer from "../../Components/User/Footer";
 import ReminderModal from "../../Components/User/Reminder";
 import InitiatingKhaltiPayment from "../User/InitiatingKhaltiPayment"
+
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
   const [activeTab, setActiveTab] = useState('all');
@@ -184,13 +185,19 @@ const AppointmentList = () => {
                     </p>
                   </div>
                   <div className="appt-actions">
-                    <p className="appt-value">
-                      <button
-                        className="btn-cancel"
-                        onClick={() => cancelAppointment(appointment._id)}>
-                        Cancel
-                      </button>
-                    </p>
+                    {appointment.status !== 'canceled' ? (
+                      <p className="appt-value">
+                        <button
+                          className="btn-cancel"
+                          onClick={() => cancelAppointment(appointment._id)}
+                        >
+                          Cancel
+                        </button>
+                      </p>
+                    ) : (
+                      <p className="appt-label canceled-text">Canceled</p>
+                    )}
+
                     <p className="appt-value">
                       <button 
                         className="btn-appt" 
