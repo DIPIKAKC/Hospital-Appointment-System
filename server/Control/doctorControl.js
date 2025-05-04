@@ -220,37 +220,48 @@ const getAppointments = async (req, res) => {
 //Get appointment stats
 const getAppointmentStats = async (req, res) => {
   try {
-    const now = new Date(); // Current date and time
+
+    const doctorId = req.userId;
+    if (!doctorId) {
+      return res.status(400).json({ error: 'Doctor ID is required' });
+    }
+    // const now = new Date(); // Current date and time
 
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Set to start of day
+    const todayStr = today.toISOString().split('T')[0];
 
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1); // Start of next day
+    const tomorrowStr = tomorrow.toISOString().split('T')[0];
 
     //Appointments on today
     const todayCount = await Appointment.countDocuments({
-      date: {
-        $gte: today,
-        $lt: tomorrow
-      }
+     doctor:doctorId,
+     date: { $gte: todayStr }
     });
 
     //Upcoming appointments (after today)
     const upcomingCount = await Appointment.countDocuments({
-      date: { $gt: tomorrow }
+      doctor: doctorId,
+      date: { $gt: todayStr }
     });
 
     // Unique patients who booked any appointments
-    const uniquePatients = await Appointment.distinct('user');
+    const uniquePatients = await Appointment.distinct('user',{
+      doctor:doctorId
+    })
     const totalPatients = uniquePatients.length;
 
     //Pending requests from now (current date and time onward)
     const pendingRequestsCount = await Appointment.countDocuments({
-      date: { $gte: now },
+      doctor: doctorId,
+      date: { $gte: todayStr },
       status: 'pending'
     });
+
     res.status(200).json({
+      doctorId: doctorId,
       todayAppointments: todayCount,
       upcomingAppointments: upcomingCount,
       totalPatientsWithAppointments: totalPatients,
@@ -262,6 +273,7 @@ const getAppointmentStats = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
 
 //get patient records
 const getMyPatients = async (req, res) => {
