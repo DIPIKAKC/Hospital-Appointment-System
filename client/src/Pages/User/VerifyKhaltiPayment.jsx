@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const PaymentStatus = () => {
   const [loading, setLoading] = useState(true);
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [error, setError] = useState('');
   const location = useLocation()
+  const navigate = useNavigate();
 
 useEffect(() => {
     const verifyPayment = async () => {
@@ -30,7 +31,12 @@ useEffect(() => {
         const data = await response.json();
   
         if (data.success) {
-          setPaymentDetails(data.appointment); // store appointment details
+          // Redirect to success page with appointment details
+          navigate('/khalti/payment/success', { 
+            state: { 
+              appointmentDetails: data.appointment 
+            }
+          });
         } else {
           setError(data.message || 'Payment verification failed');
         }
@@ -53,23 +59,8 @@ useEffect(() => {
     return <div style={{color: 'red'}}>Error: {error}</div>;
   }
 
-  return (
-    <div>
-      <h2>Payment Successful!</h2>
-      <p>Amount Paid: {paymentDetails.amount / 100} NPR</p>
-      <p>Payment Status: {paymentDetails.paymentStatus}</p>
-      <div className='appointment-details'>
-        <h3> Appointment Details: </h3>
-        <p>{paymentDetails.patientName}</p>
-        <p>{paymentDetails.doctorName}</p>
-        <p>{paymentDetails.department}</p>
-        <p>{paymentDetails.appointmentDate}</p>        
-        <p>{paymentDetails.appointmentTime}</p>
-      </div>
-      <p>Payment Method: {paymentDetails.paymentMethod}</p>
-    </div>
-  );
-};
+  return null;
+}
 
 
 export default PaymentStatus;
