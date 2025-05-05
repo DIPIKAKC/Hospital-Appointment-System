@@ -29,7 +29,10 @@ const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor,
     adminUpdateDepartment,
     adminDeleteDepartment,
     adminDeleteUsers,
-    getStats} = require("../Control/adminControl");
+    getStats,
+    addResource,
+    updateResource,
+    getResources} = require("../Control/adminControl");
 const { createNotification, getNotification } = require("../Control/notificationControl");
 const { khaltiPaymentInitiation, verifyKhaltiPayment } = require("../Control/paymentControl");
 const { verifyEmailMail } = require("../Control/sendEmail");
@@ -127,6 +130,12 @@ router.get("/admin/users", auth, authorize("admin"), getAllUsers)
 router.delete("/admin/users/delete/:id", auth, authorize("admin"), adminDeleteUsers )
 
 router.get("/admin/stats", auth, authorize("admin"), getStats)
+
+//rosource
+router.post('/add-resource', auth, authorize("admin", addResource))
+router.patch("/admin/resources/edit/:id",auth, authorize("admin"), updateResource)
+//for both user and admin
+router.get("/resources", getResources)
 
 
 //NOtification

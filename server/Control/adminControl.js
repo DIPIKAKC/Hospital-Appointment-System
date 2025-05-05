@@ -4,6 +4,7 @@ const {Appointment} = require("../Schema/appointmentSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { default: mongoose } = require("mongoose")
+const { Resource } = require("../Schema/resourceSchema")
 
 
 
@@ -381,6 +382,64 @@ const getStats = async (req, res) => {
 };
 
 
+
+//post/create new resources
+const addResource = async (req, res) => {
+  try {
+
+    const {name} = req.body
+
+    const existingResource = await Resource.findOne({name});
+    if (existingResource) {
+      return res.status(400).json({success:false, message: 'Resource already exists. Use PUT to update.' });
+    }
+
+    const newResource = await Resource.create({
+      name: name,
+    })    
+    await newResource.save();
+
+    if(newResource){
+      res.status(200).json({success:true, message:'Successfully added resource'})
+    }else{
+      res.status(400).json({success:false, message:"Error adding resource."})
+    }
+  } catch (error) {
+    res.status(400).json({ message: 'Creation failed', error: error.message });
+  }
+};
+
+
+//update resources
+const updateResource = async (req, res) => {
+  try {
+
+    const resourceId = req.params.id;
+    const updatedData = req.body;
+
+    const updatedResource = await Resource.findByIdAndUpdate(resourceId, updatedData,{ new: true });
+
+    if(!updateResource){
+      return res.status(400).json({ succes:false,message: 'Failed to update resource' });
+    }
+    
+    res.status(200).json({ success:true, message: 'resource updated successfully' , resourcedata: updatedData});
+  } catch (error) {
+    res.status(400).json({ message: 'Updation failed' });
+  }
+};
+
+//get resources
+const getResources = async (req, res) => {
+  try {
+
+    const resources = await Resource.find();
+    res.status(200).json(resources);
+  } catch (error) {
+    res.status(500).json({success:false, message: 'Server error' , error:error.message});
+  }
+};
+
     module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor, getAllAppointments, 
       getAllUsers, adminDeleteUsers, getAdminDoctors, getAdminDepartments, adminUpdateDepartment,adminDeleteDepartment, adminDeleteAppointment, 
-      adminDeleteDoctors, adminUpdateDoctor, getDoctorById, getStats}
+      adminDeleteDoctors, adminUpdateDoctor, getDoctorById, getStats, addResource, updateResource, getResources}
