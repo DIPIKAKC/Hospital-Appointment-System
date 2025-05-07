@@ -22,7 +22,6 @@ const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor,
     getAllUsers,
     getAdminDoctors,
     getAdminDepartments,
-    deleteAppointment,
     adminDeleteAppointment,
     adminDeleteDoctors,
     adminUpdateDoctor,
@@ -30,9 +29,9 @@ const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor,
     adminDeleteDepartment,
     adminDeleteUsers,
     getStats,
-    addResource,
     updateResource,
-    getResources} = require("../Control/adminControl");
+    getResources,
+    addResource} = require("../Control/adminControl");
 const { createNotification, getNotification } = require("../Control/notificationControl");
 const { khaltiPaymentInitiation, verifyKhaltiPayment } = require("../Control/paymentControl");
 const { verifyEmailMail } = require("../Control/sendEmail");
@@ -132,7 +131,7 @@ router.delete("/admin/users/delete/:id", auth, authorize("admin"), adminDeleteUs
 router.get("/admin/stats", auth, authorize("admin"), getStats)
 
 //rosource
-router.post('/add-resource', auth, authorize("admin", addResource))
+router.post("/add-resource", auth, authorize("admin"),addResource)
 router.patch("/admin/resources/edit/:id",auth, authorize("admin"), updateResource)
 //for both user and admin
 router.get("/resources", getResources)

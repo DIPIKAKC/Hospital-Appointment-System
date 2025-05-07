@@ -3,7 +3,6 @@ const {Department} = require("../Schema/departmentSchema")
 const {Appointment} = require("../Schema/appointmentSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-const { default: mongoose } = require("mongoose")
 const { Resource } = require("../Schema/resourceSchema")
 
 
@@ -387,15 +386,18 @@ const getStats = async (req, res) => {
 const addResource = async (req, res) => {
   try {
 
-    const {name} = req.body
+    const {type, total, available} = req.body
 
-    const existingResource = await Resource.findOne({name});
+    const existingResource = await Resource.findOne({type});
     if (existingResource) {
-      return res.status(400).json({success:false, message: 'Resource already exists. Use PUT to update.' });
+      return res.status(400).json({success:false, message: 'Resource already exists' });
     }
 
     const newResource = await Resource.create({
-      name: name,
+      type,
+      total,
+      available,
+      lastUpdated: new Date()
     })    
     await newResource.save();
 
@@ -419,7 +421,7 @@ const updateResource = async (req, res) => {
 
     const updatedResource = await Resource.findByIdAndUpdate(resourceId, updatedData,{ new: true });
 
-    if(!updateResource){
+    if(!updatedResource){
       return res.status(400).json({ succes:false,message: 'Failed to update resource' });
     }
     
@@ -432,9 +434,11 @@ const updateResource = async (req, res) => {
 //get resources
 const getResources = async (req, res) => {
   try {
-
-    const resources = await Resource.find();
-    res.status(200).json(resources);
+    const resources = await Resource.find({});
+    if (!resources || resources.length === 0) {
+      return res.status(404).json({ success: false, message: 'No resource found' });
+    }
+    res.status(200).json({success:true,resources});
   } catch (error) {
     res.status(500).json({success:false, message: 'Server error' , error:error.message});
   }
