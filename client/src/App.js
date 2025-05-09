@@ -39,6 +39,7 @@ import DoctorDashboard from "./Pages/Doctor/DocDashboard";
 import DoctorProfile from "./Pages/Doctor/DocProfile";
 import ChangePasswordDoc from "./Pages/Doctor/ChangeDocPw";
 import PaymentSuccess from "./Pages/User/KhaltiSuccess";
+import AdminResourceManagement from "./Pages/Admin/AdminResourceManagement";
 // import PaymentPage from "./Pages/User/KhaltiPaymentPage";
 // import PaymentStatus from "./Pages/User/KhaltiStatusPayment";
 
@@ -110,6 +111,8 @@ const App = () => {
           <Route path= "/admin/users" element= {<AdminUserManagement/>} />
 
           <Route path= "/admin/appointments" element= {<AdminAppointmentManagement/>} />
+
+          <Route path= "/admin/resources" element= {<AdminResourceManagement/>} />
 
 
           

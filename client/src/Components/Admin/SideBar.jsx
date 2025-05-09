@@ -48,6 +48,7 @@ const AdminBar = () => {
                   <div className={`admin-home-menu-item ${currentPath === '/admin/doctors' ? 'active' : ''}`} onClick={() => handleNavigate('/admin/doctors')}>Doctors</div>
                   <div className={`admin-home-menu-item ${currentPath === '/admin/appointments' ? 'active' : ''}`} onClick={() => handleNavigate('/admin/appointments')}>Appointments</div>
                   <div className={`admin-home-menu-item ${currentPath === '/admin/departments' ? 'active' : ''}`} onClick={() => handleNavigate('/admin/departments')}>Departments</div>
+                  <div className={`admin-home-menu-item ${currentPath === '/admin/resources' ? 'active' : ''}`} onClick={() => handleNavigate('/admin/resources')}>Resources</div>
                 </div>
 
                 <span className="admin-home-welcome-text">Welcome, {username}</span>
