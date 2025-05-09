@@ -339,7 +339,7 @@ const adminUpdateDepartment = async (req, res) => {
 
 
 
-//delete doctors
+//delete departments
 const adminDeleteDepartment = async (req, res) => {
   try {
     const departmentId = req.params.id;
@@ -444,6 +444,28 @@ const getResources = async (req, res) => {
   }
 };
 
+
+//delete resource
+const adminDeleteResources = async (req, res) => {
+  try {
+    const resourceId = req.params.id;
+    console.log("Incoming ID:", resourceId);
+
+    const foundResource = await Resource.findById(resourceId);
+    console.log("Appointment found before delete:", foundResource);
+
+    const deletedResource = await Resource.findByIdAndDelete(resourceId);
+
+    if (!deletedResource) {
+      return res.status(404).json({ success: false, message: "resource not found" });
+    }
+
+    return res.status(200).json({ success: true, message: `Resource id: ${resourceId} deleted successfully` });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
     module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor, getAllAppointments, 
       getAllUsers, adminDeleteUsers, getAdminDoctors, getAdminDepartments, adminUpdateDepartment,adminDeleteDepartment, adminDeleteAppointment, 
-      adminDeleteDoctors, adminUpdateDoctor, getDoctorById, getStats, addResource, updateResource, getResources}
+      adminDeleteDoctors, adminUpdateDoctor, getDoctorById, getStats, addResource, updateResource, getResources, adminDeleteResources}
