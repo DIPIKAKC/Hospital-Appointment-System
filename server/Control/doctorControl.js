@@ -5,6 +5,7 @@ const {Notification} = require("../Schema/notificationSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { registerDoctor } = require("./adminControl")
+const { sendAppointmentStatusEmail } = require("./sendEmail")
 
 
 // //login Doctor
@@ -89,23 +90,35 @@ const appointmentStatus = async (req, res) => {
       return res.status(400).json({ message: "Invalid status" });
     }
 
-    const appointment = await Appointment.findById(req.params.id);
-    console.log (appointment)
+    const appointment = await Appointment.findById(req.params.id)
+      .populate("doctor", "fullName _id")
+      .populate("user", "fullName email _id");
+
+    console.log (appointment);
     
     if (!appointment) {
       return res.status(404).json({ message: "Appointment not found" });
     }
 
     // Verify this appointment belongs to the doctor
-    if (String(appointment.doctor) !== String(doctorId)) {
+    if (String(appointment.doctor._id) !== String(doctorId)) {
       return res.status(403).json({ message: "You are not authorized to update this appointment" });
     }
 
     appointment.status = status;
     if (notes) appointment.notes = notes;
     
+        // Send email to patient
+    sendAppointmentStatusEmail(
+      appointment.user.email,
+      appointment.doctor.fullName,
+      appointment.user.fullName,
+      appointment.date, // assuming appointment.date is in string or Date format
+      appointment.time, // assuming appointment.time is available
+      status,
+      notes || "No additional notes"
+    );
     await appointment.save();
-
     let notiContent;
     if(appointment.status === "confirmed"){
       notiContent = "You appointment is confirmed"

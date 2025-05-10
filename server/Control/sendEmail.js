@@ -228,4 +228,26 @@ const passwordResetMail = async (email, token) => {
 });
 };
 
-module.exports = {sendEmail, verifyEmailMail, passwordResetMail};
+
+//notification
+function sendAppointmentStatusEmail(email, doctorName,patientName, appointmentDate, appointmentime, status, note) {
+  // Define the email options
+  const mailOptions = {
+    from: `MedEase <${process.env.NODE_MAILER_EMAIL}>`,
+    to: email, ///patient
+    subject: `Appointment ${status}`, // Subject based on the status
+    text: `Dear ${patientName},\n\nDr. ${doctorName} has ${status} your appointment for ${appointmentDate} at ${appointmentime}. Doctor's note: ${note}. Hope to see you on time.\n\nBest regards,\nMedEase Team` // Body of the email
+  };
+
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('Error sending email:', error);
+    } else {
+      console.log('Email sent:', info.response);
+    }
+  });
+}
+
+
+module.exports = {sendEmail, verifyEmailMail, passwordResetMail, sendAppointmentStatusEmail};
