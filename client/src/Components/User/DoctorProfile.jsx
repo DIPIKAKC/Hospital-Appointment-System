@@ -3,6 +3,8 @@ import { useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import doctorImg from '../../assets/docfemale.jpg';
 import './DoctorProfile.css';
+import { Phone, Mail, Calendar, Clock, Check, X } from 'lucide-react';
+
 
 const DoctorProfileCard = () => {
     const {doctorId} = useParams();
@@ -10,7 +12,9 @@ const DoctorProfileCard = () => {
         fullName: "",
         department: "",
         experience: "",
-        description: "" 
+        description: "",
+        contact:"",
+        email:"" 
     });
 
     useEffect(() => {        
@@ -44,29 +48,86 @@ const DoctorProfileCard = () => {
         fetchDoctor();
     }, [doctorId]); // Add doctorId as dependency to re-fetch if it changes
     
-    return (
-    <div className="profile-card">
-        <div className="profile-header">
-            <div className="doctor-details">
-            <div className="experience">Experience</div>
-            <div className="experience-value">{doctor.experience}</div><br/>
-            <div className="name">{doctor.fullName}</div>
-            <div className="specialty">{doctor.department?.name}</div>
+//     return (
+//     <div className="profile-card">
+//         <div className="profile-header">
+//             <div className="doctor-details">
+//             <div className="experience">Experience</div>
+//             <div className="experience-value">{doctor.experience}</div><br/>
+//             <div className="name">{doctor.fullName}</div>
+//             <div className="specialty">{doctor.department?.name}</div>
+//             </div>
+//             <div className="doctor-image">
+//                 <img src={doctorImg} alt="Doctor"></img>
+//             </div>
+//         </div>
+//         <div className="about-section">
+//             <div className="about-title">About the doctor</div>
+//             <div className="about-description">
+//             {/* Dr. Rive roe, specializes in diagnosing and treating digestive disorders, 
+//             offering comprehensive care to improve patients' gastrointestinal 
+//             health and quality of life. */}
+//                 {doctor.description} 
+//             </div>
+//         </div>
+//     </div>
+//   );
+
+return (
+    <>
+    <div className="doctor-card-ok">
+      {/* Doctor Info Section */}
+      <div className="doctor-info">
+        <div className="doctor-header">
+          {/* Circular doctor image on the left */}
+          <div className="doctor-image-circle">
+            <img 
+              src="/api/placeholder/400/320" 
+              alt="Dr. Sarah Johnson" 
+            />
+          </div>
+          
+          <div className="doctor-header-content">
+            <div className="doctor-name-section">
+              <h2 className="doctor-name">Dr. {doctor.fullName}</h2>
+              <p className="doctor-experience">{doctor.experience} experience</p>
             </div>
-            <div className="doctor-image">
-                <img src={doctorImg} alt="Doctor"></img>
+            <div className="department-badge">
+              {doctor.department.name}
             </div>
+          </div>
+          
         </div>
+
         <div className="about-section">
-            <div className="about-title">About the doctor</div>
-            <div className="about-description">
-            {/* Dr. Rive roe, specializes in diagnosing and treating digestive disorders, 
-            offering comprehensive care to improve patients' gastrointestinal 
-            health and quality of life. */}
-                {doctor.description} 
-            </div>
+          <h3 className="section-title">About</h3>
+          <p className="about-text">
+            {doctor.description} </p>
         </div>
+
+        <div className="contact-section">
+          <h3 className="section-title">Contact Information</h3>
+          <div className="contact-item">
+            <Phone size={16} className="contact-icon" />
+            <span>{doctor.contact}</span>
+          </div>
+          <div className="contact-item">
+            <Mail size={16} className="contact-icon" />
+            <span>{doctor.email}</span>
+          </div>
+          <div className="contact-item">
+            <Calendar size={16} className="contact-icon" />
+            <span>Mon-Fri, 9:00 AM - 5:00 PM</span>
+          </div>
+          <div className="contact-item">
+            <Clock size={16} className="contact-icon" />
+            <span>Appointment duration: 30 minutes</span>
+          </div>
+        </div>
+          
+      </div>
     </div>
+    </>
   );
 };
 

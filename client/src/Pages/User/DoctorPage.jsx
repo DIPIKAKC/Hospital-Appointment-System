@@ -210,6 +210,7 @@ const DoctorPage = () => {
                     <input 
                         type="text"
                         placeholder="Reason for appointment"
+                        className="appointment-reason"
                         value={reason}
                         onChange={(e) => setReason(e.target.value)}
                     />

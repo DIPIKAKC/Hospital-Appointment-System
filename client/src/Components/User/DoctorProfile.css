@@ -1,75 +1,172 @@
-.profile-card {
-    width: 300px;
-    overflow: hidden;
-    height:400px;
-    border-radius: 20px;
-  }
-  
-  .profile-header {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    padding-top: 30px;
-    background-color: white;
-    border-bottom: 1px solid #d3d7d9;
-    padding-bottom: 20px;
-  }
-  
-  /* .doctor-photo {
-    margin-right: 15px;
-  } */
-  
-  .doctor-image img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
+/* Updated DoctorCard CSS with circular image */
 
-  .doctor-details {
-    display: flex;
+.doctor-card-ok {
+  width: 100%;
+  max-width: 800px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  font-family: Arial, sans-serif;
+  padding: 10px;
+  margin: 20px auto;
+}
+
+.doctor-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Circular doctor image styling */
+.doctor-image-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #e3f2fd;
+  flex-shrink: 0;
+  /* margin-right: 16px; */
+}
+
+.doctor-image-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.doctor-header-content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.doctor-name-section {
+  /* flex-grow: 1; */
+  margin-left: 20px;
+}
+
+.doctor-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 0 0;
+}
+
+.doctor-experience {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
+
+.department-badge {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  padding: 6px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 0;
+
+}
+
+.availability-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  /* display: flex; */
+  /* align-items: center; */
+}
+
+.available {
+  background-color: #e6f6e6;
+  color: #2e7d32;
+}
+
+.unavailable {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.badge-content {
+  display: flex;
+  align-items: center;
+}
+
+.badge-icon {
+  margin-right: 6px;
+}
+
+.doctor-info {
+  width: 100%;
+}
+
+.about-section{
+  padding-top: 0;
+  padding-bottom: 0;
+  width: 550px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  margin-top: 16px;
+}
+
+.about-text {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.contact-section {
+  margin-top: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.contact-icon {
+  margin-right: 10px;
+  color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .doctor-header {
     flex-direction: column;
+    align-items: flex-start;
   }
   
-  .experience {
-    font-size: 13px;
-    color: #6b7280;
-    margin-bottom: 5px;
+  .doctor-image-circle {
+    margin-bottom: 12px;
   }
   
-  .name {
-    font-size: 15px;
-    font-weight: bold;
-    color: #1e3a8a;
-    margin-bottom: 3px;
+  .doctor-header-content {
+    width: 100%;
   }
   
-  .specialty {
-    font-size: 15px;
-    color: #4b5563;
+  .availability-badge {
+    position: relative;
+    margin-top: 10px;
+    align-self: flex-start;
   }
-  
-  .about-section {
-    padding: 15px;
-    padding-top: 25px;
-    background-color: white;
-    padding-bottom: 40px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-  }
-  
-  .about-title {
-    font-size: 15px;
-    font-weight: bold;
-    color: #1e3a8a;
-    margin-bottom: 8px;
-  }
-  
-  .about-description {
-    font-size: 13px;
-    color: #4b5563;
-    line-height: 1.4;
-  }
-
-
-
+}
