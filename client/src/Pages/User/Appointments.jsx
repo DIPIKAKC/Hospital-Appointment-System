@@ -7,6 +7,7 @@ import Resources from "../../Components/User/Resources";
 import Footer from "../../Components/User/Footer";
 import ReminderModal from "../../Components/User/Reminder";
 import InitiatingKhaltiPayment from "../User/InitiatingKhaltiPayment"
+import { toast } from "sonner";
 
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
@@ -15,6 +16,12 @@ const AppointmentList = () => {
   const [showReminderModal, setShowReminderModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [showKhaltiPayment, setShowKhaltiPayment] = useState();
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [currentAppointment, setCurrentAppointment] = useState({ name: '', description: '' });
+  const [paymentsStatus, setPaymentsStatus] = useState({  });
+
+
+
   // Function to open modal for specific appointment
   const handleOpenReminder = (appointment) => {
     setSelectedAppointment(appointment);
@@ -50,8 +57,13 @@ const AppointmentList = () => {
         const data = await response.json();
         if (Array.isArray(data)) {
           setAppointments(data);
-        }
-
+        // Fetch payment status for each appointment
+        data.forEach(app => {
+          if (app.status === "confirmed") {
+            paymentsStatus(app._id);
+          }
+        });
+      }
       } catch (error) {
         console.error("Error fetching appointments", error);
       }
@@ -80,8 +92,8 @@ const AppointmentList = () => {
       });
 
       const data = await response.json();
-      alert("Appointment canceled successfully");
-
+      // alert("Appointment canceled successfully");
+      toast.success("Appointment canceled successfully!");
       if (!response.ok) {
         throw new Error("Failed to cancel appointment");
       }
@@ -121,97 +133,105 @@ const AppointmentList = () => {
     }
   });
 
-  return (
+    const handleCancelAppointment = (appointment) => {
+    setCurrentAppointment(appointment);
+    setShowDeleteConfirm(true);
+  };
+
+    const token=localStorage.getItem("token")
+    const paymentStatus = async (appointmentId) => {
+      try {
+        const response = await fetch(`http://localhost:5000/auth/check-pay/${appointmentId}`,
+          {
+            method: 'GET',
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch payment status");
+        }
+
+        const data = await response.json();
+    // Store status for this appointment only
+        setPaymentsStatus(prev => ({
+          ...prev,
+          [appointmentId]: data?.payment?.paymentStatus || "unpaid",
+        }));
+      } catch (error) {
+        console.error("Error fetching appointments", error);
+      }
+    };
+
+
+return (
     <>
       <NavBar />
 
-      <div className="appt-dashboard">
-        <aside className="appt-sidebar">
-          <button
-            className={`sidebar-tab ${activeTab === 'all' ? 'active' : ''}`}
-            onClick={() => setActiveTab('all')}
-          >
+      <div className="apptlist-dashboard">
+        <aside className="apptlist-sidebar">
+          <button className={`apptlist-tab ${activeTab === 'all' ? 'apptlist-tab-active' : ''}`} onClick={() => setActiveTab('all')}>
             All Appointments
           </button>
-          <button
-            className={`sidebar-tab ${activeTab === 'upcoming' ? 'active' : ''}`}
-            onClick={() => setActiveTab('upcoming')}
-          >
+          <button className={`apptlist-tab ${activeTab === 'upcoming' ? 'apptlist-tab-active' : ''}`} onClick={() => setActiveTab('upcoming')}>
             Upcoming Appointments
           </button>
-          <button
-            className={`sidebar-tab ${activeTab === 'past' ? 'active' : ''}`}
-            onClick={() => setActiveTab('past')}
-          >
+          <button className={`apptlist-tab ${activeTab === 'past' ? 'apptlist-tab-active' : ''}`} onClick={() => setActiveTab('past')}>
             Past Appointments
           </button>
-          <button
-            className={`sidebar-tab ${activeTab === 'cancelled' ? 'active' : ''}`}
-            onClick={() => setActiveTab('cancelled')}
-          >
+          <button className={`apptlist-tab ${activeTab === 'cancelled' ? 'apptlist-tab-active' : ''}`} onClick={() => setActiveTab('cancelled')}>
             Cancelled Appointments
           </button>
         </aside>
 
-        <div className="appt-list">
+        <div className="apptlist-main">
           {filteredAppointments.length > 0 ? (
             filteredAppointments.map((appointment, index) => (
-              <div className="appt-item" key={appointment._id || index}>
-                <div className="appt-item-header">
-                  <div className="appt-date">
-                    <p className="appt-label">Date</p>
-                    <p className="appt-value">{appointment.date || '--/--/----'}</p>
+              <div className="apptlist-card" key={appointment._id || index}>
+                <div className="apptlist-card-header">
+                  <div className="apptlist-info-block">
+                    <p className="apptlist-label">Date</p>
+                    <p className="apptlist-value">{appointment.date || '--/--/----'}</p>
                   </div>
-                  <div className="appt-time">
-                    <p className="appt-label">Time</p>
-                    <p className="appt-value">{appointment.time || '--'}</p>
+                  <div className="apptlist-info-block">
+                    <p className="apptlist-label">Time</p>
+                    <p className="apptlist-value">{appointment.time || '--'}</p>
                   </div>
-                  <div className="appt-status">
-                    <p className="appt-label">Status</p>
-                    <p className="appt-value">{appointment.status || '--'}</p>
+                  <div className="apptlist-info-block">
+                    <p className="apptlist-label">Status</p>
+                    <p className="apptlist-value">{appointment.status || '--'}</p>
                   </div>
                 </div>
-                <div className="appt-item-body">
-                  <div className="appt-doctor">
-                    <p className="appt-label">Doctor</p>
-                    <p className="appt-value">
+
+                <div className="apptlist-card-body">
+                  <div className="apptlist-info-block">
+                    <p className="apptlist-label">Doctor</p>
+                    <p className="apptlist-value">
                       {appointment.doctor ? appointment.doctor.fullName || 'Dr. Not Assigned' : 'Dr. Not Assigned'}
                     </p>
                   </div>
-                  <div className="appt-department">
-                    <p className="appt-label">Department</p>
-                    <p className="appt-value">
+                  <div className="apptlist-info-block">
+                    <p className="apptlist-label">Department</p>
+                    <p className="apptlist-value">
                       {appointment.doctor ? appointment.doctor.department?.name || 'Not Specified' : 'Not Specified'}
                     </p>
                   </div>
-                  <div className="appt-actions">
-                    {appointment.status !== 'canceled' ? (
-                      <p className="appt-value">
-                        <button
-                          className="btn-cancel"
-                          onClick={() => cancelAppointment(appointment._id)}
-                        >
-                          Cancel
-                        </button>
-                      </p>
-                    ) : (
-                      <p className="appt-label canceled-text">Canceled</p>
+
+                  <div className="apptlist-actions">
+                    {appointment.status !== 'canceled' && appointment.status !== 'confirmed' &&(
+                      <button className="apptlist-btn-cancel" onClick={() => handleCancelAppointment(appointment)}>
+                        Cancel
+                      </button>
                     )}
 
-                    <p className="appt-value">
-                      <button 
-                        className="btn-appt" 
-                        onClick={() => handleOpenReminder(appointment)}>
-                          <MdAccessAlarms size={15} /> set reminder
-                      </button>
-                    </p>
-
-                    {/* after confirmation */}
-                    {appointment.status === "confirmed" && (
-                      <div className="appt-payment">
+                    {appointment.status === "confirmed" && paymentsStatus[appointment._id] === "unpaid" && (
+                      <div className="apptlist-payment-section">
                         <button
-                          className="btn-payment"
-                          onClick={() => setShowKhaltiPayment(true)} // Show the component to initiate payment
+                          className="apptlist-btn-payment"
+                          onClick={() => setShowKhaltiPayment(true)}
                         >
                           Pay with Khalti
                         </button>
@@ -222,12 +242,22 @@ const AppointmentList = () => {
                       </div>
                     )}
 
+
+                    {appointment.status !== 'canceled' ? (
+                    <button className="apptlist-btn-reminder" onClick={() => handleOpenReminder(appointment)}>
+                      <MdAccessAlarms size={15} /> Set Reminder
+                    </button>
+
+                    ) : (
+                      <span></span>
+                    )}
+
                   </div>
                 </div>
               </div>
             ))
           ) : (
-            <div className="appt-empty">
+            <div className="apptlist-empty-state">
               <p>No appointments found</p>
             </div>
           )}
@@ -247,9 +277,36 @@ const AppointmentList = () => {
         />
       )}
 
+
+      {/* delete modal */}
+      {showDeleteConfirm && (
+        <div className="delete-modal-overlay">
+          <div className="delete-modal">
+            <div className="delete-modal-header">
+              <div className="delete-icon">
+              </div>
+              <h3 className="delete-title">Cancel Appointment</h3>
+            </div>
+            <p className="delete-message">
+              Are you sure you want to cancel this appointment? This action cannot be undone.
+            </p>
+            <div className="delete-modal-buttons">
+              <button onClick={() => setShowDeleteConfirm(false)} className="cancel-dlt-button">
+                Cancel
+              </button>
+              <button onClick={() => {cancelAppointment(currentAppointment._id);             
+                                      setShowDeleteConfirm(false); // Close the modal after confirming
+              }} className="ok-delete-button">
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </>
   );
-}
+};
 
 export default AppointmentList;
 

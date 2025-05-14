@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const cron = require('node-cron');
-const sendEmail = require('./sendEmail');
 const { Reminder } = require('../Schema/reminderSchema');
+const { reminderEmail } = require('./reminderEmail');
 
 // const mongoURI = "mongodb+srv://dipikak0323:MedEase@cluster0.a8q9w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 // console.log(mongoURI);
@@ -17,10 +17,14 @@ cron.schedule('* * * * *', async () => {
   console.log("Checking reminders...");
 
   const now = new Date();
+  const oneMinuteAgo = new Date(now.getTime() - 60000); // 1 minute earlier
 
   try {
     const reminders = await Reminder.find({
-      sendAt: { $lte: now },
+      sendAt: {        
+        $gte: oneMinuteAgo,
+        $lte: now
+      },
       isSent: false
     });
 
@@ -29,7 +33,7 @@ cron.schedule('* * * * *', async () => {
     }
 
     for (const reminder of reminders) {
-      await sendEmail(reminder.userEmail, {
+      await reminderEmail(reminder.userEmail, {
         subject: `Reminder: Appointment on ${reminder.date}`,
         html: `
         <div style="font-family: Arial, sans-serif; padding: 16px;">

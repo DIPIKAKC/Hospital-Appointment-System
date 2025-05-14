@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import './Login.css';
 // import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { X } from 'lucide-react';
 
 const SignupForm = ({ onClose }) => {
   // const navigate = useNavigate();
@@ -11,7 +13,7 @@ const SignupForm = ({ onClose }) => {
   });
   const [successMessage, setSuccessMessage] =useState();
   const[errorMessage,setErrorMessage] =useState()
-
+  const navigate=useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -51,7 +53,10 @@ const SignupForm = ({ onClose }) => {
 
     <div className="auth-container">
     <div className="content">
-      <h1>MedEase</h1>
+        <div className="seperate">
+          <h1>MedEase</h1>
+          <X onClick={() => navigate('/')}/>
+        </div>
       <p>A hospital Appointment Booking System</p>
       <h2>Create a new account</h2>
 

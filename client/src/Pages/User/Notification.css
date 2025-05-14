@@ -1,8 +1,11 @@
 /* Notification Container */
 .notification-container {
-    max-width: 42rem;   
+    max-width: fit-content;   
     margin: 0 auto;
-    padding: 1rem;
+    margin-top: 20px;
+    padding: 1rem 50px;
+    border-radius: 20px;
+    /* background-color: #fff; */
   }
   
   /* Header Styles */
@@ -10,12 +13,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 100px;
+    /* margin-top: 30px; */
     margin-bottom: 1.5rem;
   }
   
   .notification-title {
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -27,15 +30,15 @@
   
   .mark-all-button {
     font-size: 0.875rem;
-    color: #2563eb;
+    color: #10B8B9;
     cursor: pointer;
     background: none;
     border: none;
   }
   
   .mark-all-button:hover {
-    color: #1d4ed8;
-    text-decoration: underline;
+    color: #10B8B9;
+    /* text-decoration: underline; */
   }
   
   /* Filter Tab Styles */
@@ -122,6 +125,7 @@
   
   .notification-item {
     padding: 1rem;
+    width: 700px;
     border-radius: 0.5rem;
     border: 1px solid #e5e7eb;
     background-color: white;

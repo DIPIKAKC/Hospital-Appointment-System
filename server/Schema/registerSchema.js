@@ -34,6 +34,19 @@ const register1 = mongoose.Schema({
         required: true,
         minlength: [8, "Password must be at least 8 characters long"] // Minimum password length requirement
     },
+    dateOfBirth:{
+        type: String,
+    },
+    gender:{
+        type: String,
+        enum:["Male", "Female"]
+    },
+    contact:{
+        type: String,
+    },
+    address:{
+        type:String
+    },
     role: { 
         type: String,
         enum: ["doctor", "patient"],

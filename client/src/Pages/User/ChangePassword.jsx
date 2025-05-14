@@ -64,7 +64,7 @@ const ChangePasswordPage = () => {
             className="password-input"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
-            placeholder="Enter your current password"
+            placeholder=""
           />
         </div>
 
@@ -75,23 +75,23 @@ const ChangePasswordPage = () => {
             className="password-input"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="Enter your new password"
+            placeholder=""
           />
         </div>
 
         <div className="password-button-group">
+          <button
+            onClick={handleCancel}
+            className="password-cancel-button"
+          >
+            Cancel
+          </button>
           <button
             onClick={handlePasswordChange}
             className="password-submit-button"
             disabled={!currentPassword || !newPassword}
           >
             Change Password
-          </button>
-          <button
-            onClick={handleCancel}
-            className="password-cancel-button"
-          >
-            Cancel
           </button>
         </div>
       </div>

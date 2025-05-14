@@ -3,9 +3,23 @@ import React from 'react';
 import doctorImg from '../../assets/docfemale.jpg';
 import './DoctorProfile.css';
 import { Phone, Mail} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const DoctorHomeCard = ({doctor}) => {
+const navigate = useNavigate();
 
+    // Ensure the doctor prop exists and contains the required properties
+    if (!doctor || !doctor.fullName) {
+      return <div>No doctor data available</div>;
+    }
+
+  const handleCardClick = () =>{
+    navigate(`/doctor/${doctor._id}`);
+  }
+
+  const handleBookAppointment = () =>{
+    navigate(`/doctor/${doctor._id}`);
+  }
 //     return (
 //     <div className="profile-card">
 //         <div className="profile-header">
@@ -32,7 +46,7 @@ const DoctorHomeCard = ({doctor}) => {
 //   );
 
     return (
-    <div className="doc-card-container">
+    <div className="doc-card-container" onClick={handleCardClick}>
       <div className="doc-card-content">
         <div className="doc-card-image">
           <img 
@@ -77,6 +91,7 @@ const DoctorHomeCard = ({doctor}) => {
           
           <button 
             className='doc-card-book-button'
+              onClick={handleBookAppointment}
           >
             <span className="doc-card-button-content">
               Book Appointment

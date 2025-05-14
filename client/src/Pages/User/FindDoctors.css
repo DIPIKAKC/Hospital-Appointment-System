@@ -16,6 +16,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   height: fit-content;
+  position: sticky;
 }
 
 .find-doctor-dept-container {
@@ -25,7 +26,7 @@
 .find-doctor-dept-container h2 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
-  color: #0a3d62;
+  color: #10B8B9;
 }
 
 .find-doctor-dept-subtitle {
@@ -34,12 +35,31 @@
   margin-bottom: 1.5rem;
 }
 
-.find-doctor-dept-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
+/* Scrollable department list */
+.scrollable-dept-list {
+    max-height: 300px; /* Adjust as needed */
+    overflow-y: auto;
+    padding-right: 5px; /* Prevent content clipping behind scrollbar */
 }
+
+/* Optional: Custom scrollbar styling for WebKit browsers */
+.scrollable-dept-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-dept-list::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 3px;
+}
+
+.scrollable-dept-list::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
+}
+
+.scrollable-dept-list::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
 
 .dept-item {
   padding: 0.75rem 1rem;
@@ -55,7 +75,7 @@
 }
 
 .dept-item.active {
-  background-color: #0a3d62;
+  background-color: #10B8B9;
   color: white;
   font-weight: 500;
 }
@@ -64,16 +84,17 @@
   width: 100%;
   padding: 0.75rem;
   background-color: white;
-  border: 1px solid #0a3d62;
-  color: #0a3d62;
+  border: 1px solid #10B8B9;
+  color: #10B8B9;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
+  margin-top: 20px;
   transition: all 0.2s ease;
 }
 
 .find-doctor-btn-show-all:hover {
-  background-color: #0a3d62;
+  background-color: #10B8B9;
   color: white;
 }
 
@@ -85,7 +106,7 @@
 /* Search input styles */
 .find-doctor-search-wrapper {
   position: relative;
-  /* margin-bottom: 1.5rem; */
+  margin-bottom: 1.5rem;
 }
 
 .find-doctor-search-wrapper input {
@@ -99,8 +120,8 @@
 
 .find-doctor-search-wrapper input:focus {
   outline: none;
-  border-color: #0a3d62;
-  box-shadow: 0 0 0 2px rgba(10, 61, 98, 0.2);
+  border-color: #10B8B9;
+  /* box-shadow: 0 0 0 2px rgba(10, 61, 98, 0.2); */
 }
 
 .find-doctor-search-icon {
@@ -144,10 +165,16 @@
 
 /* Doctor grid styles */
 .find-doctor-doctor-grid {
-
   display: grid;
-  grid-template-columns: repeat(2, 0.3fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 0.4fr);
+  /* gap: 1.5rem; */
+  overflow-y: auto;
+  max-height: 75vh; 
+}
+
+.find-doctor-doctor-grid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+    -ms-overflow-style: none;  /* IE and Edge */
 }
 
 /* Loading and empty states */

@@ -10,7 +10,8 @@ const { registerUser, loginUser, getUserById,
     changePassword,
     verifyEmail,
     forgotPassword,
-    pwChange} = require("../Control/userControl");
+    pwChange,
+    checkpayment} = require("../Control/userControl");
 const { doctorSlotsPost, 
     appointmentStatus, getMeDoctor, getAppointments,
     getAppointmentStats,
@@ -77,7 +78,8 @@ router.patch("/verify-email/:token",verifyEmail)
 router.post("/forgot-password", forgotPassword)
 //reset pw
 router.patch("/password-reset/:token", pwChange)
-
+//check for pay
+router.get("/check-pay/:appointmentId", checkpayment)
 
 
 

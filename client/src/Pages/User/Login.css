@@ -7,6 +7,12 @@
   font-family: Arial, sans-serif;
 }
 
+.seperate{
+  display: flex;
+  /* align-items: center; */
+  margin-left: 90px;
+  gap: 70px;
+}
 .content {
   background-color: #ffffff;
   padding: 40px 30px;
@@ -67,4 +73,9 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+.forgot-pw{
+  margin-left: 180px;
+  font-size: small;
 }

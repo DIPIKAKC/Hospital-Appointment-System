@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import aboutImg from "../../assets/about3.jpg";
 import DoctorHomeCard from "./DoctorProfileCard";
+import { toast } from "sonner";
 
 const DashboardComponent = () => {
     const [doctor, setDoctor] = useState([]);
@@ -34,7 +35,7 @@ const DashboardComponent = () => {
             window.location.href = '/find-doctors';
         } else {
             // User is not logged in, show alert
-            alert('Please create an account to book an appointment');
+            toast.info('Please create an account to book an appointment');
         }
     };
 

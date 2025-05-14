@@ -14,11 +14,12 @@ const PatientProfile = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
-    contactInfo: "",
+    contact: "",     
     address: "",
     dateOfBirth: "",
     gender: ""
   });
+
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -39,11 +40,12 @@ const PatientProfile = () => {
         setFormData({
           fullName: data.fullName || "",
           email: data.email || "",
-          contactInfo: data.contactInfo || "",
+          contact: data.contact || "",  // updated
           address: data.address || "",
           dateOfBirth: data.dateOfBirth ? data.dateOfBirth.slice(0, 10) : "",
           gender: data.gender || ""
         });
+
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -73,6 +75,7 @@ const PatientProfile = () => {
       if (formData[key] !== patient[key]) {
         updatedData[key] = formData[key];
       }
+
     });
 
     if (Object.keys(updatedData).length === 0) {
@@ -169,7 +172,7 @@ const PatientProfile = () => {
             </h2>
             <div className="user-profile__item">
               <label className="user-profile__label">Phone</label>
-              <p className="user-profile__value">{patient.contactInfo || 'not available'}</p>
+              <p className="user-profile__value">{patient.contact || 'not available'}</p>
             </div>
             <div className="user-profile__item">
               <label className="user-profile__label">Email</label>
@@ -195,7 +198,7 @@ const PatientProfile = () => {
               <input type="email" name="email" value={formData.email} onChange={handleChange} />
 
               <label>Contact Info</label>
-              <input type="text" name="contactInfo" value={formData.contactInfo} onChange={handleChange} />
+              <input type="text" name="contact" value={formData.contact} onChange={handleChange} />
 
               <label>Address</label>
               <input type="text" name="address" value={formData.address} onChange={handleChange} />

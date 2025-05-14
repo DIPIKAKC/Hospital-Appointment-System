@@ -1,8 +1,9 @@
 .user-profile {
   max-width: 900px;
-  margin: 110px auto;
+  margin: 70px auto;
   padding: 30px;
-  background-color: #d8ecec;
+  /* background-color: #d8ecec; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -12,7 +13,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e3f2fd;
+  background-color: #fff;
   padding: 20px;
   border-radius: 12px;
   margin-bottom: 30px;

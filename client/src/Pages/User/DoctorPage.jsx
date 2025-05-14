@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { toast, Toaster } from "sonner";
+import { CheckCircle } from 'lucide-react';
+import { MdArrowBackIosNew } from "react-icons/md";
 
 import './DoctorPage.css';
 import DoctorProfileCard from "../../Components/User/DoctorProfile";
@@ -21,6 +23,7 @@ const DoctorPage = () => {
     const [doctors, setDoctors] = useState(null);
     const [reason, setReason] = useState("");
     const navigate= useNavigate()
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false); // Modal state
 
     // Function to format dates consistently
     const formatDate = (date) => {
@@ -150,8 +153,9 @@ const DoctorPage = () => {
                 }
                 
                 const data = await response.json();
-                alert("Appointment request sent successfully. Waiting for response",data);
-                setTimeout(() => navigate("/appointments"), 2000);
+                // alert("Appointment request sent successfully. Waiting for response",data);
+                setIsSuccessModalOpen(true); // Open success modal
+                setTimeout(() => {setIsSuccessModalOpen(false); navigate("/appointments")}, 2000);
                 // Reset selected time or redirect to confirmation page
             } catch (error) {
                 console.error("Error booking appointment:", error);
@@ -160,12 +164,40 @@ const DoctorPage = () => {
         };
 
 
+// Success Modal Component
+  const SuccessMessageModal = ({ isOpen}) => {
+    if (!isOpen) return null;
+
+    return (
+      <div className="modal-overlay">
+      <div className="modal-container">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h3>Appointment Request Sent</h3>
+          </div>
+          
+          <div className="modal-body">
+            <div className="success-icon">
+              <CheckCircle size={64} />
+            </div>
+            <p className="success-title">Success!</p>
+            <p className="success-message">
+              Your appointment request has been successfully submitted. 
+              We'll contact you shortly to confirm the details.
+            </p>
+          </div>
+          </div>
+          </div>
+          </div>
+    );
+  };
+
     return(
 
         <>
         <NavBar />
         <div className="doctor-personal-container">
-
+        <MdArrowBackIosNew className="back-arrow" size={35} onClick={()=> navigate('/find-doctors')}/>
             <div className="doctor-personal">
                 <aside className="doctor-personal-info-card">
                     <DoctorProfileCard />
@@ -228,6 +260,12 @@ const DoctorPage = () => {
         </div>
         <Resources />
         <Footer />
+
+              {/* Success Modal */}
+      <SuccessMessageModal
+        isOpen={isSuccessModalOpen}
+        onClose={() => setIsSuccessModalOpen(false)}
+      />
     </>
     )
 };

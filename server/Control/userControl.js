@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { Reminder } = require("../Schema/reminderSchema")
 const { verifyEmailMail, passwordResetMail } = require("./sendEmail")
+const { AppointmentPayment } = require("../Schema/paymentSchema")
 
 
 //Register function for user
@@ -161,6 +162,10 @@ const getUserById = async (req,res) => {
       id: user._id,
       fullName: user.fullName,
       email: user.email,
+      contact: user.contact,
+      gender: user.gender,
+      address: user.address,
+      dateOfBirth: user.dateOfBirth,
       role: req.userRole,
      });
     
@@ -175,12 +180,11 @@ const editUserData = async(req,res)=>{
     try {
         const userId = req.params.userId
         // console.log(userId)
-        const {fullName,email, contactInfo, address, dateOfBirth, gender} = req.body
+        const {fullName, contact, address, dateOfBirth, gender} = req.body
 
         const updateFields = {};
         if (fullName) updateFields.fullName = fullName;
-        if (email) updateFields.email = email;
-        if (contactInfo) updateFields.contactInfo = contactInfo;
+        if (contact) updateFields.contact = contact;
         if (address) updateFields.address = address;
         if (dateOfBirth) updateFields.dateOfBirth = dateOfBirth;
         if (gender) updateFields.gender = gender;
@@ -576,8 +580,34 @@ const pwChange = async (req, res) => {
 
 
 
+//checkpay status
+const checkpayment= async (req, res) => {
+  try {
+    const appointmentId = req.params.appointmentId;
+
+    if (!appointmentId) {
+      return res.status(400).json({ message: 'Missing apt id' });
+    }
+
+    const payment = await AppointmentPayment.findOne({
+      appointment: appointmentId,
+      paymentStatus: 'completed',
+    });
+
+    if (payment) {
+      return res.status(200).json({ success: true, message: 'Payment completed', payment });
+    } else {
+      return res.status(404).json({ success: false, message: 'No payment found' });
+    }
+  } catch (error) {
+    console.error('Error checking payment:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+
 module.exports={registerUser, verifyEmail, loginUser, getUserById, editUserData, deleteUserData,
                  bookAppointment, cancelAppointment, getAvailableSlots, getAllDoctors,
-                  getDepartments, getDoctorById, getMyAppointments, setReminders, changePassword, forgotPassword, pwChange};
+                  getDepartments, getDoctorById, getMyAppointments, setReminders, changePassword, forgotPassword, pwChange, checkpayment};
 
 

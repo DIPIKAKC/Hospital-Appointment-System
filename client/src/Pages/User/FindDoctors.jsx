@@ -104,7 +104,7 @@ const FindDoctors = () => {
                     <h2>Departments</h2>
                     <p className="find-doctor-dept-subtitle">Find by speciality</p>
                     
-                    <div className="find-doctor-dept-list">
+                    <div className="find-doctor-dept-list scrollable-dept-list">
                         {departments.length > 0 ? (
                             departments.map((department, index) => (
                                 <div 
@@ -141,7 +141,7 @@ const FindDoctors = () => {
                         onChange={handleSearch}
                     />
                 </div>
-
+{/* 
                 <div className="find-doctor-availability-legend">
                     <div className="find-doctor-legend-item">
                         <span className="find-doctor-dot available"></span> Available
@@ -149,7 +149,7 @@ const FindDoctors = () => {
                     <div className="find-doctor-legend-item">
                         <span className="find-doctor-dot unavailable"></span> Not Available
                     </div>
-                </div>
+                </div> */}
 
 
                 <div className="find-doctor-doctor-grid">
