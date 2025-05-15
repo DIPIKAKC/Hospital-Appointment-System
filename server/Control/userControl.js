@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken")
 const { Reminder } = require("../Schema/reminderSchema")
 const { verifyEmailMail, passwordResetMail } = require("./sendEmail")
 const { AppointmentPayment } = require("../Schema/paymentSchema")
+const { uploadOnCloudinary } = require("../utils/Cloudinary")
 
 
 //Register function for user
@@ -182,6 +183,10 @@ const editUserData = async(req,res)=>{
         // console.log(userId)
         const {fullName, contact, address, dateOfBirth, gender} = req.body
 
+        const image = req.file.path || null
+
+        // console.log("img",image)
+
         const updateFields = {};
         if (fullName) updateFields.fullName = fullName;
         if (contact) updateFields.contact = contact;
@@ -189,9 +194,21 @@ const editUserData = async(req,res)=>{
         if (dateOfBirth) updateFields.dateOfBirth = dateOfBirth;
         if (gender) updateFields.gender = gender;
 
+
+        const uploadImage =await uploadOnCloudinary("user", image)
+
+        console.log(uploadImage)
+
+        if(image && uploadImage){
+          updateFields.profile = uploadImage.secure_url
+        }
+
+
         const editUser = await RegisterUser.findByIdAndUpdate(
           userId,
           updateFields,
+
+        
           { new: true, runValidators: true } // Return updated document and apply validators
         );
 
@@ -201,6 +218,7 @@ const editUserData = async(req,res)=>{
             return res.status(200).json({success:true,message:"Edited successfully"})
         }
     } catch (error) {
+      console.log(error)
         return res.status(400).json({success:false,message:"error",error})
     }
 }

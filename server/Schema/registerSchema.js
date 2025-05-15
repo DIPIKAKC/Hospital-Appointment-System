@@ -44,6 +44,9 @@ const register1 = mongoose.Schema({
     contact:{
         type: String,
     },
+    profile:{
+        type:String,
+    },
     address:{
         type:String
     },

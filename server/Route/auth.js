@@ -39,6 +39,8 @@ const { khaltiPaymentInitiation, verifyKhaltiPayment } = require("../Control/pay
 const { verifyEmailMail } = require("../Control/sendEmail");
 //const verifyKhaltiPayment = require("../Control/verifyKhaltiPayment");
 
+const {upload} = require("../utils/Multer")
+
 
 
 
@@ -51,7 +53,7 @@ router.post("/login", loginUser);
 //get user by id
 router.get("/me-user", auth, getUserById)
 //update user data
-router.patch("/edit-user-by-id/:userId", editUserData)
+router.patch("/edit-user-by-id/:userId",upload.single("image") ,editUserData)
 //delete user
 router.delete("/delete-user-by-id/:userId", deleteUserData)
 //book an appointment
