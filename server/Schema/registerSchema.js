@@ -111,7 +111,11 @@ const register2 = mongoose.Schema({
     availableSlots: [{
         date: { type: String },
         times: [{ type: String }]    
-    }]
+    }],
+    verified: {
+        type: Boolean,
+        default: false
+    }    
     },
 
  { timestamps: true });
@@ -134,7 +138,11 @@ const register3 = mongoose.Schema({
         required: true,
         minlength: 8, // Minimum password length requirement
     },
-    role: { type: String, default: "admin" }
+    role: { type: String, default: "admin" },
+    verified: {
+        type: Boolean,
+        default: false
+      } 
     },
 
  { timestamps: true 

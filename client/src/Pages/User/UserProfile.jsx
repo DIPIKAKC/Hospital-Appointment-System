@@ -66,6 +66,7 @@ const PatientProfile = () => {
     };
 
     fetchPatientData();
+    handleSubmit();
   }, [token]);
 
   const formatDate = (date) => {

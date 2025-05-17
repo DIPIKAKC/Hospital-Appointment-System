@@ -27,7 +27,7 @@ export const VerifyUserEmail = () => {
         }
       })
 
-      const data = res.json()
+      const data = await res.json()
 
       if(data.success) {
         setStatus("success")
@@ -60,7 +60,7 @@ export const VerifyUserEmail = () => {
             {successMessage}
           </div>
         )}
-          <a href="/login" className="verification-button" onClick={navigate('/login')}>Continue to Login</a>
+          <a href="/login" className="verification-button" onClick={()=>navigate('/login')}>Continue to Login</a>
         </div>
 
       <Resources />

@@ -41,6 +41,37 @@ const { uploadOnCloudinary } = require("../utils/Cloudinary")
 //   };
 
 
+//email verification
+const verifyDoctorEmail = async (req, res) => {
+  try{
+  const { token } = req.params;
+  if (!token) {
+      res.status(500).json(400, "Token is required");
+      
+  }
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  if (!decoded) {
+    res.status(400).json({success: false, message: "Token is required"});
+  }
+
+  
+
+  const user = await RegisterDoctor.findById(decoded.id);
+  if (!user) {
+    res.status(404).json({success: false, message: "Doctor not found"});
+  }
+
+  user.verified = true;
+  await user.save();
+
+  res.status(200).json({success:true, message:"Email verified Successfully"})
+  }catch(error){
+    res.status(500).json({success:false, message: error.message})
+  }
+};
+
+
 
   //post time/date slots
   const doctorSlotsPost = async (req, res) => {
@@ -173,6 +204,7 @@ const getMeDoctor = async (req, res) => {
       dateOfBirth: doctor.dateOfBirth,
       gender: doctor.gender,
       availableSlots: doctor.availableSlots,
+      profile: doctor.profile
     });
   } catch (error) {
     res.status(500).json({ message: "Error getting user profile", error: error.message });
@@ -182,18 +214,18 @@ const getMeDoctor = async (req, res) => {
 //Update doctor data by id
 const editDoctorData = async(req,res)=>{
   try {
-      const doctorId = req.userId
-      // console.log(userId)
-      const {fullName,email, contact, dateOfBirth, expereince, gender, address} = req.body
+      const doctorId = req.params.id;
+      console.log(doctorId)
+      
+      const {fullName,email, contact, dateOfBirth, gender, address} = req.body
 
       const image =  req.file ? req.file.path : null;
-        console.log("img",image)
+      console.log("IMAGE",image)
 
       const updateFields = {};
       if (fullName) updateFields.fullName = fullName;
       if (email) updateFields.email = email;
       if (contact) updateFields.contact = contact;
-      if (expereince) updateFields.expereince = expereince;
       if (dateOfBirth) updateFields.dateOfBirth = dateOfBirth;
       if (gender) updateFields.gender = gender;
       if (address) updateFields.address = address;
@@ -386,4 +418,5 @@ const changePwDoc = async (req, res) => {
   }
 };
 
-module.exports = { doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments,getAppointmentStats, getMyPatients, editDoctorData, changePwDoc};
+module.exports = { doctorSlotsPost, appointmentStatus, getMeDoctor, getAppointments,getAppointmentStats, 
+  getMyPatients, editDoctorData, changePwDoc, verifyDoctorEmail};

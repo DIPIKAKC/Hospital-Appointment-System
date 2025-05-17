@@ -65,34 +65,44 @@ const registerUser = async(req,res)=>{
 
 
 const verifyEmail = async (req, res) => {
-  try{
-  const { token } = req.params;
-  if (!token) {
-      throw new ApiError(400, "Token is required");
-      
+  try {
+    const { token } = req.params;
+
+    if (!token) {
+      return res.status(400).json({ success: false, message: "Token is required" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded) {
+      return res.status(400).json({ success: false, message: "Invalid or expired token" });
+    }
+
+    let account = await RegisterUser.findById(decoded.id);
+    let role = 'patient';
+
+    if (!account) {
+      account = await RegisterDoctor.findById(decoded.id);
+      role = 'doctor';
+    }
+
+    if (!account) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    if (role === 'patient' && account === !verified) {
+      return res.status(400).json({ success: false, message: "User not verified" });
+    }else if(role === 'patient' && account === !verified) {
+      return res.status(400).json({ success: false, message: "Doctor not verified" });
+    }
+    account.verified = true;
+    await account.save();
+
+    return res.status(200).json({ success: true, message: "Email verified successfully" });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
   }
-
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  if (!decoded) {
-    res.status(400).json({success: false, message: "Token is required"});
-  }
-
-  
-
-  const user = await RegisterUser.findById(decoded.id);
-  if (!user) {
-    res.status(404).json({success: false, message: "User not found"});
-  }
-
-  user.verified = true;
-  await user.save();
-
-  res.status(200).json({success:true, message:"Email verified Successfully"})
-  }catch(error){
-    res.status(500).json({success:false, message: error.message})
-  }
-
 };
+
 
 //login function for User
 const loginUser = async (req, res) => {
@@ -116,7 +126,8 @@ const loginUser = async (req, res) => {
 
         if(role ==='patient' && !account.verified){
           return res.status(404).json({success:false, message: 'Email not verified' });
-
+        } else if(role ==='doctor' && !account.verified){
+          return res.status(404).json({success:false, message: 'Email not verified' });
         }
 
           // Check password

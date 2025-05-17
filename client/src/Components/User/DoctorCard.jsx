@@ -52,7 +52,7 @@ const DoctorCard = ({ doctor }) => {
         <div className="doc-card-content">
           <div className="doc-card-image">
             <img 
-              src="/api/placeholder/300/300" 
+              src={doctor.profile || doctorImg} 
               alt="Doctor profile"
             />
           </div>

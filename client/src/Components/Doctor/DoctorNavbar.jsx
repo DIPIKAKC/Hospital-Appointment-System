@@ -12,6 +12,7 @@ const DocBar = () => {
     const [username, setUsername] = useState ("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [profileImage, setProfileImage]=useState()
     const dropdownRef = useRef(null);
 
     const navigate = useNavigate();
@@ -56,6 +57,11 @@ const DocBar = () => {
 
             const data = await response.json();
             setUsername(data.fullName);
+
+            if (data.profile && data.profile !== "") {
+                setProfileImage(data.profile);  
+            }
+
         } catch (error) {
             console.error("Error fetching user:", error);
         }
@@ -116,7 +122,7 @@ const DocBar = () => {
                                     className="doc-profile-trigger" 
                                     onClick={() => setShowDropdown(!showDropdown)}
                                 >
-                                    <img className='doc-photo' src={userImg} alt={username} />
+                                    <img className='doc-photo' src={profileImage} alt={username} />
                                         <span className="docname">{username}</span>
                                             <MdOutlineArrowDropDown 
                                                 size={20} 

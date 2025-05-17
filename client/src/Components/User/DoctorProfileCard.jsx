@@ -50,8 +50,8 @@ const navigate = useNavigate();
       <div className="doc-card-content">
         <div className="doc-card-image">
           <img 
-            src="/api/placeholder/300/300" 
-            alt="Doctor profile"
+            src={doctor.profile || doctorImg}
+            alt="Doctor"
           />
         </div>
         <div className="doc-card-info">

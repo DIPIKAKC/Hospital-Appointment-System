@@ -28,6 +28,7 @@ const SignupForm = ({ onClose }) => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
+      console.log(data)
       if (response.ok) {
         // alert("Account created successfully");
         setSuccessMessage('please check your email to verify account')
@@ -38,7 +39,7 @@ const SignupForm = ({ onClose }) => {
 
       }
     } catch (error) {
-      console.error("Error signing up:", error);
+      console.error("Error signing up:", error.message);
     }
   };
 

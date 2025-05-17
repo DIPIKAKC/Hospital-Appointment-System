@@ -1,8 +1,18 @@
 const nodemailer = require('nodemailer');
 const { Reminder } = require('../Schema/reminderSchema');
 
+// Setup transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'kcdipika03112061@gmail.com', // Replace with your Gmail
+    pass: 'nrdj viww tzrw bska'    // Use App Password (not your real password)
+  }
+});
+
 //email verification
 const verifyEmailMail = async (email, token) => {
+
   const mailOptions = {
     from: `MedEase <${process.env.EMAIL_USER}>`,
     to: email,
@@ -77,10 +87,6 @@ const verifyEmailMail = async (email, token) => {
     });
 }
 );
-
-
-
-
 };
 
 

@@ -4,6 +4,7 @@ const {Appointment} = require("../Schema/appointmentSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { Resource } = require("../Schema/resourceSchema")
+const { verifyEmailMail } = require("./sendEmail")
 
 
 
@@ -26,6 +27,20 @@ const registerAdmin = async(req,res)=>{
             password: hashedPassword,
             role: "admin"
         })
+
+        const verifyToken = await jwt.sign(
+          { id: user._id},
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+
+        verifyEmailMail(
+          user.email,
+          verifyToken
+        )
+
+        await user.save();
+
         if(user){
             res.status(200).json({message:'Successfully registered'})
         }else{
@@ -37,16 +52,51 @@ const registerAdmin = async(req,res)=>{
     }
   }
 
+//verify admin 
+const verifyAdminEmail = async (req, res) => {
+  try{
+  const { token } = req.params;
+  if (!token) {
+      res.status(500).json(400, "Token is required");
+      
+  }
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  if (!decoded) {
+    res.status(400).json({success: false, message: "Token is required"});
+  }
+
+  
+
+  const user = await RegisterAdmin.findById(decoded.id);
+  if (!user) {
+    res.status(404).json({success: false, message: "Admin not found"});
+  }
+
+  user.verified = true;
+  await user.save();
+
+  res.status(200).json({success:true, message:"Email verified Successfully"})
+  }catch(error){
+    res.status(500).json({success:false, message: error.message})
+  }
+
+};
+
 
 //login function for admin
 const loginAdmin = async (req, res) => {
+  //Extract email and password from request
+  const { email, password } = req.body;
+
     try {
-      //Extract email and password from request
-      const { email, password } = req.body;
   
       // To find user in the database
       const user = await RegisterAdmin.findOne({ email });
   
+      if(!user.verified){
+        return res.status(404).json({success:false, message: 'Email not verified' });
+      }
       // If user not found or password is incorrect, return error
       if (!user || !(await bcrypt.compare(password, user.password))) {
         return res.status(400).json({ message: 'Invalid email or password' });
@@ -124,6 +174,17 @@ const registerDoctor = async(req,res)=>{
           role: "doctor"
         })
         
+        const verifyToken = await jwt.sign(
+          { id: user._id},
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+
+        verifyEmailMail(
+          user.email,
+          verifyToken
+        )
+
         await user.save();
         
         if(user){
@@ -468,4 +529,5 @@ const adminDeleteResources = async (req, res) => {
 
     module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor, getAllAppointments, 
       getAllUsers, adminDeleteUsers, getAdminDoctors, getAdminDepartments, adminUpdateDepartment,adminDeleteDepartment, adminDeleteAppointment, 
-      adminDeleteDoctors, adminUpdateDoctor, getDoctorById, getStats, addResource, updateResource, getResources, adminDeleteResources}
+      adminDeleteDoctors, adminUpdateDoctor, getDoctorById, getStats, addResource, updateResource, getResources, 
+      adminDeleteResources, verifyAdminEmail}

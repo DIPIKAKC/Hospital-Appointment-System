@@ -10,6 +10,8 @@ const NavBar = () => {
     const [username, setUsername] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [profileImage, setProfileImage]=useState()
+    
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
 
@@ -56,6 +58,10 @@ const NavBar = () => {
 
             const data = await response.json();
             setUsername(data.data.fullName);
+
+            if (data.data.profile) {
+                setProfileImage(data.data.profile);  
+            }
         } catch (error) {
             console.error("Error fetching user:", error);
         }
@@ -108,7 +114,7 @@ const NavBar = () => {
                                     className="profile-trigger" 
                                     onClick={() => setShowDropdown(!showDropdown)}
                                 >
-                                    <img className='user-photo' src={userImg} alt={username} />
+                                    <img className='user-photo' src={profileImage} alt={username} />
                                     <span className="username">{username}</span>
                                     <MdOutlineArrowDropDown 
                                         size={20} 

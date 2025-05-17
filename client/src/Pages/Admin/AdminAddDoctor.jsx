@@ -80,14 +80,16 @@ const AdminAddDoctor = ({ onClose, onSuccess }) => {
       
       const data = await response.json();
 
-      if (!response.ok) {
+      if (response.ok) {
+          setSuccess("Doctor added successfully! Please check the email inbox for verification!", data);
+      }else{
         const errorData = await response.json();
-        throw new Error(errorData.message || "Error adding doctor");
+        return(errorData.message || "Error adding doctor");
       }
 
 
       // Handle success
-      setSuccess("Doctor added successfully!", data);
+      // setSuccess("Doctor added successfully!", data);
       setFormData({
         fullName: "",
         email: "",

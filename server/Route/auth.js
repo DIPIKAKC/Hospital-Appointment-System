@@ -17,7 +17,8 @@ const { doctorSlotsPost,
     getAppointmentStats,
     getMyPatients,
     editDoctorData,
-    changePwDoc} = require("../Control/doctorControl")
+    changePwDoc,
+    verifyDoctorEmail} = require("../Control/doctorControl")
 const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor, 
     getAllAppointments,
     getAllUsers,
@@ -33,7 +34,8 @@ const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor,
     updateResource,
     getResources,
     addResource,
-    adminDeleteResources} = require("../Control/adminControl");
+    adminDeleteResources,
+    verifyAdminEmail} = require("../Control/adminControl");
 const { createNotification, getNotification } = require("../Control/notificationControl");
 const { khaltiPaymentInitiation, verifyKhaltiPayment } = require("../Control/paymentControl");
 const { verifyEmailMail } = require("../Control/sendEmail");
@@ -79,7 +81,7 @@ router.patch("/verify-email/:token",verifyEmail)
 //forgot password
 router.post("/forgot-password", forgotPassword)
 //reset pw
-router.patch("/password-reset/:token", pwChange)
+router.patch("/password-reset/:token/:role", pwChange)
 //check for pay
 router.get("/check-pay/:appointmentId", checkpayment)
 
@@ -98,13 +100,15 @@ router.patch("/:id/status", auth, authorize('doctor'), appointmentStatus)
 //get profile
 router.get("/me", auth, getMeDoctor)
 //edit profile
-router.patch('/edit-doc', upload.single("image"), editDoctorData)
+router.patch('/edit-doc/:id', upload.single("image"), editDoctorData)
 //get appointments stats
 router.get("/stats-appointments", auth, authorize("doctor"), getAppointmentStats)
 //get my pattients
 router.get("/my-patients", getMyPatients)
 //change password
 router.patch("/change-pw-doc", auth, changePwDoc)
+//email verification
+router.patch('/verify-email/:token', verifyDoctorEmail)
 
 
 
@@ -113,6 +117,8 @@ router.patch("/change-pw-doc", auth, changePwDoc)
 
 //route for admin registration
 router.post("/register-admin", registerAdmin)
+//email verification
+router.patch('/verify-email/:token', verifyAdminEmail)
 router.post("/login-admin", loginAdmin)
 router.get("/me-admin", auth, getMeDAdmin)
 

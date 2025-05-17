@@ -38,6 +38,7 @@ const DoctorProfile = () => {
         if (!response.ok) throw new Error('Failed to fetch doctor data');
 
         const data = await response.json();
+        console.log(data);
         setDoctor(data);
         setFormData({
           fullName: data.fullName || "",
@@ -51,9 +52,12 @@ const DoctorProfile = () => {
         });
 
         // Set initial image preview if profile image exists
-        if (data.profile) {
-          setCurrentImage(data.data.profile);
+        if (data && data.profile) {
+          setCurrentImage(data.profile);
+        } else {
+          console.log("No profile image found in result");
         }
+
 
         setLoading(false);
       } catch (err) {
@@ -120,6 +124,7 @@ const DoctorProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const id=localStorage.getItem("id");
     // Create FormData object for file upload
     const formDataForSubmit = new FormData();
     
@@ -137,7 +142,7 @@ const DoctorProfile = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/auth/edit-doc', {
+      const response = await fetch(`http://localhost:5000/auth/edit-doc/${id}`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`
@@ -158,11 +163,11 @@ const DoctorProfile = () => {
           address: formData.address,
           dateOfBirth: formData.dateOfBirth,
           gender: formData.gender,
-          profile: result.data?.profile || prevDoctor.profile
+          profile: result.profile || prevDoctor.profile
         }));
 
-        if (result.data?.profile) {
-          setCurrentImage(result.data.profile);
+        if (result.profile) {
+          setCurrentImage(result.profile);
         }
         setModalOpen(false);
       } else {

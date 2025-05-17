@@ -82,8 +82,8 @@ return (
           {/* Circular doctor image on the left */}
           <div className="doctor-image-circle">
             <img 
-              src="/api/placeholder/400/320" 
-              alt="Dr. Sarah Johnson" 
+              src={doctor.profile || doctorImg} 
+              alt="Doctor" 
             />
           </div>
           
