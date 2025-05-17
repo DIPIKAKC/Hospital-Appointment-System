@@ -86,12 +86,27 @@ const register2 = mongoose.Schema({
         enum: ["doctor", "patient"],
         default: "doctor" 
     },
-    contact: {type:String, required:true},
     department: {
         type: mongoose.Schema.Types.ObjectId, // Reference to Department
         ref: 'Department', // Referencing the Department model
     },
     experience: { type: String},
+    dateOfBirth:{
+        type: String,
+    },
+    gender:{
+        type: String,
+        enum:["Male", "Female"]
+    },
+    address:{
+        type: String
+    },
+    profile:{
+        type:String,
+    },
+    contact:{
+        type: String,
+    },
     description: { type: String},
     availableSlots: [{
         date: { type: String },

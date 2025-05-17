@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { registerDoctor } = require("./adminControl")
 const { sendAppointmentStatusEmail } = require("./sendEmail")
+const { uploadOnCloudinary } = require("../utils/Cloudinary")
 
 
 // //login Doctor
@@ -59,7 +60,7 @@ const { sendAppointmentStatusEmail } = require("./sendEmail")
       const existingSlotIndex = doctor.availableSlots.findIndex(
         slot => slot.date === date
       );
-  
+   
       if (existingSlotIndex >= 0) {
         // Update existing slot
         doctor.availableSlots[existingSlotIndex].times = times;
@@ -167,8 +168,11 @@ const getMeDoctor = async (req, res) => {
       email: doctor.email,
       role: req.userRole,
       contact: doctor.contact,
+      address: doctor.address,
       department: doctor.department,
-      availableSlots: doctor.availableSlots
+      dateOfBirth: doctor.dateOfBirth,
+      gender: doctor.gender,
+      availableSlots: doctor.availableSlots,
     });
   } catch (error) {
     res.status(500).json({ message: "Error getting user profile", error: error.message });
@@ -180,14 +184,28 @@ const editDoctorData = async(req,res)=>{
   try {
       const doctorId = req.userId
       // console.log(userId)
-      const {fullName,email, contactInfo, expereince, gender} = req.body
+      const {fullName,email, contact, dateOfBirth, expereince, gender, address} = req.body
+
+      const image =  req.file ? req.file.path : null;
+        console.log("img",image)
 
       const updateFields = {};
       if (fullName) updateFields.fullName = fullName;
       if (email) updateFields.email = email;
-      if (contactInfo) updateFields.contactInfo = contactInfo;
-      if (expereince) updateFields.dateOfBirth = expereince;
+      if (contact) updateFields.contact = contact;
+      if (expereince) updateFields.expereince = expereince;
+      if (dateOfBirth) updateFields.dateOfBirth = dateOfBirth;
       if (gender) updateFields.gender = gender;
+      if (address) updateFields.address = address;
+
+      
+      const uploadImage =await uploadOnCloudinary("doctor", image)
+      console.log(uploadImage)
+
+      if(image && uploadImage){
+        updateFields.profile = uploadImage.secure_url
+      }
+
 
       const editDoctor = await RegisterDoctor.findByIdAndUpdate(
         doctorId,
@@ -201,7 +219,7 @@ const editDoctorData = async(req,res)=>{
           return res.status(200).json({success:true,message:"Edited successfully"})
       }
   } catch (error) {
-      return res.status(400).json({success:false,message:"error",error})
+      return res.status(400).json({success:false,message:error.message})
   }
 }
 

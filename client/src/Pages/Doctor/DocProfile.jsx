@@ -6,17 +6,21 @@ import DocBar from '../../Components/Doctor/DoctorNavbar';
 import FooterDoc from '../../Components/Doctor/FooterDoctor';
 
 const DoctorProfile = () => {
-  const [doctor, setdoctor] = useState(null);
+  const [doctor, setDoctor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [currentImage, setCurrentImage] = useState("")
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
-    contactInfo: "",
-    department: "",
-    experience: "",
-    gender: ""
+    contact: "",     
+    dateOfBirth: "",
+    experience:"",
+    gender: "",
+    address:"",
+    image: null
   });
   const token = localStorage.getItem("token");
 
@@ -34,15 +38,23 @@ const DoctorProfile = () => {
         if (!response.ok) throw new Error('Failed to fetch doctor data');
 
         const data = await response.json();
-        setdoctor(data);
+        setDoctor(data);
         setFormData({
           fullName: data.fullName || "",
           email: data.email || "",
-          contactInfo: data.contactInfo || "",
-          department: data.department || "",
+          contact: data.contact || "",
           experience: data.experience || "",
-          gender: data.gender || ""
+          dateOfBirth: data.dateOfBirth ? data.dateOfBirth.slice(0, 10) : "",
+          gender: data.gender || "",
+          address: data.address || "",
+          image: null
         });
+
+        // Set initial image preview if profile image exists
+        if (data.profile) {
+          setCurrentImage(data.data.profile);
+        }
+
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -64,46 +76,95 @@ const DoctorProfile = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData((prev) => ({ ...prev, image: file }));    
+      // Create preview for the selected image
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+
+
   //edit
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   const updatedData = {};
+
+//   Object.keys(formData).forEach((key) => {
+//     // Check for image fields (assuming they are File objects)
+//     if (formData[key] instanceof File) {
+//       // Check if a new image file is selected
+//       if (formData[key].name !== "") {
+//         updatedData[key] = formData[key];
+//       }
+//     } else {
+//       // Check for changes in normal text/field values
+//       if (formData[key] !== doctor[key]) {
+//         updatedData[key] = formData[key];
+//       }
+//     }
+//   });
+
+//   if (Object.keys(updatedData).length === 0) {
+//     alert("No changes detected.");
+//     return;
+//   }}
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedData = {};
-    Object.keys(formData).forEach((key) => {
-      if (formData[key] !== doctor[key]) {
-        updatedData[key] = formData[key];
-      }
-    });
-
-    if (Object.keys(updatedData).length === 0) {
-      alert("No changes detected.");
-      return;
-    }
-    if (loading) {
-      return (
-        <div className="profile-loading">
-          <div className="profile-loading__spinner"></div>
-          <p>Loading doctor data...</p>
-        </div>
-      );
+    // Create FormData object for file upload
+    const formDataForSubmit = new FormData();
+    
+    // Append text fields
+    formDataForSubmit.append('fullName', formData.fullName);
+    formDataForSubmit.append('email', formData.email);
+    formDataForSubmit.append('contact', formData.contact);
+    formDataForSubmit.append('address', formData.address);
+    formDataForSubmit.append('dateOfBirth', formData.dateOfBirth);
+    formDataForSubmit.append('gender', formData.gender);
+    
+    // Append image if exists
+    if (formData.image) {
+      formDataForSubmit.append('image', formData.image);
     }
 
     try {
-      const response = await fetch("http://localhost:5000/auth/edit-doc", {
+      const response = await fetch('http://localhost:5000/auth/edit-doc', {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`
+          // Don't set Content-Type when sending FormData
         },
-        body: JSON.stringify(updatedData)
+        body: formDataForSubmit
       });
 
       const result = await response.json();
       if (result.success) {
         alert("Profile updated successfully!");
-        setdoctor((prev) => ({ ...prev, ...updatedData }));
-        setModalOpen(false);
+        // Update local patient state with new data
+      setDoctor(prevDoctor => ({
+          ...prevDoctor,
+          fullName: formData.fullName,
+          email: formData.email,
+          contact: formData.contact,
+          address: formData.address,
+          dateOfBirth: formData.dateOfBirth,
+          gender: formData.gender,
+          profile: result.data?.profile || prevDoctor.profile
+        }));
 
+        if (result.data?.profile) {
+          setCurrentImage(result.data.profile);
+        }
+        setModalOpen(false);
       } else {
         alert(result.message || "Update failed.");
       }
@@ -112,6 +173,16 @@ const DoctorProfile = () => {
       alert("Something went wrong.");
     }
   };
+
+  if (loading) {
+    return (
+      <div className="profile-loading">
+        <div className="profile-loading__spinner"></div>
+        <p>Loading patient data...</p>
+      </div>
+    );
+  }
+
 
   if (error) {
     return (
@@ -128,6 +199,11 @@ const DoctorProfile = () => {
       </div>
     );
   }
+  const closeModal = () => {
+    setModalOpen(false);
+    setImagePreview(null);
+  };
+
 
   return (
     <>
@@ -136,7 +212,20 @@ const DoctorProfile = () => {
       <div className="doctor-profile">
         <div className="doctor-profile__header">
           <div className="doctor-profile__header-content">
-            <div className="doctor-profile__avatar"></div>
+            <div className="doctor-profile__avatar">
+              {currentImage && (
+                <img 
+                  src={currentImage} 
+                  alt="Profile" 
+                  style={{ 
+                    width: '70px', 
+                    height: '70px', 
+                    borderRadius: '50%', 
+                    objectFit: 'cover' 
+                  }} 
+                />
+              )}
+            </div>
             <div className="doctor-profile__info">
               <h1 className="doctor-profile__name">{doctor.fullName}</h1>
               <p className="doctor-profile__id">ID: {doctor.id || 'no id'}</p>
@@ -170,7 +259,7 @@ const DoctorProfile = () => {
             </h2>
             <div className="doctor-profile__item">
               <label className="doctor-profile__label">Phone</label>
-              <p className="doctor-profile__value">{doctor.contactInfo || 'not available'}</p>
+              <p className="doctor-profile__value">{doctor.contact || 'not available'}</p>
             </div>
             <div className="doctor-profile__item">
               <label className="doctor-profile__label">Email</label>
@@ -189,32 +278,75 @@ const DoctorProfile = () => {
           <div className="doctor-modal-content">
             <h2>Edit Profile</h2>
             <form onSubmit={handleSubmit}>
-              <label>Full Name</label>
-              <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
+              <div className="form-group">
+                <label>Full Name</label>
+                <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
+              </div>
 
-              <label>Email</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} />
+              <div className="form-group">
+                <label>Email</label>
+                <input type="email" name="email" value={formData.email} onChange={handleChange} />
+              </div>
 
-              <label>Contact Info</label>
-              <input type="text" name="contactInfo" value={formData.contactInfo} onChange={handleChange} />
+              <div className="form-group">
+                <label>Contact Info</label>
+                <input type="text" name="contact" value={formData.contact} onChange={handleChange} />
+              </div>
 
-              {/* <label>Address</label>
-              <input type="text" name="address" value={formData.address} onChange={handleChange} />
+              <div className="form-group">
+                <label>Address</label>
+                <input type="text" name="address" value={formData.address} onChange={handleChange} />
+              </div>
 
-              <label>Date of Birth</label>
-              <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} /> */}
-{/* 
-              <label>Gender</label>
-              <select name="gender" value={formData.gender} onChange={handleChange}>
-                <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select> */}
+              <div className="form-group">
+                <label>Date of Birth</label>
+                <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} />
+              </div>
 
-              <div className="doctor-modal-buttons">
-                <button type="submit" className="doctor-modal-save">Save</button>
-                <button type="button" className="doctor-modal-close" onClick={() => setModalOpen(false)}>Cancel</button>
+              <div className="form-group">
+                <label>Gender</label>
+                <select name="gender" value={formData.gender} onChange={handleChange}>
+                  <option value="">Select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Profile Image</label>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
+                {imagePreview && (
+                  
+                  <div className="image-preview-container">
+                    <p>New Image:</p>
+                    <img 
+                      src={imagePreview} 
+                      alt="Profile Preview" 
+                      className="image-preview" 
+                    />
+                  </div>
+                )}
+                {currentImage && (
+                  <div className="image-preview-container">
+                    <p>Current Image:</p>
+                    <img 
+                      src={currentImage} 
+                      alt="Current Profile Preview" 
+                      className="image-preview" 
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div className="modal-buttons">
+                <button type="submit" className="modal-save">Save</button>
+                <button type="button" className="modal-close" onClick={() => closeModal}>Cancel</button>
               </div>
             </form>
           </div>

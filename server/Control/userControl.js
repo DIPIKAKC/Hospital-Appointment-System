@@ -183,9 +183,9 @@ const editUserData = async(req,res)=>{
         // console.log(userId)
         const {fullName, contact, address, dateOfBirth, gender} = req.body
 
-        const image = req.file.path || null
+        const image =  req.file ? req.file.path : null;
 
-        // console.log("img",image)
+        console.log("img",image)
 
         const updateFields = {};
         if (fullName) updateFields.fullName = fullName;

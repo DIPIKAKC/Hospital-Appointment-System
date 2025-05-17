@@ -98,7 +98,7 @@ router.patch("/:id/status", auth, authorize('doctor'), appointmentStatus)
 //get profile
 router.get("/me", auth, getMeDoctor)
 //edit profile
-router.patch('/edit-doc', auth, authorize("doctor"), editDoctorData)
+router.patch('/edit-doc', upload.single("image"), editDoctorData)
 //get appointments stats
 router.get("/stats-appointments", auth, authorize("doctor"), getAppointmentStats)
 //get my pattients

@@ -123,7 +123,6 @@ const DocBar = () => {
                                                 className={`doc-dropdown-arrow ${showDropdown ? 'active' : ''}`} 
                                             />
                                 </div>
-                            </div>
 
                                 {showDropdown && (
                                     <div className="doc-dropdown-menu">
@@ -136,12 +135,13 @@ const DocBar = () => {
                                             <span>Change Password</span>
                                         </Link>
                                         <div className="doc-dropdown-divider"></div>
-                                        <button className="doc-dropdown-item logout" onMouseDown={handledocLogout}>
+                                        <button className="doc-dropdown-item logout" onClick={handledocLogout}>
                                             <RiLogoutBoxLine size={18} />
                                             <span>Logout</span>
                                         </button>
                                     </div>
                                 )}
+                            </div>
                         </>
                     ) : (
                         <div className="doc-auth-buttons">

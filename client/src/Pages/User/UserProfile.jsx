@@ -313,7 +313,7 @@ const PatientProfile = () => {
               </div>
 
               <div className="modal-buttons">
-                <button type="submit" className="modal-save">Save</button>
+                <button type="button" className="modal-save">Save</button>
                 <button type="button" className="modal-close" onClick={() => setModalOpen(false)}>Cancel</button>
               </div>
             </form>
