@@ -13,8 +13,9 @@ const DocBar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
     const [profileImage, setProfileImage]=useState()
-    const dropdownRef = useRef(null);
+    const [unreadCount, setUnreadCount] = useState(0);
 
+    const dropdownRef = useRef(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,6 +25,7 @@ const DocBar = () => {
         if (userId && token) {
             setIsLoggedIn(true);
             fetchUserData(token);
+            fetchUnreadNotifications();
         } else {
             setIsLoggedIn(false);
         }
@@ -64,6 +66,24 @@ const DocBar = () => {
 
         } catch (error) {
             console.error("Error fetching user:", error);
+        }
+    };
+
+
+
+    const fetchUnreadNotifications = async () => {
+        const userId = localStorage.getItem("id");
+        const userType = "doctor"; 
+
+        try {
+            const response = await fetch(`http://localhost:5000/auth/my-notification/${userType}/${userId}`);
+            const data = await response.json();
+            if (data.success) {
+            const unread = data.data.filter(n => !n.isRead).length;
+            setUnreadCount(unread);
+            }
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
         }
     };
 
@@ -113,9 +133,14 @@ const DocBar = () => {
                     <div className="doc-nav-actions">
                     {isLoggedIn ? (
                         <>
-                            <NavLink to="/my-notifications" className="doc-notification-icon">
+                            <div className="notification-bell">
+                            <NavLink to="/my-notifications" className="notification-icon">
                                 <HiOutlineBell size={22} />
+                                {unreadCount > 0 && (
+                                <span className="notification-count">{unreadCount}</span>
+                                )}
                             </NavLink>
+                            </div>
 
                             <div className="doc-profile-section" ref={dropdownRef}>
                                 <div 

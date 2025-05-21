@@ -4,6 +4,7 @@ import { BsPerson } from "react-icons/bs";
 import { IoCallOutline } from "react-icons/io5";
 import DocBar from '../../Components/Doctor/DoctorNavbar';
 import FooterDoc from '../../Components/Doctor/FooterDoctor';
+import { AiOutlineClose } from "react-icons/ai";
 
 const DoctorProfile = () => {
   const [doctor, setDoctor] = useState(null);
@@ -14,6 +15,7 @@ const DoctorProfile = () => {
   const [currentImage, setCurrentImage] = useState("")
   const [formData, setFormData] = useState({
     fullName: "",
+    department:"",
     email: "",
     contact: "",     
     dateOfBirth: "",
@@ -42,6 +44,7 @@ const DoctorProfile = () => {
         setDoctor(data);
         setFormData({
           fullName: data.fullName || "",
+          department:data.department || "",
           email: data.email || "",
           contact: data.contact || "",
           experience: data.experience || "",
@@ -130,6 +133,7 @@ const DoctorProfile = () => {
     
     // Append text fields
     formDataForSubmit.append('fullName', formData.fullName);
+    formDataForSubmit.append('department',formData);
     formDataForSubmit.append('email', formData.email);
     formDataForSubmit.append('contact', formData.contact);
     formDataForSubmit.append('address', formData.address);
@@ -158,6 +162,7 @@ const DoctorProfile = () => {
       setDoctor(prevDoctor => ({
           ...prevDoctor,
           fullName: formData.fullName,
+          department:formData.department,
           email: formData.email,
           contact: formData.contact,
           address: formData.address,
@@ -255,6 +260,10 @@ const DoctorProfile = () => {
               <label className="doctor-profile__label">Gender</label>
               <p className="doctor-profile__value">{doctor.gender || 'no g'}</p>
             </div>
+            <div className="doctor-profile__item">
+              <label className="doctor-profile__label">Department</label>
+              <p className="doctor-profile__value">{doctor.department || 'no desc'}</p>
+            </div>
           </div>
 
           <div className="doctor-profile__card">
@@ -281,11 +290,19 @@ const DoctorProfile = () => {
       {modalOpen && (
         <div className="doctor-modal-overlay">
           <div className="doctor-modal-content">
-            <h2>Edit Profile</h2>
+            <div className='doctor-form-head'>
+              <h2>Edit Profile</h2>
+              <button className='close-edit-modal-doc' onClick={() => setModalOpen(false)}><AiOutlineClose size={25}/></button>
+            </div>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Full Name</label>
                 <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
+              </div>
+
+              <div className="form-group">
+                <label>department</label>
+                <input type='text' name="department" value={formData.department} onChange={handleChange} />
               </div>
 
               <div className="form-group">
@@ -328,30 +345,30 @@ const DoctorProfile = () => {
                 />
                 {imagePreview && (
                   
-                  <div className="image-preview-container">
+                  <div className="image-preview-container-doc">
                     <p>New Image:</p>
                     <img 
                       src={imagePreview} 
                       alt="Profile Preview" 
-                      className="image-preview" 
+                      className="image-preview-doc" 
                     />
                   </div>
                 )}
                 {currentImage && (
-                  <div className="image-preview-container">
+                  <div className="image-preview-container-doc">
                     <p>Current Image:</p>
                     <img 
                       src={currentImage} 
                       alt="Current Profile Preview" 
-                      className="image-preview" 
+                      className="image-preview-doc" 
                     />
                   </div>
                 )}
               </div>
 
-              <div className="modal-buttons">
-                <button type="submit" className="modal-save">Save</button>
-                <button type="button" className="modal-close" onClick={() => closeModal}>Cancel</button>
+              <div className="doctor-modal-buttons">
+                <button type="submit" className="doctor-modal-save">Save</button>
+                <button type="button" className="doctor-modal-close" onClick={closeModal}>Cancel</button>
               </div>
             </form>
           </div>

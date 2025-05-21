@@ -242,27 +242,39 @@ const DoctorAppointmentsList = () => {
                     <label>Reason for visit:</label>
                     <p>{appointment.reason || "No reason provided"}</p>
                   </div>
+{/* passed time */}
+                  {appointment.status === "pending" ? (() => {
+                    const appointmentDateTime = new Date(`${appointment.date}T${appointment.time}`);
+                    const currentTime = new Date();
 
-                  {appointment.status === "pending" ? (
-                    <div className="appointment-actions">
-                      <button
-                        onClick={() =>
-                          setAppointmentToUpdate({ id: appointment._id, status: "confirmed" })
-                        }
-                        className="accept-button"
-                      >
-                        Accept
-                      </button>
-                      <button
-                        onClick={() =>
-                          setAppointmentToUpdate({ id: appointment._id, status: "rejected" })
-                        }
-                        className="reject-button"
-                      >
-                        Reject
-                      </button>
-                    </div>
-                  ) : (
+                    if (appointmentDateTime > currentTime) {
+                      return (
+                        <div className="appointment-actions">
+                          <button
+                            onClick={() =>
+                              setAppointmentToUpdate({ id: appointment._id, status: "confirmed" })
+                            }
+                            className="accept-button"
+                          >
+                            Accept
+                          </button>
+                          <button
+                            onClick={() =>
+                              setAppointmentToUpdate({ id: appointment._id, status: "rejected" })
+                            }
+                            className="reject-button"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <p className="expired-message">This appointment time has already passed.</p>
+                      );
+                    }
+                  })() : (
+                    //
                     <div className="appointment-status">
                       <p className={`status-message ${appointment.status}`}>
                         {appointment.status === "confirmed"

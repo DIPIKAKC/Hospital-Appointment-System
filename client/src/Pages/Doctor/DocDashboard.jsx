@@ -57,6 +57,7 @@ const DoctorDashboard = () => {
       });
 
       const data = await res.json();
+      console.log(data)
       if (res.ok) {
         setPatient(data.patients || []);  
       } else {
@@ -180,7 +181,7 @@ const DoctorDashboard = () => {
               {patient.map((patient, index) => (
                 <div className="patient-item" key={index}>
                   <div className="patient-avatar">
-                    {patient.name.charAt(0)}
+                    {patient.name?.charAt(0)}
                   </div>
                   <div className="patient-info">
                     <h4>{patient.name}</h4>

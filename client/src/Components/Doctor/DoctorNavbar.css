@@ -162,6 +162,7 @@
 
 .doc-dropdown-item:hover {
   background-color: #F7FAFC;
+  text-decoration: none;
   color: #10B8B9;
 }
 

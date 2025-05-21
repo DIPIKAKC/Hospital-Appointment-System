@@ -38,29 +38,42 @@ const MyNotifications = () => {
       }
     };
 
+    const markOneAsRead = async (id) => {
+      try {
+        const res = await fetch(`http://localhost:5000/auth/notification/${id}/read`, {
+          method: 'PATCH'
+        });
+        const data = await res.json();
+        if (data.success) {
+          setNotifications(prev => prev.map(n => n._id === id ? { ...n, isRead: true } : n));
+        }
+      } catch (err) {
+        console.error("Failed to mark as read", err);
+      }
+    };
+
+    const markAllAsRead = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/auth/notification/read-all/${userId}/${userType}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userId, userType })
+        });
+        const data = await res.json();
+        if (data.success) {
+          setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+        }
+      } catch (err) {
+        console.error("Failed to mark all as read", err);
+      }
+    };
+
     useEffect(()=>{
         fetchNotifications()
     },[])
 
-    
-
-  // Mark notification as read
-  const markAsRead = (id) => {
-    setNotifications(notifications.map(notification => 
-      notification._id === id ? { ...notification, isRead: true } : notification
-    ));
-    
-    // In a real app, update backend
-    // await fetch(`/api/notifications/${id}/read`, { method: 'PUT' });
-  };
-
-  // Mark all as read
-  const markAllAsRead = () => {
-    setNotifications(notifications.map(notification => ({ ...notification, isRead: true })));
-    
-    // In a real app, update backend
-    // await fetch('/api/notifications/read-all', { method: 'PUT' });
-  };
 
   // Filter notifications
   const filteredNotifications = notifications.filter(notification => {
@@ -113,40 +126,6 @@ const MyNotifications = () => {
         </button>
       </div>
 
-      {/* Filter tabs */}
-      {/* <div className="filter-tabs">
-        <button 
-          className={`filter-tab ${filter === 'all' ? 'active' : ''}`}
-          onClick={() => setFilter('all')}
-        >
-          All
-        </button>
-        <button 
-          className={`filter-tab ${filter === 'unread' ? 'active' : ''}`}
-          onClick={() => setFilter('unread')}
-        >
-          Unread
-        </button>
-        <button 
-          className={`filter-tab ${filter === 'appointment' ? 'active' : ''}`}
-          onClick={() => setFilter('appointment')}
-        >
-          Appointments
-        </button>
-        <button 
-          className={`filter-tab ${filter === 'message' ? 'active' : ''}`}
-          onClick={() => setFilter('message')}
-        >
-          Messages
-        </button>
-        <button 
-          className={`filter-tab ${filter === 'system' ? 'active' : ''}`}
-          onClick={() => setFilter('system')}
-        >
-          System
-        </button>
-      </div> */}
-
       {/* Loading state */}
       {loading && (
         <div className="loading-container">
@@ -171,7 +150,7 @@ const MyNotifications = () => {
           <div 
             key={notification._id} 
             className={`notification-item ${notification.isRead ? '' : 'unread'}`}
-            onClick={() => markAsRead(notification._id)}
+            onClick={() => markOneAsRead(notification._id)}
           >
             <div className="notification-content">
               <div className="notification-icon-container">
