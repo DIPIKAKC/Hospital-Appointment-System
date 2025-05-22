@@ -64,7 +64,7 @@ export const ResetPassword = () => {
       <NavBar />
       <div className="reset-container">
         <div className="reset-card">
-          <h1 className="reset-title">Change Password</h1>
+          <h1 className="reset-title">Reset Password</h1>
           <p className="reset-subtitle">Enter your new password below to reset your account.</p>
 
           {error && <p className="error-message">{error}</p>}
@@ -96,7 +96,7 @@ export const ResetPassword = () => {
               />
             </div>
             <button type="submit" className="reset-button">
-              {loading ? 'Changing password...' : 'Change Password'}
+              {loading ? 'Changing password...' : 'Reset Password'}
             </button>
           </form>
 

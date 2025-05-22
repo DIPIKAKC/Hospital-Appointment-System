@@ -18,7 +18,7 @@ const AppointmentList = () => {
   const [showKhaltiPayment, setShowKhaltiPayment] = useState();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [currentAppointment, setCurrentAppointment] = useState({ name: '', description: '' });
-  const [paymentsStatus, setPaymentsStatus] = useState({  });
+  const [paymentsStatus, setPaymentsStatus] = useState({});
 
 
 
@@ -57,13 +57,14 @@ const AppointmentList = () => {
         const data = await response.json();
         if (Array.isArray(data)) {
           setAppointments(data);
+
         // Fetch payment status for each appointment
         data.forEach(app => {
-          if (app.status === "confirmed") {
-            paymentsStatus(app._id);
+          if (app.paystatus === "confirmed") {
+            paymentStatus(app._id);
           }
         });
-      }
+       }
       } catch (error) {
         console.error("Error fetching appointments", error);
       }
@@ -139,9 +140,9 @@ const AppointmentList = () => {
   };
 
     const token=localStorage.getItem("token")
-    const paymentStatus = async (appointmentId) => {
+    const paymentStatus = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/auth/check-pay/${appointmentId}`,
+        const response = await fetch(`http://localhost:5000/auth/check-pay`,
           {
             method: 'GET',
             headers: {
@@ -157,10 +158,7 @@ const AppointmentList = () => {
 
         const data = await response.json();
     // Store status for this appointment only
-        setPaymentsStatus(prev => ({
-          ...prev,
-          [appointmentId]: data?.payment?.paymentStatus || "unpaid",
-        }));
+        setPaymentsStatus(data?.paymentStatus);
       } catch (error) {
         console.error("Error fetching appointments", error);
       }
@@ -220,14 +218,15 @@ return (
                     </p>
                   </div>
 
+{/* past current time? */}
                   <div className="apptlist-actions">
-                    {appointment.status !== 'canceled' && appointment.status !== 'confirmed' &&(
+                    {appointment.status !== 'canceled' && appointment.status !== 'confirmed' && isFutureAppointment(appointment.date, appointment.time) &&(
                       <button className="apptlist-btn-cancel" onClick={() => handleCancelAppointment(appointment)}>
                         Cancel
                       </button>
                     )}
 
-                    {appointment.status === "confirmed" && paymentsStatus[appointment._id] === "unpaid" && (
+                    {appointment.status === 'confirmed' && isFutureAppointment(appointment.date, appointment.time) && (
                       <div className="apptlist-payment-section">
                         <button
                           className="apptlist-btn-payment"
@@ -242,15 +241,12 @@ return (
                       </div>
                     )}
 
-
-                    {appointment.status !== 'canceled' ? (
+                    {appointment.status !== 'canceled' && isFutureAppointment(appointment.date, appointment.time) &&  (
                     <button className="apptlist-btn-reminder" onClick={() => handleOpenReminder(appointment)}>
                       <MdAccessAlarms size={15} /> Set Reminder
                     </button>
-
-                    ) : (
-                      <span></span>
                     )}
+{/*  */}
 
                   </div>
                 </div>
@@ -309,5 +305,7 @@ return (
 };
 
 export default AppointmentList;
+
+
 
 

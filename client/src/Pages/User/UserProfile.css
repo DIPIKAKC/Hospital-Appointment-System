@@ -23,6 +23,7 @@
 .user-profile__header-content {
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
 /* .user-profile__avatar {
@@ -74,7 +75,7 @@
 .user-profile__card {
   background-color: white;
   padding: 20px;
-  width: 400px;
+  width: 425px;
   border-radius: 10px;
   border: 1px solid #ddd;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -166,10 +167,21 @@
   max-height: 90vh; /* prevents modal from getting taller than viewport */
   overflow-y: auto; /* scroll inside modal if too tall */
 }
+.modal-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
 
 .modal-content h2 {
   margin-top: 0;
   margin-bottom: 1rem;
+}
+
+.form-head{
+  display: flex;
+  gap: 270px;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-content label {
@@ -185,6 +197,10 @@
   margin-top: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ccc;
+}
+
+.form-group{
+margin-bottom: 0;
 }
 
 .modal-buttons {
@@ -208,6 +224,17 @@
   padding: 0.5rem 1.5rem;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.image-preview-user{
+ max-width: 250px;
+ max-height: auto;
+}
+
+.close-edit-modal{
+  background-color: #fff;
+  border: none;
   cursor: pointer;
 }
 

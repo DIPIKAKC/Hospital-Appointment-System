@@ -1,10 +1,10 @@
-Modal Container
-.modal-container {
+/* Modal Container */
+/* .modal-container {
     position: relative;
-  }
+  } */
   
   /* Open Button */
-  .open-button {
+  /* .open-button {
     padding: 8px 16px;
     background-color: #3b82f6;
     color: white;
@@ -14,10 +14,10 @@ Modal Container
     margin-top: 16px;
     cursor: pointer;
     font-weight: 500;
-  }
+  } */
   
   /* Modal Overlay */
-  .modal-overlay {
+  .modal-overlay-reminder {
     position: fixed;
     top: 0;
     left: 0;
@@ -31,7 +31,7 @@ Modal Container
   }
   
   /* Modal */
-  .modal {
+  .modal-reminder {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -41,7 +41,7 @@ Modal Container
   }
   
   /* Modal Header */
-  .modal-header {
+  .modal-header-reminder {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,14 +49,14 @@ Modal Container
     padding: 16px 24px;
   }
   
-  .modal-title {
+  .modal-title-reminder {
     font-size: 20px;
     font-weight: 600;
-    color: #1f2937;
+    color: #10B8B9;
     margin: 0;
   }
   
-  .close-button {
+  .close-button-reminder {
     background: none;
     border: none;
     color: #6b7280;
@@ -65,15 +65,15 @@ Modal Container
   }
   
   /* Modal Body */
-  .modal-body {
+  .modal-body-reminder {
     padding: 24px;
   }
   
-  .input-group {
+  .input-group-reminder {
     margin-bottom: 24px;
   }
   
-  .input-label {
+  .input-label-reminder {
     display: flex;
     align-items: center;
     font-size: 14px;
@@ -82,13 +82,13 @@ Modal Container
     margin-bottom: 8px;
   }
   
-  .icon-wrapper {
+  .icon-wrapper-reminder {
     margin-right: 8px;
     display: flex;
     align-items: center;
   }
   
-  .input-field {
+  .input-field-reminder {
     width: 100%;
     border: 1px solid #d1d5db;
     border-radius: 4px;
@@ -97,13 +97,13 @@ Modal Container
     outline: none;
   }
   
-  .input-field:focus {
+  .input-field-reminder:focus {
     border-color: #3b82f6;
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
   }
   
   /* Modal Footer */
-  .modal-footer {
+  .modal-footer-reminder {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
@@ -111,7 +111,7 @@ Modal Container
     padding: 16px 24px;
   }
   
-  .later-button {
+  .later-button-reminder {
     padding: 8px 16px;
     background-color: transparent;
     color: #374151;
@@ -121,13 +121,13 @@ Modal Container
     cursor: pointer;
   }
   
-  .later-button:hover {
+  .later-button-reminder:hover {
     background-color: #f3f4f6;
   }
   
-  .set-button {
+  .set-button-reminder {
     padding: 8px 16px;
-    background-color: #3b82f6;
+    background-color: #10B8B9;
     color: white;
     border: none;
     border-radius: 4px;
@@ -135,11 +135,11 @@ Modal Container
     cursor: pointer;
   }
   
-  .set-button:hover {
-    background-color: #2563eb;
+  .set-button-reminder:hover {
+    background-color: #0c9c9c;
   }
   
-  .set-button:disabled {
-    background-color: #93c5fd;
+  .set-button-reminder:disabled {
+    background-color: #a9dddd;
     cursor: not-allowed;
   }

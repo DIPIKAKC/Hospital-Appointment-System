@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import doctorImg from '../../assets/docfemale.jpg';
 import "./DoctorCard.css";
 import { Phone, Mail} from 'lucide-react';
+import { PiMoneyWavy } from "react-icons/pi";
 
 
 const DoctorCard = ({ doctor }) => {
@@ -81,10 +82,10 @@ const DoctorCard = ({ doctor }) => {
             </div>
             
             <div className="doc-card-contact">
-              <div className="doc-card-contact-item">
-                <span className="doc-card-contact-icon"><Phone size={18}/></span>
-                <span>{doctor.contact}</span>
-              </div>
+            <div className="doc-card-contact-item">
+              <span className="doc-card-contact-icon"><PiMoneyWavy size={20} color='green'/></span>
+              <span>{doctor.doctorfee}</span>
+            </div>
               <div className="doc-card-contact-item">
                 <span className="doc-card-contact-icon"><Mail size={18}/></span>
                 <span>{doctor.email}</span>

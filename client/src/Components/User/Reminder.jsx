@@ -167,25 +167,30 @@ const ReminderModal = ({ appointment, onClose }) => {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <div className="modal-header">
-          <h3 className="modal-title">Set Reminder for the appointment with Dr. {appointment.doctor.fullName}</h3>
-          <button onClick={onClose} className="close-button"><AiOutlineClose size= {20} /></button>
+    <div className="modal-overlay-reminder">
+      <div className="modal-reminder">
+        <div className="modal-header-reminder">
+          <h3 className="modal-title-reminder">Set Reminder for the appointment with Dr. {appointment.doctor.fullName}</h3>
+          <button onClick={onClose} className="close-button-reminder"><AiOutlineClose size= {20} /></button>
         </div>
-        <div className="modal-body">
-          <div className="input-group">
+        <div className="modal-body-reminder">
+          <div className="input-group-reminder">
             <label>Date</label>
-            <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+            <input
+              type="date"
+              value={date}
+              min={new Date().toISOString().split("T")[0]} //today's date
+              onChange={e => setDate(e.target.value)}
+            />
           </div>
-          <div className="input-group">
+          <div className="input-group-reminder">
             <label>Time</label>
             <input type="time" value={time} onChange={e => setTime(e.target.value)} />
           </div>
         </div>
-        <div className="modal-footer">
-          <button onClick={onClose} className="later-button">Maybe Later</button>
-          <button onClick={handleSetReminder} className="set-button" disabled={!date || !time}>
+        <div className="modal-footer-reminder">
+          <button onClick={onClose} className="later-button-reminder">Maybe Later</button>
+          <button onClick={handleSetReminder} className="set-button-reminder" disabled={!date || !time}>
             Set Reminder
           </button>
         </div>

@@ -1,6 +1,10 @@
 import React from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 import './KhaltiSuccess.css';
+import { IoCheckmark } from "react-icons/io5";
+import NavBar from '../../Components/User/Navbar';
+import Footer from '../../Components/User/Footer';
+import Resources from '../../Components/User/Resources';
 
 const PaymentSuccess = () => {
   const location = useLocation();
@@ -13,16 +17,18 @@ const PaymentSuccess = () => {
   const { appointmentDetails } = location.state;
   
   return (
+    <>
+    <NavBar/>
     <div className="payment-success-container">
       <div className="success-header">
         <h2>Payment Successful!</h2>
         <div className="checkmark-circle">
-          <i className="checkmark">✓</i>
+          <i className="checkmark"><IoCheckmark size={60}/></i>
         </div>
       </div>
       
       <div className="payment-info">
-        <p><strong>Amount Paid:</strong> {appointmentDetails.amount / 100} NPR</p>
+        <p><strong>Amount Paid:</strong> {appointmentDetails.amount} NPR</p>
         <p><strong>Payment Status:</strong> {appointmentDetails.paymentStatus}</p>
         <p><strong>Payment Method:</strong> {appointmentDetails.paymentMethod}</p>
       </div>
@@ -56,20 +62,23 @@ const PaymentSuccess = () => {
       </div>
       
       <div className="action-buttons">
-        <button 
+        {/* <button 
           className="print-button"
           onClick={() => window.print()}
         >
           Print Receipt
-        </button>
+        </button> */}
         <button 
           className="home-button"
-          onClick={() => window.location.href = '/'}
+          onClick={() => window.location.href = '/appointments'}
         >
-          Back to Home
+          Back to Appointments
         </button>
       </div>
     </div>
+    <Resources />
+    <Footer />
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import doctorImg from '../../assets/docfemale.jpg';
 import './DoctorProfile.css';
 import { Phone, Mail, Calendar, Clock, Check, X } from 'lucide-react';
+import { PiMoneyWavy } from "react-icons/pi";
 
 
 const DoctorProfileCard = () => {
@@ -106,18 +107,18 @@ return (
         </div>
 
         <div className="contact-section">
-          <h3 className="section-title">Contact Information</h3>
-          <div className="contact-item">
+          <h3 className="section-title">Additional Information</h3>
+          {/* <div className="contact-item">
             <Phone size={16} className="contact-icon" />
             <span>{doctor.contact}</span>
+          </div> */}
+          <div className="contact-item">
+            <PiMoneyWavy size={19} className="contact-icon" />
+            <span>{doctor.doctorfee}</span>
           </div>
           <div className="contact-item">
             <Mail size={16} className="contact-icon" />
             <span>{doctor.email}</span>
-          </div>
-          <div className="contact-item">
-            <Calendar size={16} className="contact-icon" />
-            <span>Mon-Fri, 9:00 AM - 5:00 PM</span>
           </div>
           <div className="contact-item">
             <Clock size={16} className="contact-icon" />

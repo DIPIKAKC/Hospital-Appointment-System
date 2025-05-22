@@ -5,6 +5,7 @@ import Resources from '../../Components/User/Resources';
 import Footer from '../../Components/User/Footer';
 import { BsPerson } from "react-icons/bs";
 import { IoCallOutline } from "react-icons/io5";
+import { AiOutlineClose } from "react-icons/ai";
 
 const PatientProfile = () => {
   const [patient, setPatient] = useState(null);
@@ -66,7 +67,6 @@ const PatientProfile = () => {
     };
 
     fetchPatientData();
-    handleSubmit();
   }, [token]);
 
   const formatDate = (date) => {
@@ -245,7 +245,10 @@ const PatientProfile = () => {
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2>Edit Profile</h2>
+            <div className='form-head'>
+              <h2>Edit Profile</h2>
+              <button className='close-edit-modal' onClick={() => setModalOpen(false)}><AiOutlineClose size={25}/></button>
+            </div>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Full Name</label>
@@ -292,29 +295,29 @@ const PatientProfile = () => {
                 />
                 {imagePreview && (
                   
-                  <div className="image-preview-container">
+                  <div className="image-preview-user-container">
                     <p>New Image:</p>
                     <img 
                       src={imagePreview} 
                       alt="Profile Preview" 
-                      className="image-preview" 
+                      className="image-preview-user" 
                     />
                   </div>
                 )}
                 {currentImage && (
-                  <div className="image-preview-container">
+                  <div className="image-preview-user-container">
                     <p>Current Image:</p>
                     <img 
                       src={currentImage} 
                       alt="Current Profile Preview" 
-                      className="image-preview" 
+                      className="image-preview-user" 
                     />
                   </div>
                 )}
               </div>
 
               <div className="modal-buttons">
-                <button type="button" className="modal-save">Save</button>
+                <button type="button" className="modal-save" onClick={handleSubmit}>Save</button>
                 <button type="button" className="modal-close" onClick={() => setModalOpen(false)}>Cancel</button>
               </div>
             </form>

@@ -3,6 +3,8 @@ import React from 'react';
 import doctorImg from '../../assets/docfemale.jpg';
 import './DoctorProfile.css';
 import { Phone, Mail} from 'lucide-react';
+import { RiMoneyRupeeCircleLine } from "react-icons/ri";
+import { PiMoneyWavy } from "react-icons/pi";
 import { useNavigate } from 'react-router-dom';
 
 const DoctorHomeCard = ({doctor}) => {
@@ -80,11 +82,15 @@ const navigate = useNavigate();
           
           <div className="doc-card-contact">
             <div className="doc-card-contact-item">
+              <span className="doc-card-contact-icon"><PiMoneyWavy size={20} color='green'/></span>
+              <span>{doctor.doctorfee}</span>
+            </div>
+            {/* <div className="doc-card-contact-item">
               <span className="doc-card-contact-icon"><Phone size={18}/></span>
               <span>{doctor.contact}</span>
-            </div>
+            </div> */}
             <div className="doc-card-contact-item">
-              <span className="doc-card-contact-icon"><Mail size={18}/></span>
+              <span className="doc-card-contact-icon"><Mail size={18}/> </span>
               <span>{doctor.email}</span>
             </div>
           </div>

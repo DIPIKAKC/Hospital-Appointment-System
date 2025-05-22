@@ -31,44 +31,6 @@ const Notification = () => {
         }else{
             console.log("Notification not found")
         }
-        
-        // // Simulated data based on your schema
-        // const dummyData = [
-        //   {
-        //     _id: '1',
-        //     notificationType: 'appointment',
-        //     content: 'Your appointment with Dr. Smith has been confirmed for tomorrow at 2:00 PM',
-        //     isRead: false,
-        //     userType: 'patient',
-        //     createdAt: new Date(Date.now() - 3600000).toISOString() // 1 hour ago
-        //   },
-        //   {
-        //     _id: '2',
-        //     notificationType: 'message',
-        //     content: 'Dr. Johnson responded to your query about medication',
-        //     isRead: true,
-        //     userType: 'patient',
-        //     createdAt: new Date(Date.now() - 86400000).toISOString() // 1 day ago
-        //   },
-        //   {
-        //     _id: '3',
-        //     notificationType: 'system',
-        //     content: 'Please complete your medical history form',
-        //     isRead: false,
-        //     userType: 'patient',
-        //     createdAt: new Date(Date.now() - 172800000).toISOString() // 2 days ago
-        //   },
-        //   {
-        //     _id: '4',
-        //     notificationType: 'appointment',
-        //     content: 'Patient Jane Doe rescheduled their appointment to Friday',
-        //     isRead: false,
-        //     userType: 'doctor',
-        //     createdAt: new Date(Date.now() - 43200000).toISOString() // 12 hours ago
-        //   }
-        // ];
-        
-        // setNotifications(dummyData);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching notifications:', error);
@@ -76,29 +38,43 @@ const Notification = () => {
       }
     };
 
+    const markOneAsRead = async (id) => {
+      try {
+        const res = await fetch(`http://localhost:5000/auth/notification/${id}/read`, {
+          method: 'PATCH'
+        });
+        const data = await res.json();
+        if (data.success) {
+          setNotifications(prev => prev.map(n => n._id === id ? { ...n, isRead: true } : n));
+        }
+      } catch (err) {
+        console.error("Failed to mark as read", err);
+      }
+    };
+
+    const markAllAsRead = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/auth/notification/read-all/${userId}/${userType}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userId, userType })
+        });
+        const data = await res.json();
+        if (data.success) {
+          setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+        }
+      } catch (err) {
+        console.error("Failed to mark all as read", err);
+      }
+    };
+
+
     useEffect(()=>{
         fetchNotifications()
     },[])
 
-    
-
-  // Mark notification as read
-  const markAsRead = (id) => {
-    setNotifications(notifications.map(notification => 
-      notification._id === id ? { ...notification, isRead: true } : notification
-    ));
-    
-    // In a real app, update backend
-    // await fetch(`/api/notifications/${id}/read`, { method: 'PUT' });
-  };
-
-  // Mark all as read
-  const markAllAsRead = () => {
-    setNotifications(notifications.map(notification => ({ ...notification, isRead: true })));
-    
-    // In a real app, update backend
-    // await fetch('/api/notifications/read-all', { method: 'PUT' });
-  };
 
   // Filter notifications
   const filteredNotifications = notifications.filter(notification => {
@@ -112,8 +88,6 @@ const Notification = () => {
     switch (type) {
       case 'confirmed':
         return <GiConfirmed className="notification-icon appointment-icon" />;
-      case 'message':
-        return <FaUser className="notification-icon message-icon" />;
       case 'rejected':
         return <FaExclamationCircle className="notification-icon system-icon" />;
       default:
@@ -154,40 +128,6 @@ const Notification = () => {
         </button>
       </div>
 
-      {/* Filter tabs */}
-      {/* <div className="filter-tabs">
-        <button 
-          className={`filter-tab ${filter === 'all' ? 'active' : ''}`}
-          onClick={() => setFilter('all')}
-        >
-          All
-        </button>
-        <button 
-          className={`filter-tab ${filter === 'unread' ? 'active' : ''}`}
-          onClick={() => setFilter('unread')}
-        >
-          Unread
-        </button>
-        <button 
-          className={`filter-tab ${filter === 'appointment' ? 'active' : ''}`}
-          onClick={() => setFilter('appointment')}
-        >
-          Appointments
-        </button>
-        <button 
-          className={`filter-tab ${filter === 'message' ? 'active' : ''}`}
-          onClick={() => setFilter('message')}
-        >
-          Messages
-        </button>
-        <button 
-          className={`filter-tab ${filter === 'system' ? 'active' : ''}`}
-          onClick={() => setFilter('system')}
-        >
-          System
-        </button>
-      </div> */}
-
       {/* Loading state */}
       {loading && (
         <div className="loading-container">
@@ -211,8 +151,8 @@ const Notification = () => {
         {filteredNotifications.map((notification) => (
           <div 
             key={notification._id} 
-            className={`notification-item ${notification.isRead ? '' : 'unread'}`}
-            onClick={() => markAsRead(notification._id)}
+            className={`notification-item ${notification.isRead ? '': 'unread' }`}
+            onClick={() => markOneAsRead(notification._id)}
           >
             <div className="notification-content">
               <div className="notification-icon-container">
@@ -223,9 +163,11 @@ const Notification = () => {
                   <p className={`notification-message ${notification.isRead ? '' : 'unread-text'}`}>
                     {notification.content}
                   </p>
-                  {!notification.isRead && (
+
+                  {!notification.isRead && 
                     <span className="unread-indicator"></span>
-                  )}
+                  }
+
                 </div>
                 <div className="notification-meta">
                   <span className="notification-time">

@@ -11,7 +11,8 @@ const NavBar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
     const [profileImage, setProfileImage]=useState()
-    
+    const [unreadCount, setUnreadCount] = useState(0);
+
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const NavBar = () => {
         if (userId && token) {
             setIsLoggedIn(true);
             fetchUserData(userId, token, username);
+            fetchUnreadNotifications();
         } else {
             setIsLoggedIn(false);
         }
@@ -67,6 +69,23 @@ const NavBar = () => {
         }
     };
 
+    const fetchUnreadNotifications = async () => {
+        const userId = localStorage.getItem("id");
+        const userType = "patient"; // or determine dynamically if needed
+
+        try {
+            const response = await fetch(`http://localhost:5000/auth/my-notification/${userType}/${userId}`);
+            const data = await response.json();
+            if (data.success) {
+            const unread = data.data.filter(n => !n.isRead).length;
+            setUnreadCount(unread);
+            }
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
+        }
+        };
+
+
     const handleLogout = () => {
         localStorage.removeItem("id");
         localStorage.removeItem("user");
@@ -105,9 +124,15 @@ const NavBar = () => {
                 <div className="nav-actions">
                     {isLoggedIn ? (
                         <>
+                            <div className="notification-bell">
                             <NavLink to="/notification" className="notification-icon">
                                 <HiOutlineBell size={22} />
+                                {unreadCount > 0 && (
+                                <span className="notification-count">{unreadCount}</span>
+                                )}
                             </NavLink>
+                            </div>
+
 
                             <div className="user-profile-section" ref={dropdownRef}>
                                 <div 
@@ -144,10 +169,10 @@ const NavBar = () => {
                     ) : (
                         <div className="authbuttons">
                             <Link to='/signup'>
-                                <button className="btn btn-outline">Create Account</button>
+                                <button className="btn btn-primary">Create Account</button>
                             </Link>
                             <Link to="/login">
-                                <button className="btn btn-primary">Login</button>
+                                <button className="btn btn-outline">Login</button>
                             </Link>
                         </div>
                     )}
