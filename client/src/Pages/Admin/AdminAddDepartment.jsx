@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./AdminAddDepartment.css";
 import { X } from "lucide-react";
 
-const AdminAddDepartment = () => {
+const AdminAddDepartment = ({ onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     description: ""
@@ -95,7 +95,7 @@ const AdminAddDepartment = () => {
                           <button type="submit" className="dept-add-s-btn" disabled={loading}>
                             {loading ? "Adding..." : "Save"}
                           </button>
-                          <button type="button" className="dept-add-c-btn" onClick={() => setShowAddModal(false)}>
+                          <button type="button" className="dept-add-c-btn" onClick={onClose}>
                             Cancel
                           </button>
                         </div>

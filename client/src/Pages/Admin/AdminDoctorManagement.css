@@ -1,8 +1,9 @@
 /* admindoctormanagement */
 .doctor-container {
-  width: 1130px;
-  margin-left: 250px;
+  width: 1200px;
   min-height: 100vh;
+  justify-self: center;
+  margin-left: 250px;
 }
 
 .doctor-header {
@@ -82,7 +83,7 @@
   align-items: center;
   border-radius: 8px;
   background-color: #fff;
-  color: #000;
+  /* color: #000; */
 }
 
 .add-new-doc{
@@ -220,6 +221,11 @@
   z-index: 1000;
 }
 
+  .editdoc-modal-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+    -ms-overflow-style: none;  /* IE and Edge */
+  }
+
 .editdoc-modal-content {
   background: white;
   padding: 2rem;
@@ -229,6 +235,7 @@
   position: relative;
   width: 90%;
   max-width: 700px;
+  display: flex;
 }
 
 .editdoc-close-modal {

@@ -272,8 +272,8 @@ export default function AdminDepartmentManagement() {
                 />
               </div>
               <div className="u-modal-btns">
-                <button type="submit" className="u-s-btn">Save</button>
-                <button type="button" className="u-c-btn" onClick={() => setShowAddModal(false)}>Cancel</button>
+                <button type="submit" className="u-save-dept-btn">Save</button>
+                <button type="button" className="u-nosave-dept-btn" onClick={() => setShowAddModal(false)}>Cancel</button>
               </div>
             </form>
           </div>
@@ -284,7 +284,7 @@ export default function AdminDepartmentManagement() {
       {showEditModal && (
         <div className="u-modal-overlay">
           <div className="u-modal">
-            <div className='u-head-edit'>
+            <div className='u-modal-head-edit'>
               <h2>Edit Department</h2>
               <button onClick={() => setShowEditModal(false)} className='wrong'>
                   <X size={25} />
@@ -311,8 +311,8 @@ export default function AdminDepartmentManagement() {
                 />
               </div>
               <div className="u-modal-btns">
-                <button type="submit" className="u-u-btn" >Update</button>
-                <button type="button" className="u-c-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
+                <button type="submit" className="u-update-dept-btn" >Update</button>
+                <button type="cancel" className="u-cancel-dept-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
               </div>
             </form>
           </div>

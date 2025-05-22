@@ -1,7 +1,8 @@
 /* Main Container Styles */
 .admin-user-container {
-  width: 1110px;
+  width: 1190px;
   min-height: 100vh;
+  justify-self: center;
   margin-left: 250px;
 }
 

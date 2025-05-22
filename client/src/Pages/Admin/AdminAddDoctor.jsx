@@ -9,6 +9,7 @@ const AdminAddDoctor = ({ onClose, onSuccess }) => {
     department: "",
     experience: "",
     description: "",
+    doctorfee: "",
     contact: ""
   });
   
@@ -64,6 +65,7 @@ const AdminAddDoctor = ({ onClose, onSuccess }) => {
         department: formData.department,
         experience: formData.experience,
         description: formData.description,
+        doctorfee: formData.doctorfee,
         contact: formData.contact,
         role: "doctor"
       };
@@ -97,6 +99,7 @@ const AdminAddDoctor = ({ onClose, onSuccess }) => {
         department: "",
         experience: "",
         description: "",
+        doctorfee:"",
         contact: ""
       });
       if (onSuccess) {
@@ -223,6 +226,19 @@ const AdminAddDoctor = ({ onClose, onSuccess }) => {
                   placeholder="experience"
                 />
               </div>
+
+              <div className="form-group">
+                <label htmlFor="doctorfee">Fee *</label>
+                <input
+                  type="doctorfee"
+                  id="doctorfee"
+                  name="doctorfee"
+                  value={formData.doctorfee}
+                  onChange={handleChange}
+                  required
+                  placeholder="doctorfee"
+                />
+              </div>
               
             <div className="form-footer">
               <button
@@ -231,7 +247,7 @@ const AdminAddDoctor = ({ onClose, onSuccess }) => {
                 className={loading ? "submit-button loading" : "submit-button"}
               >
                 {loading ? "Adding..." : "Add Doctor"}
-                se
+                
               </button>
             </div>
           </form>

@@ -9,7 +9,8 @@ const AdminUpdateDoctor = ({ doctorId, onClose, onSuccess }) => {
     department: "",
     experience: "",
     description: "",
-    contact: ""
+    contact: "",
+    doctorfee: "",
   });
 
   const [departments, setDepartments] = useState([]);
@@ -53,6 +54,7 @@ const AdminUpdateDoctor = ({ doctorId, onClose, onSuccess }) => {
             department: data.department?._id || "", //department as an object
             experience: data.experience || "",
             description: data.description || "",
+            doctorfee: data.doctorfee || "",
             contact: data.contact || ""
           });
         } else {
@@ -88,6 +90,7 @@ const AdminUpdateDoctor = ({ doctorId, onClose, onSuccess }) => {
         department: formData.department,
         experience: formData.experience,
         description: formData.description,
+        doctorfee:formData.doctorfee,
         contact: formData.contact
       };
 
@@ -216,6 +219,19 @@ const AdminUpdateDoctor = ({ doctorId, onClose, onSuccess }) => {
                 onChange={handleChange}
                 required
                 placeholder="Experience"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="doctorfee">Fee *</label>
+              <input
+                type="text"
+                id="doctorfee"
+                name="doctorfee"
+                value={formData.doctorfee}
+                onChange={handleChange}
+                required
+                placeholder="Fee"
               />
             </div>
 

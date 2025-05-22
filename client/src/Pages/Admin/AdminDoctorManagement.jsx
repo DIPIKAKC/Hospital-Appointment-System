@@ -194,6 +194,7 @@ export default function AdminDoctorManagement() {
               <th>NAME</th>
               <th>EMAIL</th>
               <th>DEPARTMENT</th>
+              <th>FEE</th>
               <th>CONTACT</th>
               <th>ACTIONS</th>
             </tr>
@@ -205,6 +206,7 @@ export default function AdminDoctorManagement() {
                   <td>{doctor.fullName}</td>
                   <td>{doctor.email}</td>
                   <td>{departmentMap[doctor.department] || doctor.department}</td>
+                  <td>{doctor.doctorfee}</td>
                   <td>{doctor.contact}</td>
                   <td className="doctor-action-buttons">
 

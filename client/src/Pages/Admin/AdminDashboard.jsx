@@ -14,7 +14,9 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState({
     users: 0,
     doctors: 0,
-    appointments: 0
+    appointments: 0,
+    departments: 0,
+    resources: 0
   });
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDepartmentModal, setShowDepartmentModal] = useState(false);
@@ -35,7 +37,9 @@ const AdminDashboard = () => {
         setStats({
           users: data?.users || 0,
           doctors: data?.doctors || 0,
-          appointments: data?.appointments || 0
+          appointments: data?.appointments || 0,
+          departments: data?.departments || 0,
+          resources: data?.resources || 0
         });
       } catch (err) {
         console.error("Failed to fetch stats", err);
@@ -47,8 +51,6 @@ const AdminDashboard = () => {
 
 
   const handleNavigate = (path) => navigate(path);
-  // const handleAddDoctor = () => navigate('/admin/add-doctor');
-  // const handleAddDepartment = () => navigate('/admin/add-department');
 
   const handleDoctorAdded = () => {
     setShowAddModal(false);
@@ -68,22 +70,34 @@ const AdminDashboard = () => {
         <h2 className='overview'>Dashboard Overview</h2>
         <div className="admin-home-dashboard-content">
           <div className="admin-home-stats-container">
-            <div className="admin-home-stat-card blue">
+            <div className="admin-home-stat-card">
               <h3>Total Users</h3>
               <p className="admin-home-stat-value">{stats.users}</p>
               <a className="admin-home-view-link" onClick={() => handleNavigate('/admin/users')}>View All Users →</a>
             </div>
 
-            <div className="admin-home-stat-card green">
+            <div className="admin-home-stat-card">
               <h3>Total Doctors</h3>
               <p className="admin-home-stat-value">{stats.doctors}</p>
               <a className="admin-home-view-link" onClick={() => handleNavigate('/admin/doctors')}>View All Doctors →</a>
             </div>
 
-            <div className="admin-home-stat-card purple">
+            <div className="admin-home-stat-card">
               <h3>Total Appointments</h3>
               <p className="admin-home-stat-value">{stats.appointments}</p>
               <a className="admin-home-view-link" onClick={() => handleNavigate('/admin/appointments')}>View All Appointments →</a>
+            </div>
+
+            <div className="admin-home-stat-card">
+              <h3>Total Departments</h3>
+              <p className="admin-home-stat-value">{stats.departments}</p>
+              <a className="admin-home-view-link" onClick={() => handleNavigate('/admin/departments')}>View All Departments →</a>
+            </div>
+
+            <div className="admin-home-stat-card">
+              <h3>Total Resources</h3>
+              <p className="admin-home-stat-value">{stats.resources}</p>
+              <a className="admin-home-view-link" onClick={() => handleNavigate('/admin/resources')}>View All Resources →</a>
             </div>
           </div>
           </div>
@@ -92,16 +106,10 @@ const AdminDashboard = () => {
             <h3>Quick Actions</h3>
             <div className="admin-home-action-buttons">
               <button className="admin-home-action-btn add-doctor" onClick={() => setShowAddModal(true)}>
-                <div className="admin-home-icon-circle" style={{ backgroundColor: "#d1f5d3", color: "#28a745" }}>
-                  <BsPersonAdd />
-                </div>
                 <div className="admin-home-action-label">Add Doctor</div>
               </button>
 
               <button className="admin-home-action-btn add-department" onClick={() => setShowDepartmentModal(true)}>
-                <div className="admin-home-icon-circle" style={{ backgroundColor: "#e6f0ff", color: "#007bff" }}>
-                  <GoFileDirectory />
-                </div>
                 <div className="admin-home-action-label">Add Department</div>
               </button>
             </div>

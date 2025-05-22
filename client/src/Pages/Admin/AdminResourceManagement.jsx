@@ -191,7 +191,7 @@ export default function AdminDepartmentManagement() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button className="admin-resource-add-new-dept" onClick={handleAddNew} > <Plus size={20} className='admin-resource-plus-icon'/>Add New Department</button>
+          <button className="admin-resource-add-new-dept" onClick={handleAddNew} > <Plus size={20} className='admin-resource-plus-icon'/>Add New Resource</button>
         </div>
 
         {loading ? (
@@ -298,7 +298,7 @@ export default function AdminDepartmentManagement() {
       {showEditModal && (
         <div className="u-modal-overlay">
           <div className="u-modal">
-            <div className='u-head-edit'>
+            <div className='u-head-resource-edit'>
               <h2>Edit Department</h2>
               <button onClick={() => setShowEditModal(false)} className='wrong'>
                   <X size={25} />
@@ -333,9 +333,9 @@ export default function AdminDepartmentManagement() {
                   required
                 />
               </div>
-              <div className="u-modal-btns">
-                <button type="submit" className="u-u-btn" >Update</button>
-                <button type="button" className="u-c-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
+              <div className="u-res-edit-btns">
+                <button type="submit" className="u-update-resource-btn" >Update</button>
+                <button type="button" className="u-cancel-resource-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
               </div>
             </form>
           </div>
