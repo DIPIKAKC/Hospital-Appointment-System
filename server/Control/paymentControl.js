@@ -38,10 +38,10 @@ const khaltiPaymentInitiation = async (req, res) => {
 
     console.log("Khalti payload:", payload);
 
-    const response = await fetch("https://a.khalti.com/api/v2/epayment/initiate/", {
+    const response = await fetch("https://dev.khalti.com/api/v2/epayment/initiate/", {
       method: "POST",
       headers: {
-        Authorization: `Key ${process.env.KHALTI_SECRET_KEY}`,
+        Authorization: `Key ${process.env.KHALTI_LIVE_SECRET_KEY}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify(payload)
@@ -106,10 +106,10 @@ const verifyKhaltiPayment = async (req, res) => {
   }
 
   try {
-    const verifyRes = await fetch("https://a.khalti.com/api/v2/epayment/lookup/", {
+    const verifyRes = await fetch("https://dev.khalti.com/api/v2/epayment/lookup/", {
       method: "POST",
       headers: {
-        Authorization: `Key ${process.env.KHALTI_SECRET_KEY}`,
+        Authorization: `Key ${process.env.KHALTI_LIVE_SECRET_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ pidx }),

@@ -183,3 +183,12 @@
   background-color: #10B8B9;
   margin-top: 10px;
 }
+
+.apptlist-payment-section{
+  background-color: #5f259f;
+  padding: 2px 25px;
+  font-size: small;
+  width: fit-content;
+  border-radius: 20px;
+  color: #fff;
+}

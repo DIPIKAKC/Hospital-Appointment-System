@@ -12,6 +12,7 @@ import { toast } from "sonner";
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
   const [activeTab, setActiveTab] = useState('all');
+  const[isLoadingPayments, isNotLoading] = useState()
 
   const [showReminderModal, setShowReminderModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
@@ -19,6 +20,7 @@ const AppointmentList = () => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [currentAppointment, setCurrentAppointment] = useState({ name: '', description: '' });
   const [paymentsStatus, setPaymentsStatus] = useState({});
+const [showKhaltiPaymentFor, setShowKhaltiPaymentFor] = useState(null); // store appointment ID
 
 
 
@@ -35,8 +37,17 @@ const AppointmentList = () => {
       const now = new Date();
       return appointmentDateTime > now;
     };
+
+    useEffect(() => {
+      fetchAppointments();
+    }, []);
+
+    useEffect(() => {
+      if (appointments.length > 0) {
+        paymentStatus();
+      }
+    }, [appointments]);
   
-  useEffect(() => {
     const fetchAppointments = async () => {
       const token = localStorage.getItem("token")
       try {
@@ -57,20 +68,13 @@ const AppointmentList = () => {
         const data = await response.json();
         if (Array.isArray(data)) {
           setAppointments(data);
-
-        // Fetch payment status for each appointment
-        data.forEach(app => {
-          if (app.paystatus === "confirmed") {
-            paymentStatus(app._id);
-          }
-        });
        }
+       console.log("appointments:", data)
       } catch (error) {
         console.error("Error fetching appointments", error);
       }
     };
-    fetchAppointments();
-  }, []);
+
 
   const cancelAppointment = async (id) => {
     // Find the appointment in the current state
@@ -157,13 +161,31 @@ const AppointmentList = () => {
         }
 
         const data = await response.json();
-    // Store status for this appointment only
-        setPaymentsStatus(data?.paymentStatus);
+        
+        if (data.success && data.payments) {
+          const paymentMap = {};
+          data.payments.forEach((payment) => {
+            paymentMap[payment.appointment] = payment.paymentStatus; // 'completed' or 'pending'
+          });
+        setPaymentsStatus(paymentMap);
+        console.log("payments:",paymentMap)
+        }
+
       } catch (error) {
         console.error("Error fetching appointments", error);
       }
     };
 
+    // Handle payment completion (call this from InitiatingKhaltiPayment)
+  const handlePaymentSuccess = (appointmentId) => {
+    setPaymentsStatus(prev => ({
+      ...prev,
+      [appointmentId]: 'completed',
+    }));
+    setShowKhaltiPaymentFor(null); // Close the payment modal
+    toast.success("Payment completed successfully!");
+  };
+    
 
 return (
     <>
@@ -217,16 +239,27 @@ return (
                       {appointment.doctor ? appointment.doctor.department?.name || 'Not Specified' : 'Not Specified'}
                     </p>
                   </div>
+                  {/* <div className="apptlist-info-block">
+                    <p className="apptlist-label">Payment</p>
+                    <p
+                      className="apptlist-value"
+                      style={{ color: paymentsStatus[appointment._id] === 'completed' ? 'green' : 'red' }}
+                    >
+                      {paymentsStatus[appointment._id] === 'completed' ? 'Paid' : 'Unpaid'}
+                    </p>
+                  </div> */}
+
 
 {/* past current time? */}
                   <div className="apptlist-actions">
                     {appointment.status !== 'canceled' && appointment.status !== 'confirmed' && isFutureAppointment(appointment.date, appointment.time) &&(
-                      <button className="apptlist-btn-cancel" onClick={() => handleCancelAppointment(appointment)}>
+                      <button className="apptlist-btn-cancel" 
+                      onClick={() => handleCancelAppointment(appointment)}>
                         Cancel
                       </button>
                     )}
 
-                    {appointment.status === 'confirmed' && isFutureAppointment(appointment.date, appointment.time) && (
+                    {/* {appointment.status === 'confirmed' && isFutureAppointment(appointment.date, appointment.time) && (
                       <div className="apptlist-payment-section">
                         <button
                           className="apptlist-btn-payment"
@@ -239,14 +272,67 @@ return (
                           <InitiatingKhaltiPayment appointment={appointment} />
                         )}
                       </div>
-                    )}
+                    )} */}
+
+{/*status paid for only upcoming appts */}
+                    {/* {appointment.status === 'confirmed' && 
+                      isFutureAppointment(appointment.date, appointment.time) && (
+                        <div className="apptlist-payment-section">
+                          {paymentsStatus[appointment._id] === 'completed' ? (
+                            <span className="already-paid-text">Already Paid</span>
+                          ) : (
+                            <>
+                              <button
+                                className="apptlist-btn-payment"
+                                onClick={() => setShowKhaltiPaymentFor(appointment._id)}
+                              >
+                                Pay with Khalti
+                              </button>
+
+                              {showKhaltiPaymentFor === appointment._id && (
+                                <InitiatingKhaltiPayment appointment={appointment}
+                                  onPaymentSuccess={() => handlePaymentSuccess(appointment._id)}
+                                  onClose={() => setShowKhaltiPaymentFor(null)}
+                                />
+                              )}
+                            </>
+                          )}
+                        </div>
+                      )} */}
+
+{appointment.status === 'confirmed' && (
+  <div className="apptlist-payment-section">
+    {isLoadingPayments ? (
+      <span>Loading payment status...</span>
+    ) : paymentsStatus[appointment._id] === 'completed' ? (
+      <span className="already-paid-text">Paid</span>
+    ) : isFutureAppointment(appointment.date, appointment.time) ? (
+      <>
+        <button
+          className="apptlist-btn-payment"
+          onClick={() => setShowKhaltiPaymentFor(appointment._id)}
+        >
+          Pay with Khalti
+        </button>
+        {showKhaltiPaymentFor === appointment._id && (
+          <InitiatingKhaltiPayment
+            appointment={appointment}
+            onPaymentSuccess={() => handlePaymentSuccess(appointment._id)}
+            onClose={() => setShowKhaltiPaymentFor(null)}
+          />
+        )}
+      </>
+    ) : null}
+  </div>
+)}
+
 
                     {appointment.status !== 'canceled' && isFutureAppointment(appointment.date, appointment.time) &&  (
                     <button className="apptlist-btn-reminder" onClick={() => handleOpenReminder(appointment)}>
                       <MdAccessAlarms size={15} /> Set Reminder
                     </button>
                     )}
-{/*  */}
+
 
                   </div>
                 </div>

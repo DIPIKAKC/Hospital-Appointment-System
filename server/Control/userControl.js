@@ -640,7 +640,7 @@ const pwChange = async (req, res) => {
 const checkpayment = async (req, res) => {
   try {
     // Fetch all payment records
-    const payments = await AppointmentPayment.find({}, 'appointmentId paymentStatus');
+    const payments = await AppointmentPayment.find({}, 'appointment paymentStatus');
 
     if (!payments || payments.length === 0) {
       return res.status(404).json({ success: false, message: 'No payment records found' });
