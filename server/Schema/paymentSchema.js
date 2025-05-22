@@ -9,8 +9,7 @@ const appointmentPaymentSchema = new mongoose.Schema(
     },
     amount: {
       type: Number,
-      required: true,
-      default: 500 // Static fee
+      required: true
     },
     paymentMethod: {
       type: String,

@@ -4,7 +4,6 @@ const resourceSchema = new mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ['generalBeds', 'icuBeds', 'emergencyBeds', 'ventilators'],
     unique: true 
   },
   total: { type: Number, required: true },

@@ -96,7 +96,41 @@ const getNotification = async(req,res)=>{
 
 
 
+// one noti
+const markNotificationAsRead = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updated = await Notification.findByIdAndUpdate(id, { isRead: true }, { new: true });
+
+    if (!updated) {
+      return res.status(404).json({ success: false, message: "Notification not found" });
+    }
+
+    res.status(200).json({ success: true, message: "Marked as read", data: updated });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server Error", error: err.message });
+  }
+};
+
+
+//all noti
+const markAllNotificationsAsRead = async (req, res) => {
+  try {
+    const { userId, userType } = req.params;
+
+    const filter = userType === "doctor"
+      ? { doctorId: userId, userType }
+      : { userId: userId, userType };
+
+    const updated = await Notification.updateMany(filter, { isRead: true });
+
+    res.status(200).json({ success: true, message: "All marked as read", updatedCount: updated.modifiedCount });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server Error", error: err.message });
+  }
+};
 
 
 
-module.exports = {createNotification, getNotification}
+module.exports = {createNotification, getNotification,markNotificationAsRead, markAllNotificationsAsRead}

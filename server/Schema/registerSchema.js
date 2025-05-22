@@ -112,6 +112,10 @@ const register2 = mongoose.Schema({
         date: { type: String },
         times: [{ type: String }]    
     }],
+    doctorfee:{
+        type: Number,
+        required:true
+    },
     verified: {
         type: Boolean,
         default: false

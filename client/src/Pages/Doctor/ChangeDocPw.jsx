@@ -74,7 +74,7 @@ const ChangePasswordDoc = () => {
             className="doctor-password-input"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            placeholder=""
+            placeholder=" "
           />
         </div>
 

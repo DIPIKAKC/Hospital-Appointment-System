@@ -610,24 +610,46 @@ const pwChange = async (req, res) => {
 
 
 //checkpay status
-const checkpayment= async (req, res) => {
+// const checkpayment= async (req, res) => {
+//   try {
+//     // const appointmentId = req.params.appointmentId;
+
+//     // if (!appointmentId) {
+//     //   return res.status(400).json({ message: 'Missing apt id' });
+//     // }
+
+//     const payment = await AppointmentPayment.find();
+
+
+//     if (payment) {
+//       return res.status(200).json(
+//         { success: true, 
+//           message: 'Payment completed',
+//           paystatus : payment.paymentStatus 
+
+//         });
+//     } else {
+//       return res.status(404).json({ success: false, message: 'No payment found' });
+//     }
+//   } catch (error) {
+//     console.error('Error checking payment:', error);
+//     res.status(500).json({ success: false, message: 'Server error' });
+//   }
+// };
+
+const checkpayment = async (req, res) => {
   try {
-    const appointmentId = req.params.appointmentId;
+    // Fetch all payment records
+    const payments = await AppointmentPayment.find({}, 'appointmentId paymentStatus');
 
-    if (!appointmentId) {
-      return res.status(400).json({ message: 'Missing apt id' });
+    if (!payments || payments.length === 0) {
+      return res.status(404).json({ success: false, message: 'No payment records found' });
     }
 
-    const payment = await AppointmentPayment.findOne({
-      appointment: appointmentId,
-      paymentStatus: 'completed',
+    return res.status(200).json({
+      success: true,
+      payments,  // array of { appointmentId, paymentStatus }
     });
-
-    if (payment) {
-      return res.status(200).json({ success: true, message: 'Payment completed', payment });
-    } else {
-      return res.status(404).json({ success: false, message: 'No payment found' });
-    }
   } catch (error) {
     console.error('Error checking payment:', error);
     res.status(500).json({ success: false, message: 'Server error' });

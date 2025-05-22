@@ -185,7 +185,7 @@ const appointmentStatus = async (req, res) => {
 const getMeDoctor = async (req, res) => {
   try {
 
-    const doctor= await RegisterDoctor.findById(req.userId)
+    const doctor= await RegisterDoctor.findById(req.userId).populate("department","name");
 
     if(!doctor){
       return res.status(404).send({ message: "doctor does not exist", sucess: false });    
@@ -196,11 +196,12 @@ const getMeDoctor = async (req, res) => {
     res.status(200).json({
       id: doctor._id,
       fullName: doctor.fullName,
+      description:doctor.description,
       email: doctor.email,
       role: req.userRole,
       contact: doctor.contact,
       address: doctor.address,
-      department: doctor.department,
+      department: doctor.department.name,
       dateOfBirth: doctor.dateOfBirth,
       gender: doctor.gender,
       availableSlots: doctor.availableSlots,
@@ -357,17 +358,17 @@ const getMyPatients = async (req, res) => {
 
     //For patients and appt info
     // Find all appointments for this doctor
-    const appointments = await Appointment.find({doctorId}).populate('user', 'fullName email');
+    const appointments = await Appointment.find({doctorId}).populate('user', ' _id fullName email');
 
     // Group by unique patients and find their latest appointment
     const patientMap = new Map();
 
     for (const appt of appointments) {
-      const id = appt.user._id.toString();
+      const id = appt.user?._id;
       if (!patientMap.has(id) || new Date(appt.date) > new Date(patientMap.get(id).lastVisit)) {
         patientMap.set(id, {
-          name: appt.user.fullName,
-          email: appt.user.email,
+          name: appt.user?.fullName,
+          email: appt.user?.email,
           lastVisit: appt.date,
           condition: appt.reason || 'General Checkup' // Customize as needed
         });
@@ -382,7 +383,7 @@ const getMyPatients = async (req, res) => {
     res.status(200).json({ patients });
   } catch (err) {
     console.error('Error fetching my patients:', err);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: err.message });
   }
 };
 

@@ -143,7 +143,7 @@ const getMeDAdmin = async (req, res) => {
 //Register function for Doctor
 const registerDoctor = async(req,res)=>{
   try{
-    const {fullName,email,password,contact,department, description, experience} = req.body
+    const {fullName,email,password,contact,department, description, experience, doctorfee} = req.body
     
     if (!password || password.length < 8) {
       return res.status(400).json({ message: "Password must be at least 8 characters long" });
@@ -171,6 +171,7 @@ const registerDoctor = async(req,res)=>{
           department,
           description,
           experience,
+          doctorfee,
           role: "doctor"
         })
         
@@ -429,11 +430,15 @@ const getStats = async (req, res) => {
     const usersCount = await RegisterUser.countDocuments({ role: 'patient' });
     const doctorsCount = await RegisterDoctor.countDocuments();
     const appointmentsCount = await Appointment.countDocuments();
+    const deaprtmentsCount = await Department.countDocuments();
+    const resourcesCount = await Resource.countDocuments();
 
     res.json({
       users: usersCount,
       doctors: doctorsCount,
-      appointments: appointmentsCount
+      appointments: appointmentsCount,
+      departments: deaprtmentsCount,
+      resources: resourcesCount
     });
   } catch (error) {
     console.error('Error fetching admin stats:', error);
@@ -448,6 +453,14 @@ const addResource = async (req, res) => {
   try {
 
     const {type, total, available} = req.body
+
+    // Validation: available must not be greater than total
+    if (available > total) {
+      return res.status(400).json({
+        success: false,
+        message: '`available` cannot be greater than `total`'
+      });
+    }
 
     const existingResource = await Resource.findOne({type});
     if (existingResource) {
@@ -480,6 +493,18 @@ const updateResource = async (req, res) => {
     const resourceId = req.params.id;
     const updatedData = req.body;
 
+    const newTotal = updatedData.total !== undefined ? updatedData.total : existingResource.total;
+    const newAvailable = updatedData.available !== undefined ? updatedData.available : existingResource.available;
+
+    if (newAvailable > newTotal) {
+      return res.status(400).json({
+        success: false,
+        message: '`available` cannot be greater than `total`'
+      });
+    }
+    updatedData.lastUpdated = new Date(); // update lastUpdated timestamp
+
+    
     const updatedResource = await Resource.findByIdAndUpdate(resourceId, updatedData,{ new: true });
 
     if(!updatedResource){

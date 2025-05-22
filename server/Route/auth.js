@@ -36,7 +36,7 @@ const {registerAdmin, loginAdmin, addDepartments, getMeDAdmin, registerDoctor,
     addResource,
     adminDeleteResources,
     verifyAdminEmail} = require("../Control/adminControl");
-const { createNotification, getNotification } = require("../Control/notificationControl");
+const { createNotification, getNotification, markNotificationAsRead, markAllNotificationsAsRead } = require("../Control/notificationControl");
 const { khaltiPaymentInitiation, verifyKhaltiPayment } = require("../Control/paymentControl");
 const { verifyEmailMail } = require("../Control/sendEmail");
 //const verifyKhaltiPayment = require("../Control/verifyKhaltiPayment");
@@ -83,7 +83,7 @@ router.post("/forgot-password", forgotPassword)
 //reset pw
 router.patch("/password-reset/:token/:role", pwChange)
 //check for pay
-router.get("/check-pay/:appointmentId", checkpayment)
+router.get("/check-pay", checkpayment)
 
 
 
@@ -152,7 +152,8 @@ router.delete("/admin/resources/delete/:id", auth , authorize("admin"), adminDel
 //NOtification
 router.post('/create', createNotification)
 router.get("/my-notification/:userType/:id", getNotification)
-
+router.patch('/notification/:id/read', markNotificationAsRead)
+router.patch("/notification/read-all/:userId/:userType", markAllNotificationsAsRead)
 
 //payment
 router.post('/payment/khalti/initiate', khaltiPaymentInitiation)
