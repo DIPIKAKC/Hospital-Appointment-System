@@ -4,6 +4,7 @@ import DocBar from "../../Components/Doctor/DoctorNavbar";
 import FooterDoc from "../../Components/Doctor/FooterDoctor";
 import "./ManageSchedule.css";
 import { RiEditLine } from "react-icons/ri";
+import { toast } from "sonner";
 
 
 const ManageSchedule = () => {
@@ -19,7 +20,7 @@ const ManageSchedule = () => {
   const navigate = useNavigate();
 
   const timeSlots = [
-    "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", 
+    "07:00 AM", "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", 
     "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM",
     "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", 
     "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM", 
@@ -41,15 +42,13 @@ const ManageSchedule = () => {
         });
         
         const data = await response.json();
-        // if (data.userRole !== "doctor") {
-        //   setError("Only doctors can access this page");
-        // }
-        navigate("/schedules");
-        
+        if (data.userRole !== "doctor") {
+          setError("Only doctors can access this page");
+        }        
         setDoctorSlots(data.availableSlots || []);
         setLoading(false);
       } catch (err) {
-        setError("Failed to fetch schedule. " + (err.response?.data?.message || err.message));
+        setError("Failed to fetch schedule. " + (err.message || err.message));
         setLoading(false);
       }
     };
@@ -73,6 +72,32 @@ const ManageSchedule = () => {
       setSelectedTimeSlots([]);
     }
   }, [date, doctorSlots, editingSlot]);
+
+
+  const isTimeSlotInFuture = (timeStr) => {
+  if (!date) return false;
+
+  const selectedDate = new Date(date);
+  const now = new Date();
+
+  const [time, meridian] = timeStr.split(" ");
+  const [hour, minute] = time.split(":").map(Number);
+
+  let slotHour = hour;
+  if (meridian === "PM" && hour !== 12) slotHour += 12;
+  if (meridian === "AM" && hour === 12) slotHour = 0;
+
+  const slotTime = new Date(date);
+  slotTime.setHours(slotHour, minute, 0, 0);
+
+  // If date is today, compare time
+  if (selectedDate.toDateString() === now.toDateString()) {
+    return slotTime > now;
+  }
+
+  // If date is in the future
+  return selectedDate > now;
+};
 
   const handleTimeSlotToggle = (timeSlot) => {
     if (selectedTimeSlots.includes(timeSlot)) {
@@ -114,10 +139,12 @@ const ManageSchedule = () => {
         throw new Error(data.message || "Failed to update schedule");
       }
       
-      setMessage(data.message || "Schedule updated successfully");
-      // Display success in a toast-like popup
-      showToast("Schedule updated successfully", "success");
-      
+      // setMessage(data.message || "Schedule updated successfully");
+      toast.success("Schedule updated successfully");
+        setTimeout(() => {
+          // Force scroll top before reload
+          window.scrollTo(0, 0);
+        }, 100);
       // Refresh local slots
       setDoctorSlots(data.availableSlots || []);
       
@@ -128,7 +155,7 @@ const ManageSchedule = () => {
       
     } catch (err) {
       setError(err.response?.data?.message || "Error updating schedule");
-      showToast("Error updating schedule", "error");
+      toast.error("Error updating schedule", "error");
     }
   };
 
@@ -219,26 +246,6 @@ const ManageSchedule = () => {
     return viewMode === "past" ? dateB - dateA : dateA - dateB;
   });
 
-  // Toast notification function
-  const showToast = (message, type) => {
-    const toast = document.createElement("div");
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    
-    // Add visible class to trigger animation
-    setTimeout(() => {
-      toast.classList.add("visible");
-    }, 10);
-    
-    // Remove toast after 3 seconds
-    setTimeout(() => {
-      toast.classList.remove("visible");
-      setTimeout(() => {
-        document.body.removeChild(toast);
-      }, 300);
-    }, 3000);
-  };
 
   // Format date to be more readable
   const formatDate = (dateString) => {
@@ -371,19 +378,27 @@ const ManageSchedule = () => {
             <div className="form-group">
               <label className="form-label">Select Available Time Slots:</label>
               <div className="time-slots-grid">
-                {timeSlots.map(time => (
-                  <div 
-                    key={time}
-                    onClick={() => handleTimeSlotToggle(time)}
-                    className={`time-slot ${selectedTimeSlots.includes(time) ? 'selected' : ''}`}
-                  >
-                    {time}
-                  </div>
-                ))}
+                {/* disabled logic */}
+                {timeSlots.map((time) => {
+                  const disabled = !isTimeSlotInFuture(time);
+                  return(
+                    <button
+                      key={time}
+                      onClick={() => !disabled && handleTimeSlotToggle(time)}
+                      className={`time-slot ${selectedTimeSlots.includes(time) ? 'selected' : ''} ${disabled ? 'disabled' : ''}`}
+                      disabled={disabled}
+                      type="button"
+                    >
+                      {time}
+                    </button>
+                  )
+                })}
+
               </div>
             </div>
           )}
-          
+
+
           <div className="form-actions">
             <button 
               type="submit"

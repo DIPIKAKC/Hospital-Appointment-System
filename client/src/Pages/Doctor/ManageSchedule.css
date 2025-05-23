@@ -243,6 +243,7 @@
   padding: 8px;
   background-color: #f7f9fc;
   border: 1px solid #dfe6e9;
+  color: #10B8B9;
   border-radius: 8px;
   text-align: center;
   cursor: pointer;
@@ -259,6 +260,14 @@
   background-color: #10B8B9;
   color: white;
   border-color: #2b9999;
+}
+
+.time-slot.disabled {
+  background-color: #f0f0f0; /* light gray */
+  color: #999;
+  cursor: not-allowed;
+  pointer-events: none; /* prevent clicks */
+  border-color: #ddd;
 }
 
 .form-actions {
