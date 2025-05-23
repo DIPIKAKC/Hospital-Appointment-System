@@ -300,31 +300,31 @@ return (
                         </div>
                       )} */}
 
-{appointment.status === 'confirmed' && (
-  <div className="apptlist-payment-section">
-    {isLoadingPayments ? (
-      <span>Loading payment status...</span>
-    ) : paymentsStatus[appointment._id] === 'completed' ? (
-      <span className="already-paid-text">Paid</span>
-    ) : isFutureAppointment(appointment.date, appointment.time) ? (
-      <>
-        <button
-          className="apptlist-btn-payment"
-          onClick={() => setShowKhaltiPaymentFor(appointment._id)}
-        >
-          Pay with Khalti
-        </button>
-        {showKhaltiPaymentFor === appointment._id && (
-          <InitiatingKhaltiPayment
-            appointment={appointment}
-            onPaymentSuccess={() => handlePaymentSuccess(appointment._id)}
-            onClose={() => setShowKhaltiPaymentFor(null)}
-          />
-        )}
-      </>
-    ) : null}
-  </div>
-)}
+                      {appointment.status === 'confirmed' && (
+                        <div className="apptlist-payment-section">
+                          {isLoadingPayments ? (
+                            <span>Loading payment status...</span>
+                          ) : paymentsStatus[appointment._id] === 'completed' ? (
+                            <span className="already-paid-text">Paid</span>
+                          ) : isFutureAppointment(appointment.date, appointment.time) ? (
+                            <>
+                              <button
+                                className="apptlist-btn-payment"
+                                onClick={() => setShowKhaltiPaymentFor(appointment._id)}
+                              >
+                                Pay with Khalti
+                              </button>
+                              {showKhaltiPaymentFor === appointment._id && (
+                                <InitiatingKhaltiPayment
+                                  appointment={appointment}
+                                  onPaymentSuccess={() => handlePaymentSuccess(appointment._id)}
+                                  onClose={() => setShowKhaltiPaymentFor(null)}
+                                />
+                              )}
+                            </>
+                          ) : null}
+                        </div>
+                      )}
 
 
                     {appointment.status !== 'canceled' && isFutureAppointment(appointment.date, appointment.time) &&  (

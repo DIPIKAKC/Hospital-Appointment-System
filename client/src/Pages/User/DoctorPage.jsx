@@ -57,45 +57,42 @@ const DoctorPage = () => {
                 const data = await response.json();
                 setDoctors(data);
 
-            // Format selectedDate consistently
-            const formattedSelectedDate = formatDate(selectedDate);
-            console.log("Looking for slots on date:", formattedSelectedDate);          
-                        
-            // Find the doctor with ID matching doctorId
-            const currentDoctor = data.find(doctor => doctor._id === doctorId);
+                const formattedSelectedDate = formatDate(selectedDate);
+                const currentDoctor = data.find(d => d._id === doctorId);
+                if (!currentDoctor || !currentDoctor.availableSlots) {
+                    setAvailableTimes([]);
+                    return;
+                }
 
-            if (!currentDoctor || !currentDoctor.availableSlots) {
-                console.error("Doctor not found or has no available slots:", doctorId);
-                setAvailableTimes([]);
-                return;
-            }
+                const slotsForDate = currentDoctor.availableSlots.find(slot => formatDate(new Date(slot.date)) === formattedSelectedDate);
+                if (!slotsForDate || !slotsForDate.times) {
+                    setAvailableTimes([]);
+                    return;
+                }
 
-//
-            console.log("All available slot dates:", 
-                currentDoctor.availableSlots.map(slot => ({
-                    original: slot.date,
-                    formatted: formatDate(new Date(slot.date))
-                }))
-            );
-//
+                let times = slotsForDate.times;
 
-            // Find slots for the selected date
-            const slotsForDate = currentDoctor.availableSlots.find(slot => {
-                const slotDate = formatDate(new Date(slot.date));
-                return slotDate === formattedSelectedDate;
-            });         
+                // Filter past times if selectedDate is today
+                const today = new Date();
+                if (
+                    today.toDateString() === selectedDate.toDateString()
+                ) {
+                    const now = today.getHours() * 60 + today.getMinutes(); // current time in minutes
 
-            console.log("Slots for Selected Date:", slotsForDate); // Debugging log
-            
-            if (slotsForDate && slotsForDate.times) {
-                console.log("Available times:", slotsForDate.times);
-                setAvailableTimes(slotsForDate.times);
-            } else {
-                console.log("No times available for selected date");
-                setAvailableTimes([]);
-            }
+                    // Helper: convert "10:30 AM" -> total minutes from midnight
+                    const timeToMinutes = (timeStr) => {
+                    let [time, meridian] = timeStr.split(' ');
+                    let [hours, minutes] = time.split(':').map(Number);
+                    if (meridian === 'PM' && hours !== 12) hours += 12;
+                    if (meridian === 'AM' && hours === 12) hours = 0;
+                    return hours * 60 + minutes;
+                    };
 
-        } catch (error) {
+                    times = times.filter(time => timeToMinutes(time) > now);
+                }
+
+                setAvailableTimes(times);
+            } catch (error) {
             console.error("Error fetching available slots:", error);
             setAvailableTimes([]);
         }}

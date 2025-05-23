@@ -302,13 +302,15 @@ const getAppointmentStats = async (req, res) => {
     //Appointments on today
     const todayCount = await Appointment.countDocuments({
      doctor:doctorId,
-     date: { $gte: todayStr }
+     date: { $gte: todayStr },
+     status: "confirmed" && !'pending' && !'canceled'
     });
 
     //Upcoming appointments (after today)
     const upcomingCount = await Appointment.countDocuments({
       doctor: doctorId,
-      date: { $gt: todayStr }
+      date: { $gt: tomorrowStr },
+      status: 'confirmed'
     });
 
     // Unique patients who booked any appointments
@@ -321,7 +323,7 @@ const getAppointmentStats = async (req, res) => {
     const pendingRequestsCount = await Appointment.countDocuments({
       doctor: doctorId,
       date: { $gte: todayStr },
-      status: 'pending'
+      status: 'pending' && !'canceled'
     });
 
     res.status(200).json({
