@@ -637,10 +637,52 @@ const pwChange = async (req, res) => {
 //   }
 // };
 
+// const checkpayment = async (req, res) => {
+//   try {
+//     // Fetch all payment records
+//     const payments = await AppointmentPayment.find({}, 'appointment paymentStatus');
+
+//     if (!payments || payments.length === 0) {
+//       return res.status(404).json({ success: false, message: 'No payment records found' });
+//     }
+
+//     return res.status(200).json({
+//       success: true,
+//       payments,  // array of { appointmentId, paymentStatus }
+//     });
+//   } catch (error) {
+//     console.error('Error checking payment:', error);
+//     res.status(500).json({ success: false, message: 'Server error' });
+//   }
+// };
+
 const checkpayment = async (req, res) => {
   try {
-    // Fetch all payment records
-    const payments = await AppointmentPayment.find({}, 'appointment paymentStatus');
+    // Aggregate to get latest payment status per unique appointment
+    const payments = await AppointmentPayment.aggregate([
+      {
+        $sort: { updatedAt: -1, createdAt: -1 } // Sort by latest updated
+      },
+      {
+        $group: {
+          _id: "$appointment", // Group by appointment ID
+          paymentStatus: { $first: "$paymentStatus" }, // Take the latest paymentStatus
+          latestPaymentId: { $first: "$_id" }, // Optional: include latest payment record ID
+          appointmentId: { $first: "$appointment" }, // Return the appointment ID
+          createdAt: { $first: "$createdAt" },
+          updatedAt: { $first: "$updatedAt" }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          appointment: "$appointmentId",
+          paymentStatus: 1,
+          createdAt: 1,
+          updatedAt: 1
+        }
+      }
+    ]);
 
     if (!payments || payments.length === 0) {
       return res.status(404).json({ success: false, message: 'No payment records found' });
@@ -648,13 +690,14 @@ const checkpayment = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      payments,  // array of { appointmentId, paymentStatus }
+      payments, // array of { appointment, paymentStatus }
     });
   } catch (error) {
     console.error('Error checking payment:', error);
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
+
 
 
 module.exports={registerUser, verifyEmail, loginUser, getUserById, editUserData, deleteUserData,

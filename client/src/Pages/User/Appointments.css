@@ -193,3 +193,69 @@
   border-radius: 20px;
   color: #290352;
 }
+
+/* Existing styles remain unchanged */
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .apptlist-dashboard {
+    flex-direction: column;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .apptlist-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    padding-right: 0;
+  }
+
+  .apptlist-tab {
+    width: auto;
+    white-space: nowrap;
+    padding: 10px 16px;
+  }
+
+  .apptlist-main {
+    margin-left: 0;
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .apptlist-card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .apptlist-card-body {
+    flex-direction: row;
+  }
+
+  .apptlist-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    margin-top: 10px;
+  }
+
+  .apptlist-btn-cancel,
+  .apptlist-btn-payment,
+  .apptlist-btn-reminder {
+    min-width: auto;
+    flex: 1 1 100px;
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .apptlist-payment-section,
+  .apptlist-cancel-text {
+    font-size: 13px;
+    padding: 4px 10px;
+  }
+}

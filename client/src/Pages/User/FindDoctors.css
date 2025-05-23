@@ -166,7 +166,7 @@
 /* Doctor grid styles */
 .find-doctor-doctor-grid {
   display: grid;
-  grid-template-columns: repeat(3, 0.4fr);
+  grid-template-columns: repeat(3, 1fr);
   /* gap: 1.5rem; */
   overflow-y: auto;
   max-height: 75vh; 
@@ -204,7 +204,8 @@
 
 @media (max-width: 576px) {
   .find-doctor-doctor-grid {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns:repeat(3, 1fr);  
   }
   
   .find-doctor-availability-legend {
@@ -214,5 +215,53 @@
   
   .find-doctor-availability-legend p {
     display: none;
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+  .find-doctor-container {
+    flex-direction: column;
+  }
+
+  .find-doctor-sidebar {
+    width: 100% ;
+    position: relative;
+  }
+
+  .find-doctor-search-wrapper input {
+    width: 100%;
+  }
+
+  .find-doctor-dept-container {
+    padding: 1rem;
+  }
+    .find-doctor-doctor-grid {
+    display: grid;
+    grid-template-columns:repeat(3, 1fr);  
+  }
+}
+
+@media (max-width: 576px) {
+  .find-doctor-availability-legend {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .find-doctor-search-wrapper input {
+    padding-left: 2.5rem;
+    font-size: 0.9rem;
+  }
+
+  .find-doctor-search-icon {
+    left: 0.75rem;
+  }
+
+  .find-doctor-content p {
+    font-size: 0.9rem;
+  }
+    .find-doctor-doctor-grid {
+    display: grid;
+    grid-template-columns:repeat(3, 1fr);  
   }
 }

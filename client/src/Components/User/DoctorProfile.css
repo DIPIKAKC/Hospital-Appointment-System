@@ -157,24 +157,81 @@
   color: #666;
 }
 
-/* Responsive adjustments */
-@media (max-width: 480px) {
+/* Responsive styles */
+@media (max-width: 768px) {
   .doctor-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
-  
+
   .doctor-image-circle {
-    margin-bottom: 12px;
+    /* margin-bottom: 12px; */
   }
-  
+
   .doctor-header-content {
-    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  
-  .availability-badge {
-    position: relative;
+
+  .doctor-name-section {
+    margin-left: 0;
     margin-top: 10px;
-    align-self: flex-start;
+  }
+
+  .availability-badge {
+    position: static;
+    margin-top: 10px;
+  }
+
+  .about-section {
+    width: 100%;
+    text-align: center;
+  }
+
+  .section-title,
+  .about-text {
+    text-align: left;
+  }
+
+  .contact-section {
+    padding: 0 5px;
+  }
+
+  .contact-item {
+    justify-content: left;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .doctor-card-ok {
+    padding: 10px 8px;
+  }
+
+  .doctor-name {
+    font-size: 18px;
+  }
+
+  .section-title {
+    font-size: 15px;
+  }
+
+  .about-text {
+    font-size: 13px;
+  }
+
+  .contact-item {
+    font-size: 12px;
+  }
+
+  .department-badge {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+
+  .availability-badge {
+    font-size: 12px;
+    padding: 3px 10px;
   }
 }

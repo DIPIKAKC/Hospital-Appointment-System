@@ -35,3 +35,43 @@
     width: 24px;
     height: 24px;
 }
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .contact-dashboard {
+    background-size: 30%;
+    height: fit-content;
+    /* flex-direction: column; */
+    /* background-position: top; */
+    background-size: contain;
+  }
+
+  .contact-info {
+    margin-left: 0;
+    padding-top: 20px;
+    text-align: left;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-dashboard {
+    margin: 40px 20px 0 20px;
+    padding-top: 80px;
+    background-size: 80%;
+    background-position: right;
+  }
+
+  /* .contact-info h3 {
+    font-size: 18px;
+  } */
+
+  /* .email-icon {
+    width: 20px;
+    height: 20px;
+  } */
+/* 
+  .contact-email {
+    font-size: 14px;
+    text-align: right;
+  } */
+}

@@ -65,7 +65,7 @@ const navigate = useNavigate();
             <div 
               className={`doc-card-availability`}
             >
-              Available
+              Verified
             </div>
           </div>
           

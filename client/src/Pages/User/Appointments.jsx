@@ -259,47 +259,7 @@ return (
                       </button>
                     )}
 
-                    {/* {appointment.status === 'confirmed' && isFutureAppointment(appointment.date, appointment.time) && (
-                      <div className="apptlist-payment-section">
-                        <button
-                          className="apptlist-btn-payment"
-                          onClick={() => setShowKhaltiPayment(true)}
-                        >
-                          Pay with Khalti
-                        </button>
-
-                        {showKhaltiPayment && (
-                          <InitiatingKhaltiPayment appointment={appointment} />
-                        )}
-                      </div>
-                    )} */}
-
-{/*status paid for only upcoming appts */}
-                    {/* {appointment.status === 'confirmed' && 
-                      isFutureAppointment(appointment.date, appointment.time) && (
-                        <div className="apptlist-payment-section">
-                          {paymentsStatus[appointment._id] === 'completed' ? (
-                            <span className="already-paid-text">Already Paid</span>
-                          ) : (
-                            <>
-                              <button
-                                className="apptlist-btn-payment"
-                                onClick={() => setShowKhaltiPaymentFor(appointment._id)}
-                              >
-                                Pay with Khalti
-                              </button>
-
-                              {showKhaltiPaymentFor === appointment._id && (
-                                <InitiatingKhaltiPayment appointment={appointment}
-                                  onPaymentSuccess={() => handlePaymentSuccess(appointment._id)}
-                                  onClose={() => setShowKhaltiPaymentFor(null)}
-                                />
-                              )}
-                            </>
-                          )}
-                        </div>
-                      )} */}
-
+{/*status paid */}
                       {appointment.status === 'confirmed' && (
                         <div className="apptlist-payment-section">
                           {isLoadingPayments ? (
@@ -325,8 +285,7 @@ return (
                           ) : null}
                         </div>
                       )}
-
-
+{/*  */}
                     {appointment.status !== 'canceled' && isFutureAppointment(appointment.date, appointment.time) &&  (
                     <button className="apptlist-btn-reminder" onClick={() => handleOpenReminder(appointment)}>
                       <MdAccessAlarms size={15} /> Set Reminder

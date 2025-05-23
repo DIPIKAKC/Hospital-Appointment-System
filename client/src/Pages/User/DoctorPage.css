@@ -305,3 +305,74 @@
     transition: none;
   }
 }
+
+
+@media (max-width: 1024px) {
+  .doctor-personal-container {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+
+  .doctor-personal-booking-section {
+    width: 100%;
+    margin-top: 30px;
+    max-height: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .doctor-personal-time-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .doctor-personal-booking-section {
+    padding: 20px;
+  }
+
+  .doctor-personal{
+    margin-top: 0;
+  }
+  .doctor-personal-appointment-calendar .react-calendar__navigation button {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .doctor-personal-appointment-calendar .react-calendar__month-view__days__day {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .doctor-personal-continue-button {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .find-doctor-doctor-grid{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .doctor-personal-time-grid {
+    grid-template-columns: (3,1fr);
+  }
+
+  .modal-container {
+    margin: 0 15px;
+  }
+
+  .modal-header h3,
+  .success-title {
+    font-size: 1.1rem;
+  }
+
+  .success-message {
+    font-size: 0.95rem;
+  }
+
+  .doctor-personal-calendar h3,
+  .doctor-personal-timeslot-section h3 {
+    font-size: 1rem;
+  }
+}

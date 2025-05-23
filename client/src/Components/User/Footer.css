@@ -12,6 +12,16 @@
     justify-content: space-between;
 }
 
+.foot-logo{
+    border: none;
+    background-color: #fff;
+    font-weight: 700;
+    font-size: 25px;
+    font-style: italic;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color:#10B8B9;
+}
+
 .footer{
     padding-left:200px;
     padding-right: 200px;
@@ -38,5 +48,100 @@
 
 .copyrights{
     margin-top: 25px;
-    margin-left:400px
+    text-align: center;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) {
+    .footer-container {
+        padding-left: 80px;
+        padding-right: 80px;
+        margin-top: 80px;
+    }
+    
+    .footer {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+    
+    .copyrights {
+        margin-left: 200px;
+    }
+}
+
+/* Small tablet styles */
+@media (max-width: 768px) {
+    .footer-container {
+        padding: 30px 50px;
+        margin-top: 60px;
+    }
+    
+    .footer-info {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .footer {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+    
+    .copyrights {
+        margin-left: 0;
+        text-align: center;
+        margin-top: 30px;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+    .footer-container {
+        padding: 20px 20px;
+        margin-top: 40px;
+    }
+    
+    .footer-info {
+        gap: 30px;
+    }
+    
+    .footer {
+        padding-left: 0;
+        padding-right: 0;
+        gap: 12px;
+    }
+    
+    .terms {
+        gap: 12px;
+    }
+    
+    .copyrights {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+}
+
+/* Extra small mobile styles */
+@media (max-width: 320px) {
+    .footer-container {
+        padding: 15px 15px;
+        margin-top: 30px;
+    }
+    
+    .footer-info {
+        gap: 25px;
+    }
+    
+    .footer {
+        gap: 10px;
+    }
+    
+    .terms {
+        gap: 10px;
+    }
+    
+    .copyrights {
+        margin-top: 15px;
+        font-size: 12px;
+    }
 }

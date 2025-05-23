@@ -298,9 +298,6 @@
   cursor: not-allowed;
 }
 
-
-
-
 .status-indicator {
   font-size: 0.8rem;
   padding: 4px 8px;
@@ -338,53 +335,84 @@
   background-color: rgba(52, 152, 219, 0.05);
 }
 
+@media (max-width: 1024px) {
+  .main-container {
+    flex-direction: column;
+    padding: 16px;
+    align-items: center;
+  }
+
+  .schedule-content {
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+  }
+
+  .schedule-form {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .slot-card {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
-  .schedule-container {
+  .schedule-title {
+    font-size: 1.8rem;
+  }
+
+  .form-heading, .section-heading {
+    font-size: 1.2rem;
+  }
+
+  .date-input, .time-slot {
+    font-size: 0.9rem;
+  }
+
+  .schedule-content {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .time-tags {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 480px) {
+  .schedule-title {
+    font-size: 1.5rem;
+  }
+
+  .form-heading, .section-heading {
+    font-size: 1.1rem;
+  }
+
+  .view-toggle {
+    width: 100%;
+    flex-direction: column;
+    padding: 8px;
+  }
+
+  .toggle-btn {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .schedule-form {
     padding: 16px;
   }
 
-  .slot-grid {
-    grid-template-columns: 1fr;
-  }
-
   .time-slots-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .form-actions {
     flex-direction: column;
+    gap: 12px;
   }
 }
 
-@media (max-width: 480px) {
-  .time-slots-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .view-toggle {
-    flex-direction: column;
-  }
-}
-
-
-/* .slot-action-btn {
-  flex: 1;
-  padding: 8px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  transition: all 0.3s ease;
-}
-
-.edit-btn {
-  color: #10B8B9;
-}
-
-.edit-btn:hover {
-  background-color: #2b9999;
-} */

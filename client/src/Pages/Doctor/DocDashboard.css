@@ -264,10 +264,14 @@
   .link-schedule:hover{
     text-decoration: none;
   }
+  
   /* Responsive Adjustments */
   @media (max-width: 1200px) {
     .dashboard-stats {
       grid-template-columns: repeat(2, 1fr);
+    }
+    .doctor-dashboard-sidebar{
+      max-width: fit-content;
     }
   }
   
@@ -281,6 +285,28 @@
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
+
+    .doctor-dashboard-sidebar {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .quick-actions{
+    width: fit-content;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .recent-patients-doc {
+    width: 142%;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .patients-list .patient-item {
+    width: 100%;
+  }
+
   }
   
   @media (max-width: 768px) {
@@ -322,10 +348,24 @@
       width: 100%;
       justify-content: space-between;
     }
+    
   }
   
   @media (max-width: 576px) {
     .dashboard-stats {
       grid-template-columns: 1fr;
     }
+
+      .doctor-dashboard {
+    margin: 0 10px;
+    padding: 15px;
+  }
+
+  .doctor-dashboard-sidebar {
+    gap: 15px;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
   }

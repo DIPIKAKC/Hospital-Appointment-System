@@ -20,10 +20,14 @@
 }
 
 
-.logo {
-  font-size: 24px;
-  color: #10B8B9;
-  text-decoration: none;
+.logo{
+    border: none;
+    background-color: #fff;
+    font-weight: 700;
+    font-size: 25px;
+    font-style: italic;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color:#10B8B9;
 }
 
 .navbar-menu {
