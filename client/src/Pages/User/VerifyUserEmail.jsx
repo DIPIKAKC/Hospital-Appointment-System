@@ -4,6 +4,7 @@ import Resources from '../../Components/User/Resources';
 import Footer from '../../Components/User/Footer';
 import './VerifyUserEmail.css'; 
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export const VerifyUserEmail = () => {
   const [successMessage, setSuccessMessage] = useState('Your email has been verified. You can now continue to login');
@@ -37,7 +38,7 @@ export const VerifyUserEmail = () => {
       }
 
     }catch(error){
-      alert(error.message)
+      toast.error(error.message)
     }
 
   }

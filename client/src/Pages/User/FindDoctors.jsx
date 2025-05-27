@@ -99,6 +99,7 @@ const FindDoctors = () => {
         <NavBar/> 
 
         <main className="find-doctor-container">
+{/*  */}
             <div className="find-doctor-sidebar">
                 <div className="find-doctor-dept-container">
                     <h2>Departments</h2>
@@ -131,6 +132,7 @@ const FindDoctors = () => {
                 </div>
             </div>
 
+{/*  */}
             <div className="find-doctor-content">
                 <div className="find-doctor-search-wrapper">
                     <i className="find-doctor-search-icon"><GoSearch size={22}/></i>
@@ -141,15 +143,6 @@ const FindDoctors = () => {
                         onChange={handleSearch}
                     />
                 </div>
-{/* 
-                <div className="find-doctor-availability-legend">
-                    <div className="find-doctor-legend-item">
-                        <span className="find-doctor-dot available"></span> Available
-                    </div><p>|</p>
-                    <div className="find-doctor-legend-item">
-                        <span className="find-doctor-dot unavailable"></span> Not Available
-                    </div>
-                </div> */}
 
 
                 <div className="find-doctor-doctor-grid">

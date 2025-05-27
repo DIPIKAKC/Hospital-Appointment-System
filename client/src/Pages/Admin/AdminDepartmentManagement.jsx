@@ -82,7 +82,7 @@ export default function AdminDepartmentManagement() {
       setDepartments(prev => prev.filter(dept => dept._id !== departmentId));      
     } catch (error) {
       console.error("Delete error:", error.message);
-      alert("Error deleting department: " + error.message);
+      toast.error("Error deleting department: " + error.message);
     }
   };
 
@@ -132,7 +132,7 @@ export default function AdminDepartmentManagement() {
       await fetchDepartments();      
     } catch (error) {
       console.error("Add error:", error.message);
-      alert("Error adding department: " + error.message);
+      toast.error("Error adding department: " + error.message);
     }
   };
 
@@ -161,7 +161,7 @@ export default function AdminDepartmentManagement() {
       
     } catch (error) {
       console.error("Update error:", error.message);
-      alert("Error updating department: " + error.message);
+      toast.error("Error updating department: " + error.message);
     }
   };
 

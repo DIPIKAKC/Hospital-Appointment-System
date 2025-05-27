@@ -35,12 +35,12 @@
   }
   
   .admin-home-sidebar-menu {
-    margin-top: 45px;
+    margin-top: 35px;
   }
   
   .admin-home-menu-item {
-    padding: 12px 30px;
-    margin-bottom: 13px;
+    padding: 10px 30px;
+    margin-bottom: 6px;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;

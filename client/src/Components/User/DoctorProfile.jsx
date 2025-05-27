@@ -35,7 +35,7 @@ const DoctorProfileCard = () => {
                     console.log("Fetched doctor list:", data); // Debugging
 
                     if (Array.isArray(data) && data.length > 0) {
-                        setDoctor(data[0]); // Assuming you want to display the first doctor
+                        setDoctor(data[0]); // to display the first doctor
                     }else if (data.fullName) {
                         setDoctor(data); // If the API returns a single doctor object
                     }
@@ -47,32 +47,8 @@ const DoctorProfileCard = () => {
         };
 
         fetchDoctor();
-    }, [doctorId]); // Add doctorId as dependency to re-fetch if it changes
+    }, [doctorId]); // doctorId as dependency to re-fetch if it changes
     
-//     return (
-//     <div className="profile-card">
-//         <div className="profile-header">
-//             <div className="doctor-details">
-//             <div className="experience">Experience</div>
-//             <div className="experience-value">{doctor.experience}</div><br/>
-//             <div className="name">{doctor.fullName}</div>
-//             <div className="specialty">{doctor.department?.name}</div>
-//             </div>
-//             <div className="doctor-image">
-//                 <img src={doctorImg} alt="Doctor"></img>
-//             </div>
-//         </div>
-//         <div className="about-section">
-//             <div className="about-title">About the doctor</div>
-//             <div className="about-description">
-//             {/* Dr. Rive roe, specializes in diagnosing and treating digestive disorders, 
-//             offering comprehensive care to improve patients' gastrointestinal 
-//             health and quality of life. */}
-//                 {doctor.description} 
-//             </div>
-//         </div>
-//     </div>
-//   );
 
 return (
     <>
@@ -108,10 +84,6 @@ return (
 
         <div className="contact-section">
           <h3 className="section-title">Additional Information</h3>
-          {/* <div className="contact-item">
-            <Phone size={16} className="contact-icon" />
-            <span>{doctor.contact}</span>
-          </div> */}
           <div className="contact-item">
             <PiMoneyWavy size={19} className="contact-icon" />
             <span>{doctor.doctorfee}</span>

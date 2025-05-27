@@ -3,6 +3,7 @@ import './ChangeDocPw.css';
 import { useNavigate } from 'react-router-dom';
 import DocBar from '../../Components/Doctor/DoctorNavbar';
 import FooterDoc from '../../Components/Doctor/FooterDoctor';
+import { toast } from 'sonner';
 
 const ChangePasswordDoc = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const ChangePasswordDoc = () => {
         throw new Error(data.message || 'Failed to change password');
       }
 
-      alert('Password changed successfully!');
+      toast.success('Password changed successfully!');
       setError(null);
       setCurrentPassword('');
       setNewPassword('');

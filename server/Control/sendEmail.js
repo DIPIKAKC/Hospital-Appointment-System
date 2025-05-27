@@ -3,18 +3,20 @@ const { Reminder } = require('../Schema/reminderSchema');
 
 // Setup transporter
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+service: 'gmail',
   auth: {
-    user: 'kcdipika03112061@gmail.com', // Replace with your Gmail
-    pass: 'nrdj viww tzrw bska'    // Use App Password (not your real password)
-  }
+    user: 'dipikak0323@gmail.com',
+    pass: 'xnsr jief lpfu gpbx'
+  },
+  debug: true,
+  logger: true
 });
 
 //email verification
 const verifyEmailMail = async (email, token) => {
 
   const mailOptions = {
-    from: `MedEase <${process.env.EMAIL_USER}>`,
+    from: `MedEase <${process.env.NODE_MAILER_EMAIL}>`,
     to: email,
     subject: 'Verify Your Email - MedEase',
     html: `
@@ -34,7 +36,7 @@ const verifyEmailMail = async (email, token) => {
                 <!-- Header with logo -->
                 <tr>
                   <td style="background-color: #10B8B9; padding: 20px 30px; text-align: center;">
-                    <img src="${process.env.LOGO_URL}" alt="MedEase" width="180" style="display: block; margin: 0 auto;">
+                    <h2 style= "width="180" style="text-align: center; display: block; margin: 0 auto; color: #ffffff">MedEase</h2>
                   </td>
                 </tr>
 

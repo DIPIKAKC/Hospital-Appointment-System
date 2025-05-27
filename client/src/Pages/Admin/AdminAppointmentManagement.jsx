@@ -111,7 +111,7 @@ export default function AdminAppointmentManagement() {
       setAppointments(prev => prev.filter(appointment => appointment._id !== appointmentId));
     } catch (error) {
       console.error("Delete error:", error.message);
-      alert("Error deleting appointment: " + error.message);
+      toast.error("Error deleting appointment: " + error.message);
     }
   };
   

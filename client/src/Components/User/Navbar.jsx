@@ -4,7 +4,6 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 import { HiOutlineBell } from "react-icons/hi2";
 import { RiUser3Line, RiLockPasswordLine, RiLogoutBoxLine } from "react-icons/ri";
 import './Navbar.css';
-import userImg from '../../assets/user.jpg'
 
 const NavBar = () => {
     const [username, setUsername] = useState("");
@@ -106,17 +105,17 @@ const NavBar = () => {
                     MedEase
                 </Link>
 
-                <div className="navbar-menu">
-                    <NavLink to="/" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
+                <div className="user-navbar-menu">
+                    <NavLink to="/" className={({ isActive }) => `user-nav-item ${isActive ? "active" : ""}`}>
                         Home
                     </NavLink>
-                    <NavLink to="/appointments" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
+                    <NavLink to="/appointments" className={({ isActive }) => `user-nav-item ${isActive ? "active" : ""}`}>
                         Appointments
                     </NavLink>
-                    <NavLink to="/find-doctors" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
+                    <NavLink to="/find-doctors" className={({ isActive }) => `user-nav-item ${isActive ? "active" : ""}`}>
                         Find Doctors
                     </NavLink>
-                    <NavLink to="/contact-us" className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}>
+                    <NavLink to="/contact-us" className={({ isActive }) => `user-nav-item ${isActive ? "active" : ""}`}>
                         Contact Us
                     </NavLink>
                 </div>
@@ -124,12 +123,12 @@ const NavBar = () => {
                 <div className="nav-actions">
                     {isLoggedIn ? (
                         <>
-                            <div className="notification-bell">
-                            <NavLink to="/notification" className="notification-icon">
+                            <div className="user-notification-bell">
+                            <NavLink to="/notification" className="user-notification-icon">
                                 <HiOutlineBell size={22} />
-                                {unreadCount > 0 && (
-                                <span className="notification-count">{unreadCount}</span>
-                                )}
+                                {/* {unreadCount > 0 && (
+                                <span className="user-notification-count">{unreadCount}</span>
+                                )} */}
                             </NavLink>
                             </div>
 

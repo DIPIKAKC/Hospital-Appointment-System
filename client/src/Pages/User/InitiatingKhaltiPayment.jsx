@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 
 const InitiatingKhaltiPayment = ({ appointment}) => {
   // Effect hook to handle payment redirection once the component is rendered
-  const [amountNPR, setAmountNPR] = useState(null);
   useEffect(() => {
     const handleKhaltiPayment = async () => {
       const user = JSON.parse(localStorage.getItem("userData"));

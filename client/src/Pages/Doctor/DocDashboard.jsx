@@ -121,59 +121,6 @@ const DoctorDashboard = () => {
       </div>
 
       <div className="dashboard-content">
-        {/* <div className="appointments-section">
-          <div className="section-header">
-            <h2>Upcoming Appointments</h2>
-            <button className="view-all-btn">View All</button>
-          </div>
-          
-          <div className="appointments-list">
-            {upcomingAppointments.map(appointment => (
-              <div className="appointment-card" key={appointment.id}>
-                <div className="appointment-time">
-                  <FaClock className="time-icon" />
-                  <span>{appointment.time}</span>
-                </div>
-                
-                <div className="appointment-details">
-                  <h3>{appointment.patientName}</h3>
-                  <p className="appointment-reason">{appointment.reason}</p>
-                  <p className="appointment-date">{appointment.date}</p>
-                </div>
-                
-                <div className="appointment-status">
-                  <span className={`status-badge ${appointment.status.toLowerCase()}`}>
-                    {appointment.status}
-                  </span>
-                </div>
-                
-                <div className="appointment-actions">
-                  {appointment.status === "Pending" && (
-                    <button 
-                      className="approve-btn"
-                      onClick={() => handleApproveAppointment(appointment.id)}
-                    >
-                      Approve
-                    </button>
-                  )}
-                  <button 
-                    className="reschedule-btn"
-                    onClick={() => handleRescheduleAppointment(appointment.id)}
-                  >
-                    Reschedule
-                  </button>
-                  <button 
-                    className="cancel-btn"
-                    onClick={() => handleCancelAppointment(appointment.id)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div> */}
-
         <div className="doctor-dashboard-sidebar">
           <div className="recent-patients-doc">
             <h2>Recent Patients</h2>

@@ -12,11 +12,10 @@ import { toast } from "sonner";
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
   const [activeTab, setActiveTab] = useState('all');
-  const[isLoadingPayments, isNotLoading] = useState()
+  const[isLoadingPayments, setIsLoadingPayments] = useState()
 
   const [showReminderModal, setShowReminderModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-  const [showKhaltiPayment, setShowKhaltiPayment] = useState();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [currentAppointment, setCurrentAppointment] = useState({ name: '', description: '' });
   const [paymentsStatus, setPaymentsStatus] = useState({});
@@ -82,7 +81,7 @@ const [showKhaltiPaymentFor, setShowKhaltiPaymentFor] = useState(null); // store
 
     // Don't proceed if the appointment is already canceled
     if (appointmentToCancel.status === 'canceled') {
-      alert("This appointment is already canceled");
+      toast.info("This appointment is already canceled");
       return;
     }
 
@@ -100,7 +99,7 @@ const [showKhaltiPaymentFor, setShowKhaltiPaymentFor] = useState(null); // store
       // alert("Appointment canceled successfully");
       toast.success("Appointment canceled successfully!");
       if (!response.ok) {
-        throw new Error("Failed to cancel appointment");
+        toast.error("Failed to cancel appointment");
       }
 
       // Update the local state to reflect the canceled appointment
@@ -116,7 +115,7 @@ const [showKhaltiPaymentFor, setShowKhaltiPaymentFor] = useState(null); // store
 
     } catch (error) {
       console.error("Error canceling appointment", error);
-      alert("Failed to cancel appointment. Please try again.");
+      toast.error("Failed to cancel appointment. Please try again.");
     }
   };
 
@@ -176,7 +175,7 @@ const [showKhaltiPaymentFor, setShowKhaltiPaymentFor] = useState(null); // store
       }
     };
 
-    // Handle payment completion (call this from InitiatingKhaltiPayment)
+    // Handle payment completion
   const handlePaymentSuccess = (appointmentId) => {
     setPaymentsStatus(prev => ({
       ...prev,
@@ -239,15 +238,6 @@ return (
                       {appointment.doctor ? appointment.doctor.department?.name || 'Not Specified' : 'Not Specified'}
                     </p>
                   </div>
-                  {/* <div className="apptlist-info-block">
-                    <p className="apptlist-label">Payment</p>
-                    <p
-                      className="apptlist-value"
-                      style={{ color: paymentsStatus[appointment._id] === 'completed' ? 'green' : 'red' }}
-                    >
-                      {paymentsStatus[appointment._id] === 'completed' ? 'Paid' : 'Unpaid'}
-                    </p>
-                  </div> */}
 
 
 {/* past current time? */}

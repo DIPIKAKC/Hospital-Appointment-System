@@ -81,7 +81,7 @@ router.patch("/verify-email/:token",verifyEmail)
 //forgot password
 router.post("/forgot-password", forgotPassword)
 //reset pw
-router.patch("/password-reset/:token/:role", pwChange)
+router.patch("/password-reset/:token", pwChange)
 //check for pay
 router.get("/check-pay", checkpayment)
 
@@ -118,7 +118,7 @@ router.patch('/verify-email/:token', verifyDoctorEmail)
 //route for admin registration
 router.post("/register-admin", registerAdmin)
 //email verification
-router.patch('/verify-email/:token', verifyAdminEmail)
+// router.patch('/verify-email/:token', verifyAdminEmail)
 router.post("/login-admin", loginAdmin)
 router.get("/me-admin", auth, getMeDAdmin)
 

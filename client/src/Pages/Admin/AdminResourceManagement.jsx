@@ -84,7 +84,7 @@ export default function AdminDepartmentManagement() {
       setResources(prev => prev.filter(ress => ress._id !== resourceId));      
     } catch (error) {
       console.error("Delete error:", error.message);
-      alert("Error deleting resource: " + error.message);
+      toast.error("Error deleting resource: " + error.message);
     }
   };
 
@@ -133,7 +133,7 @@ export default function AdminDepartmentManagement() {
       await fetchResources();      
     } catch (error) {
       console.error("Add error:", error.message);
-      alert("Error adding department: " + error.message);
+      toast.error("Error adding department: " + error.message);
     }
   };
 
@@ -162,7 +162,7 @@ export default function AdminDepartmentManagement() {
       
     } catch (error) {
       console.error("Update error:", error.message);
-      alert("Error updating department: " + error.message);
+      toast.error("Error updating department: " + error.message);
     }
   };
 
@@ -203,7 +203,7 @@ export default function AdminDepartmentManagement() {
                 <th>NAME</th>
                 <th>TOTAL</th>
                 <th>AVAILABLE</th>
-                <th>LAST UPDATED</th>
+                {/* <th>LAST UPDATED</th> */}
                 <th>ACTIONS</th>
               </tr>
             </thead>
@@ -214,7 +214,7 @@ export default function AdminDepartmentManagement() {
                   <td>{resource.type}</td>
                   <td>{resource.total}</td>
                   <td>{resource.available}</td>
-                  <td>{new Date(resource.lastUpdated).toLocaleString()}</td>
+                  {/* <td>{new Date(resource.lastUpdated).toLocaleString()}</td> */}
                     <td className="admin-resource-actions">
                       <button
                         className="admin-resource-edit-btn"

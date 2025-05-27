@@ -125,7 +125,7 @@ export default function AdminDoctorManagement() {
       setDoctors(prev => prev.filter(doctor => doctor._id !== doctorId));
     } catch (error) {
       console.error("Delete error:", error.message);
-      alert("Error deleting doctor: " + error.message);
+      toast.error("Error deleting doctor: " + error.message);
     }
   };
 

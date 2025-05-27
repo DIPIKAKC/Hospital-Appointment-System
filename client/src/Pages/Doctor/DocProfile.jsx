@@ -5,6 +5,7 @@ import { IoCallOutline } from "react-icons/io5";
 import DocBar from '../../Components/Doctor/DoctorNavbar';
 import FooterDoc from '../../Components/Doctor/FooterDoctor';
 import { AiOutlineClose } from "react-icons/ai";
+import { toast } from 'sonner';
 
 const DoctorProfile = () => {
   const [doctor, setDoctor] = useState(null);
@@ -157,7 +158,7 @@ const DoctorProfile = () => {
 
       const result = await response.json();
       if (result.success) {
-        alert("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
         // Update local patient state with new data
       setDoctor(prevDoctor => ({
           ...prevDoctor,
@@ -176,11 +177,11 @@ const DoctorProfile = () => {
         }
         setModalOpen(false);
       } else {
-        alert(result.message || "Update failed.");
+        toast.error(result.message || "Update failed.");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Something went wrong.");
+      toast.error("Something went wrong.");
     }
   };
 
@@ -213,7 +214,6 @@ const DoctorProfile = () => {
     setModalOpen(false);
     setImagePreview(null);
   };
-
 
   return (
     <>

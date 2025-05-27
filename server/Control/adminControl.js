@@ -28,16 +28,16 @@ const registerAdmin = async(req,res)=>{
             role: "admin"
         })
 
-        const verifyToken = await jwt.sign(
-          { id: user._id},
-          process.env.JWT_SECRET,
-          { expiresIn: "1d" }
-        );
+        // const verifyToken = await jwt.sign(
+        //   { id: user._id},
+        //   process.env.JWT_SECRET,
+        //   { expiresIn: "1d" }
+        // );
 
-        verifyEmailMail(
-          user.email,
-          verifyToken
-        )
+        // verifyEmailMail(
+        //   user.email,
+        //   verifyToken
+        // )
 
         await user.save();
 
@@ -53,35 +53,35 @@ const registerAdmin = async(req,res)=>{
   }
 
 //verify admin 
-const verifyAdminEmail = async (req, res) => {
-  try{
-  const { token } = req.params;
-  if (!token) {
-      res.status(500).json(400, "Token is required");
+// const verifyAdminEmail = async (req, res) => {
+//   try{
+//   const { token } = req.params;
+//   if (!token) {
+//       res.status(500).json(400, "Token is required");
       
-  }
+//   }
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  if (!decoded) {
-    res.status(400).json({success: false, message: "Token is required"});
-  }
+//   const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//   if (!decoded) {
+//     res.status(400).json({success: false, message: "Token is required"});
+//   }
 
   
 
-  const user = await RegisterAdmin.findById(decoded.id);
-  if (!user) {
-    res.status(404).json({success: false, message: "Admin not found"});
-  }
+//   const user = await RegisterAdmin.findById(decoded.id);
+//   if (!user) {
+//     res.status(404).json({success: false, message: "Admin not found"});
+//   }
 
-  user.verified = true;
-  await user.save();
+//   user.verified = true;
+//   await user.save();
 
-  res.status(200).json({success:true, message:"Email verified Successfully"})
-  }catch(error){
-    res.status(500).json({success:false, message: error.message})
-  }
+//   res.status(200).json({success:true, message:"Email verified Successfully"})
+//   }catch(error){
+//     res.status(500).json({success:false, message: error.message})
+//   }
 
-};
+// };
 
 
 //login function for admin
@@ -94,9 +94,9 @@ const loginAdmin = async (req, res) => {
       // To find user in the database
       const user = await RegisterAdmin.findOne({ email });
   
-      if(!user.verified){
-        return res.status(404).json({success:false, message: 'Email not verified' });
-      }
+      // if(!user.verified){
+      //   return res.status(404).json({success:false, message: 'Email not verified' });
+      // }
       // If user not found or password is incorrect, return error
       if (!user || !(await bcrypt.compare(password, user.password))) {
         return res.status(400).json({ message: 'Invalid email or password' });
@@ -151,6 +151,9 @@ const registerDoctor = async(req,res)=>{
     if(!department || !email || !fullName || !contact){
       return res.status(400).json({ message: "All fields are required" });
         }
+    if(doctorfee<=0){
+      return res.status(400).json({message:"doctor fee shoul not be negative or 0"})
+    }
         
         // Check if email already exists
         const existingDoctor = await RegisterDoctor.findOne({ email });
@@ -334,6 +337,13 @@ const adminUpdateDoctor = async (req, res) => {
     const doctorId = req.params.id;
     const updatedData = req.body;
 
+    if(updatedData.doctorfee<1){
+      return res.status(400).json({ message: 'Doctor fee shouldnot be  less than 1' });
+    }
+    if(updatedData.experience<0){
+      return res.status(400).json({ message: 'Doctor experience shouldnot be  less than 0' });
+    }
+    
     const updatedDoctor = await RegisterDoctor.findByIdAndUpdate(doctorId, updatedData, { new: true });
 
     if (!updatedDoctor) {
@@ -381,7 +391,7 @@ const getAdminDepartments = async (req, res) => {
 };
 
 
-//update doctors
+//update departments
 const adminUpdateDepartment = async (req, res) => {
   try {
     const departmentId = req.params.id;
@@ -461,6 +471,12 @@ const addResource = async (req, res) => {
         message: '`available` cannot be greater than `total`'
       });
     }
+    if (available < 0 || total < 0) {
+      return res.status(400).json({
+        success: false,
+        message: '`available` and `total` must not be negative'
+      });
+    }
 
     const existingResource = await Resource.findOne({type});
     if (existingResource) {
@@ -502,9 +518,13 @@ const updateResource = async (req, res) => {
         message: '`available` cannot be greater than `total`'
       });
     }
+    if (newAvailable < 0 || newTotal < 0) {
+      return res.status(400).json({
+        success: false,
+        message: '`available` and `total` must not be negative'
+      });
+    }
     updatedData.lastUpdated = new Date(); // update lastUpdated timestamp
-
-    
     const updatedResource = await Resource.findByIdAndUpdate(resourceId, updatedData,{ new: true });
 
     if(!updatedResource){
@@ -555,4 +575,4 @@ const adminDeleteResources = async (req, res) => {
     module.exports = {registerAdmin, loginAdmin, getMeDAdmin, addDepartments, registerDoctor, getAllAppointments, 
       getAllUsers, adminDeleteUsers, getAdminDoctors, getAdminDepartments, adminUpdateDepartment,adminDeleteDepartment, adminDeleteAppointment, 
       adminDeleteDoctors, adminUpdateDoctor, getDoctorById, getStats, addResource, updateResource, getResources, 
-      adminDeleteResources, verifyAdminEmail}
+      adminDeleteResources}

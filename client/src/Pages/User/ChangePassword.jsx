@@ -4,6 +4,7 @@ import NavBar from '../../Components/User/Navbar';
 import Footer from '../../Components/User/Footer';
 import Resources from '../../Components/User/Resources';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const ChangePasswordPage = () => {
   const navigate = useNavigate();
@@ -34,12 +35,12 @@ const ChangePasswordPage = () => {
         throw new Error(data.message || 'Failed to change password');
       }
 
-      alert('Password changed successfully!');
+      toast.success('Password changed successfully!');
       setError(null);
       setCurrentPassword('');
       setNewPassword('');
     } catch (err) {
-      setError(err.message);
+      toast.error(err.message);
       setMessage(null);
     }
   };

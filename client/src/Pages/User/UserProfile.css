@@ -121,11 +121,11 @@
   margin-bottom: 10px;
 }
 
-@keyframes spin {
+/* @keyframes spin {
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 .profile-error__message {
   color: red;
@@ -133,7 +133,7 @@
 }
 
 /* Modal */
-.modal-overlay {
+.user-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -148,29 +148,29 @@
   padding: 2rem;
 }
 
-.modal-content {
+.user-modal-content {
   background: #fff;
   padding: 2rem;
   width: 100%;
   max-width: 500px;
   border-radius: 10px;
-  animation: fadeIn 0.3s ease-in-out;
+  /* animation: fadeIn 0.3s ease-in-out; */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   max-height: 90vh;
   overflow-y: auto;
 }
 
-.modal-content::-webkit-scrollbar {
+.user-modal-content::-webkit-scrollbar {
   display: none;
   -ms-overflow-style: none;
 }
 
-.modal-content h2 {
+.user-modal-content h2 {
   margin-top: 0;
   margin-bottom: 1rem;
 }
 
-.form-head {
+.user-form-head {
   display: flex;
   gap: 270px;
   justify-content: center;
@@ -178,14 +178,14 @@
   flex-wrap: wrap;
 }
 
-.modal-content label {
+.user-modal-content label {
   display: block;
   margin-top: 1rem;
   font-weight: bold;
 }
 
-.modal-content input,
-.modal-content select {
+.user-modal-content input,
+.user-modal-content select {
   width: 100%;
   padding: 0.5rem;
   margin-top: 0.5rem;
@@ -197,7 +197,7 @@
   margin-bottom: 0;
 }
 
-.modal-buttons {
+.edit-modal-buttons {
   margin-top: 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -205,7 +205,7 @@
   gap: 10px;
 }
 
-.modal-save,
+.modal-save-edit-user,
 .modal-close {
   padding: 0.5rem 1.5rem;
   border: none;
@@ -214,8 +214,8 @@
   cursor: pointer;
 }
 
-.modal-save {
-  background-color: #4CAF50;
+.modal-save-edit-user {
+  background-color: #10B8B9;
 }
 
 .modal-close {
@@ -270,7 +270,7 @@
     padding: 15px;
   }
 
-  .modal-content {
+  .user-modal-content {
     padding: 1rem;
   }
 

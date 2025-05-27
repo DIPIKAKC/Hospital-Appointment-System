@@ -99,6 +99,7 @@ const ManageSchedule = () => {
   return selectedDate > now;
 };
 
+//already selected or not time slots
   const handleTimeSlotToggle = (timeSlot) => {
     if (selectedTimeSlots.includes(timeSlot)) {
       setSelectedTimeSlots(selectedTimeSlots.filter(t => t !== timeSlot));
@@ -159,6 +160,7 @@ const ManageSchedule = () => {
     }
   };
 
+  //edit- slot data
   const handleEditSlot = (slot) => {
     setEditingSlot(slot);
     window.scrollTo({ top: document.querySelector('.schedule-form').offsetTop - 100, behavior: 'smooth' });

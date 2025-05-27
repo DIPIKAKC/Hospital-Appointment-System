@@ -243,7 +243,7 @@ const AdminAddDoctor = ({ onClose, onSuccess }) => {
             <div className="form-footer">
               <button
                 type="submit"
-                disabled={loading}
+                // disabled={loading}
                 className={loading ? "submit-button loading" : "submit-button"}
               >
                 {loading ? "Adding..." : "Add Doctor"}

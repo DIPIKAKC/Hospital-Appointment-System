@@ -1,149 +1,144 @@
-/* 
- body {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f3f4f6;
-  font-family: Arial, sans-serif;
-} */
-
-.doctor-personal-card-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* width: 100%;
-  height: 100vh; */
-}
-
-.doctor-personal-card {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 25px;
-  width: 100%;
-  padding-left: 30px;
-  padding-right: 30px;
-}
-
-/* .doctor-image {
-  margin-right: 20px;
-} */
-
-.doctor-personal-card-photo img {
-  width: 120px;
-  height: 150px;
-  /* object-fit: cover; */
-  border-radius: 10px;
-}
-
-.doctor-personal-card-details {
-  margin-right: 30px;
-  flex-grow: 1;
-}
-
-.experience-personal-card-label {
-  color: #6b7280;
-  margin-bottom: 5px;
-}
-
-.experience-personal-card-value {
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.doctor-personal-card-name {
-  color: #1f2937;
-  font-weight: 500;
-  margin-bottom: 5px;
-}
-
-.doctor-personal-card-specialty {
-  color: #6b7280;
-  font-size: 0.875rem;
-  margin-bottom: 15px;
-}
-
-.book-personal-card-appointment-btn {
-  white-space: nowrap; /* Prevents text from wrapping */
-  width: fit-content;
-  background-color: #10B8B9;
-  color: white;
-  border: none;
-  padding: 15px 50px;
-  /* padding-left: 40px;
-  padding-right: 40px; */
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.book-personal-card-appointment-btn:hover {
-  background-color: #089d9d;
-}
-
-
-/* indicator */
-
-.availability-personal-card-indicator {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-left: 8px;
-  border-radius: 50%;
-  vertical-align: middle;
-}
-
-.available {
-  background-color: rgb(0, 255, 0);
-}
-
-.unavailable {
-  background-color: rgb(143, 143, 143);
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .doctor-personal-card {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-  }
-
-  .doctor-personal-card-photo img {
-    width: 100px;
-    height: 130px;
-  }
-
-  .book-personal-card-appointment-btn {
-    padding: 12px 30px;
-    font-size: 14px;
-  }
-
-  .doctor-personal-card-details {
-    margin-top: 15px;
-    margin-right: 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .doctor-personal-card-photo img {
-    width: 90px;
-    height: 120px;
-  }
-
-  .book-personal-card-appointment-btn {
-    padding: 10px 20px;
-    font-size: 13px;
-  }
-
-  .doctor-personal-card {
-    padding: 15px;
-  }
-}
-
-
+.doc-card-container {
+            max-width: 290px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+          }
+  
+          .doc-card-content {
+            display: flex;
+            flex-direction:column;
+          }
+  
+          .doc-card-image {
+            width: 300px;
+            flex-shrink: 0;
+            background-color:black;
+          }
+  
+          .doc-card-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+          }
+  
+          .doc-card-info {
+            padding: 20px;
+            flex-grow: 1;
+          }
+  
+          .doc-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+          }
+  
+          .doc-card-department {
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 600;
+            color:rgb(125, 129, 129);
+            margin-bottom: 4px;
+          }
+  
+          .doc-card-name {
+            font-size: 20px;
+            color: #111827;
+          }
+  
+          .doc-card-availability {
+            border-radius: 50px;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: #d1fae5;
+            color: #047857;
+          }
+  
+          .available {
+            background-color: #d1fae5;
+            color: #047857;
+          }
+  
+          .unavailable {
+            background-color: #fee2e2;
+            color: #b91c1c;
+          }
+  
+          .doc-card-experience {
+            display: flex;
+            align-items: center;
+            color: #6b7280;
+          }
+  
+          .doc-card-stars {
+            display: flex;
+            color: #fbbf24;
+            font-size: 17px;
+          }
+  
+          .doc-card-years {
+            font-size: 14px;
+            margin-left: 6px;
+          }
+  
+          .doc-card-contact {
+            margin-top: 14px;
+          }
+  
+          .doc-card-contact-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #4b5563;
+            margin-bottom: 6px;
+          }
+  
+          .doc-card-contact-icon {
+            margin-right: 8px;
+            font-size: 14px;
+          }
+  
+          .doc-card-book-button {
+            margin-top: 16px;
+            width: 100%;
+            padding: 10px 16px;
+            background-color: #10B8B9;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+          }
+  
+          .doc-card-book-button.disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+          }
+  
+          .doc-card-button-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+  
+          .contact-icon {
+            margin-right: 10px;
+            color: #666;
+          }
+          @media (max-width: 640px) {
+            .doc-card-content {
+              flex-direction: column;
+            }
+  
+            .doc-card-image {
+              width: 100%;
+              height: 200px;
+            }
+          }

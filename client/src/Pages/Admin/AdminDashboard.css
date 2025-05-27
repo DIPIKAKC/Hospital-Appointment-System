@@ -21,7 +21,7 @@
 }
 
 .overview{
-  margin-top: 30px;
+  margin-top: 10px;
   margin-bottom: 7px;
 }
 .admin-home-dashboard-content {
@@ -84,7 +84,7 @@
 .admin-home-quick-actions {
   max-width: fit-content;
   /* background-color:#fff; */
-  margin-top: 30px;
+  margin-top: 5px;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);

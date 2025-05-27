@@ -6,6 +6,7 @@ import Footer from '../../Components/User/Footer';
 import { BsPerson } from "react-icons/bs";
 import { IoCallOutline } from "react-icons/io5";
 import { AiOutlineClose } from "react-icons/ai";
+import { toast } from 'sonner';
 
 const PatientProfile = () => {
   const [patient, setPatient] = useState(null);
@@ -127,7 +128,7 @@ const PatientProfile = () => {
 
       const result = await response.json();
       if (result.success) {
-        alert("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
         // Update local patient state with new data
         setPatient(prevPatient => ({
           ...prevPatient,
@@ -141,11 +142,11 @@ const PatientProfile = () => {
         }));
         setModalOpen(false);
       } else {
-        alert(result.message || "Update failed.");
+        toast.error(result.message || "Update failed.");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Something went wrong.");
+      toast.error("Something went wrong.");
     }
   };
 
@@ -243,9 +244,9 @@ const PatientProfile = () => {
       </div>
 
       {modalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className='form-head'>
+        <div className="user-modal-overlay">
+          <div className="user-modal-content">
+            <div className='user-form-head'>
               <h2>Edit Profile</h2>
               <button className='close-edit-modal' onClick={() => setModalOpen(false)}><AiOutlineClose size={25}/></button>
             </div>
@@ -316,8 +317,8 @@ const PatientProfile = () => {
                 )}
               </div>
 
-              <div className="modal-buttons">
-                <button type="button" className="modal-save" onClick={handleSubmit}>Save</button>
+              <div className="edit-modal-buttons">
+                <button type="button" className="modal-save-edit-user" onClick={handleSubmit}>Save</button>
                 <button type="button" className="modal-close" onClick={() => setModalOpen(false)}>Cancel</button>
               </div>
             </form>

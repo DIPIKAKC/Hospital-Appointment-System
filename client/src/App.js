@@ -53,7 +53,7 @@ const App = () => {
       position="top-right" 
       richColors 
       closeButton 
-      duration={5000}
+      duration={3000}
       expand={false}
       offset="16px"
     />

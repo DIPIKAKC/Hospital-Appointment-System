@@ -95,7 +95,7 @@ const Notification = () => {
     }
   };
 
-  // Format timestamp
+  // Format timestamp in user readable format
   const formatTime = (dateString) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -141,7 +141,7 @@ const Notification = () => {
           <FaBell className="empty-icon" />
           <h3 className="empty-title">No notifications</h3>
           <p className="empty-text">
-            You don't have any {filter !== 'all' ? filter : ''} notifications at the moment.
+            You don't have any notifications at the moment.
           </p>
         </div>
       )}

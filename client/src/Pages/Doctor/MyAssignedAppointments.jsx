@@ -3,6 +3,7 @@ import "./MyAssignedAppointments.css";
 import DocBar from "../../Components/Doctor/DoctorNavbar";
 import FooterDoc from "../../Components/Doctor/FooterDoctor";
 import { IoCalendarOutline } from "react-icons/io5";
+import { toast } from "sonner";
 
 const DoctorAppointmentsList = () => {
   const [appointments, setAppointments] = useState([]);
@@ -62,7 +63,7 @@ const DoctorAppointmentsList = () => {
       }
 
       const data = await response.json();
-      alert("Appointment updated successfully");
+      toast.success("Appointment updated successfully");
       console.log(data);
 
       // Refresh appointments after update
@@ -73,7 +74,7 @@ const DoctorAppointmentsList = () => {
       setNotes("");
     } catch (error) {
       console.error(error);
-      alert("Unable to update");
+      toast.error("Unable to update");
     }
   };
 
@@ -244,10 +245,44 @@ const DoctorAppointmentsList = () => {
                   </div>
 {/* passed time */}
                   {appointment.status === "pending" ? (() => {
-                    const appointmentDateTime = new Date(`${appointment.date}T${appointment.time}`);
-                    const currentTime = new Date();
+                    console.log("Raw appointment.date:", appointment.date);
+                    console.log("Raw appointment.time:", appointment.time);
 
-                    if (appointmentDateTime > currentTime) {
+                    const [year, month, day] = appointment.date.split("-");
+
+                    let hour = 0;
+                    let minute = 0;
+
+                    // Handle "07:00 AM" or "02:30 PM"
+                    const timeMatch = appointment.time.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+                    if (timeMatch) {
+                      let [, hr, min, meridian] = timeMatch;
+                      hr = parseInt(hr);
+                      min = parseInt(min);
+
+                      if (meridian.toUpperCase() === "PM" && hr !== 12) hr += 12;
+                      if (meridian.toUpperCase() === "AM" && hr === 12) hr = 0;
+
+                      hour = hr;
+                      minute = min;
+                    }
+
+                    // Construct valid local Date object
+                    const appointmentDateTime = new Date(
+                      Number(year),
+                      Number(month) - 1,
+                      Number(day),
+                      hour,
+                      minute
+                    );
+
+                    const now = new Date();
+
+                    console.log("Parsed Appointment DateTime:", appointmentDateTime.toString());
+                    console.log("Current Time:", now.toString());
+
+
+                    if (now.getTime() < appointmentDateTime.getTime()) {
                       return (
                         <div className="appointment-actions">
                           <button

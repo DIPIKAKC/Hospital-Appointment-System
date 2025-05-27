@@ -5,8 +5,8 @@ const { Reminder } = require('../Schema/reminderSchema');
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'kcdipika03112061@gmail.com', // Replace with your Gmail
-    pass: 'nrdj viww tzrw bska'    // Use App Password (not your real password)
+    user: 'dipikak0323@gmail.com', 
+    pass: 'xnsr jief lpfu gpbx'    // App Password
   }
 });
 

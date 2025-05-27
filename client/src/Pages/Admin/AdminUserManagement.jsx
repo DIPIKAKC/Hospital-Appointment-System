@@ -86,7 +86,7 @@ export default function AdminUserManagement() {
       setUsers(prev => prev.filter(user => user._id !== userId));
     } catch (error) {
       console.error("Delete error:", error.message);
-      alert("Error deleting user: " + error.message);
+      toast.error("Error deleting user: " + error.message);
     }
   };
 

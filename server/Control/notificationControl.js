@@ -17,7 +17,6 @@ const {RegisterUser, RegisterDoctor} = require("../Schema/registerSchema") //imp
       return res.status(400).json({success:false, message: "All fields are required." });
     }
 
-    // Optional: validate doctorId and userId exist in DB
     let user, doctor
     if(userId){
 
@@ -28,14 +27,7 @@ const {RegisterUser, RegisterDoctor} = require("../Schema/registerSchema") //imp
          doctor = await RegisterDoctor.findById(doctorId);
     }
 
-    // if (!doctor) {
-    //   return res.status(404).json({success:false, message: "Doctor not found." });
-    // }
-    // if (!user) {
-    //   return res.status(404).json({success:false, message: "User not found." });
-    // }
 
-    // Create and save the notification
     const newNotification = new Notification({
       doctorId,
       userId,

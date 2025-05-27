@@ -145,8 +145,8 @@ const appointmentStatus = async (req, res) => {
       appointment.user.email,
       appointment.doctor.fullName,
       appointment.user.fullName,
-      appointment.date, // assuming appointment.date is in string or Date format
-      appointment.time, // assuming appointment.time is available
+      appointment.date, 
+      appointment.time, 
       status,
       notes || "No additional notes"
     );
@@ -289,7 +289,6 @@ const getAppointmentStats = async (req, res) => {
     if (!doctorId) {
       return res.status(400).json({ error: 'Doctor ID is required' });
     }
-    // const now = new Date(); // Current date and time
 
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Set to start of day
@@ -344,22 +343,7 @@ const getAppointmentStats = async (req, res) => {
 //get patient records
 const getMyPatients = async (req, res) => {
   try {
-    const doctorId = req.id; // Assuming JWT middleware sets this
-
-    // for only full name and email
-    // Get distinct user IDs who booked appointments with this doctor
-    // const patientIds = await Appointment.distinct('user', {
-    //   doctorId: doctorId
-    // });
-// 
-    // // Fetch user details for those IDs
-    // const patients = await RegisterUser.find(
-    //   { _id: { $in: patientIds } },
-    //   { fullName: 1, email: 1 } // return only necessary fields
-    // );
-
-    //For patients and appt info
-    // Find all appointments for this doctor
+    const doctorId = req.id; 
     const appointments = await Appointment.find({doctorId}).populate('user', ' _id fullName email');
 
     // Group by unique patients and find their latest appointment

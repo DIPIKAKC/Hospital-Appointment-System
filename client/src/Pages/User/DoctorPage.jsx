@@ -27,9 +27,7 @@ const DoctorPage = () => {
 
     // Function to format dates consistently
     const formatDate = (date) => {
-
         const d = new Date(date);
-        // return d.toISOString().split('T')[0]; // Returns YYYY-MM-DD format
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     };
 
@@ -108,17 +106,20 @@ const DoctorPage = () => {
         setSelectedTime(null); // Reset selected time when date changes
     };
 
-    //book-appointment
+
+
+
+    // book-appointment
         const handleBookAppointment = async () => {
 
             if (!selectedTime) {
-                alert("Please select a time slot");
+                toast.info("Please select a time slot");
                 return;
             }
 
             const token = localStorage.getItem("token");
             if (!token) {
-                alert("You must be logged in to book an appointment");
+                toast.info("You must be logged in to book an appointment");
                 return;
             }
             
@@ -144,21 +145,21 @@ const DoctorPage = () => {
                 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    // alert(`Failed to book appointment: ${errorData.message}`);
                     toast.error(`Failed to book appointment: ${errorData.message}`)
                     return;
                 }
                 
                 const data = await response.json();
-                // alert("Appointment request sent successfully. Waiting for response",data);
-                setIsSuccessModalOpen(true); // Open success modal
-                setTimeout(() => {setIsSuccessModalOpen(false); navigate("/appointments")}, 2000);
+                toast.success("Your appointment request has been successfully submitted. We'll contact you shortly to confirm the details.") // Open success modal
+                setTimeout(() => {navigate("/appointments")}, 1000);
                 // Reset selected time or redirect to confirmation page
             } catch (error) {
                 console.error("Error booking appointment:", error);
-                alert("Failed to book appointment. Please try again.");
+                toast.error("Failed to book appointment. Please try again.");
             }
         };
+
+
 
 
 // Success Modal Component

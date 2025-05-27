@@ -31,7 +31,7 @@ const khaltiPaymentInitiation = async (req, res) => {
     const payload = {
       return_url: "http://localhost:3000/khalti/payment/verify",  // Page where Khalti will redirect after payment
       website_url: "http://localhost:3000/khalti/payment/verify",
-      amount: amount, // Convert to paisa (100 paisa = 1 NPR)
+      amount: amount, // Converted
       purchase_order_id: `APPT-${appointmentId}`,
       purchase_order_name: "MedEase Appointment Payment",
     };

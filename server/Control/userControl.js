@@ -22,8 +22,8 @@ const registerUser = async(req,res)=>{
           return res.status(400).json({ message: "User with this email already exists" });
         }
 
-        if (!password || password.length < 8) {
-          return res.status(400).json({ message: "Password must be at least 8 characters long" });
+        if (!password || password.trim().length === 0) {
+          return res.status(400).json({ message: "Password cannot be empty or all spaces" });
         }
         console.log(req.body)
         const salt = await bcrypt.genSalt(10) //generating salt
@@ -89,11 +89,16 @@ const verifyEmail = async (req, res) => {
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    if (role === 'patient' && account === !verified) {
-      return res.status(400).json({ success: false, message: "User not verified" });
-    }else if(role === 'patient' && account === !verified) {
-      return res.status(400).json({ success: false, message: "Doctor not verified" });
+    // if (role === 'patient' && account !== verified) {
+    //   return res.status(400).json({ success: false, message: "User not verified" });
+    // }else if(role === 'patient' && account !== verified) {
+    //   return res.status(400).json({ success: false, message: "Doctor not verified" });
+    // }
+    
+    if (account.verified) {
+      return res.status(400).json({ success: false, message: `${role.charAt(0).toUpperCase() + role.slice(1)} already verified` });
     }
+
     account.verified = true;
     await account.save();
 
@@ -124,10 +129,9 @@ const loginUser = async (req, res) => {
           return res.status(404).json({ message: 'Email not found' });
         }
 
-        if(role ==='patient' && !account.verified){
-          return res.status(404).json({success:false, message: 'Email not verified' });
-        } else if(role ==='doctor' && !account.verified){
-          return res.status(404).json({success:false, message: 'Email not verified' });
+        // Check verification
+        if (!account.verified) {
+          return res.status(403).json({ success: false, message: `${role.charAt(0).toUpperCase() + role.slice(1)} email not verified` });
         }
 
           // Check password
@@ -374,8 +378,8 @@ const cancelAppointment = async (req, res) => {
       return res.status(403).json({ message: "You are not authorized to cancel this appointment" });
     }
 
-    // Only allow cancellation of pending or confirmed appointments
-    if (!["pending", "confirmed"].includes(appointment.status)) {
+    // Only allow cancellation of pending appointments
+    if (!["pending"].includes(appointment.status)) {
       return res.status(400).json({ message: `Cannot cancel an appointment that is already ${appointment.status}` });
     }
     appointment.status = "canceled";
@@ -665,10 +669,10 @@ const checkpayment = async (req, res) => {
       },
       {
         $group: {
-          _id: "$appointment", // Group by appointment ID
-          paymentStatus: { $first: "$paymentStatus" }, // Take the latest paymentStatus
-          latestPaymentId: { $first: "$_id" }, // Optional: include latest payment record ID
-          appointmentId: { $first: "$appointment" }, // Return the appointment ID
+          _id: "$appointment", // 
+          paymentStatus: { $first: "$paymentStatus" }, 
+          latestPaymentId: { $first: "$_id" }, 
+          appointmentId: { $first: "$appointment" }, 
           createdAt: { $first: "$createdAt" },
           updatedAt: { $first: "$updatedAt" }
         }

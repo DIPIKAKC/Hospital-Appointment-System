@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import './AdminLogin.css';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "sonner";
 
 
 const LoginAdmin = () => {
@@ -33,10 +34,10 @@ const LoginAdmin = () => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user.fullName));
         localStorage.setItem("id", data.user.userId); //This stores the user ID
-        alert("Login successful!");
+        toast.success("Login successful!");
         navigate("/admin/dashboard");
       } else {
-        alert(data.message || "Invalid credentials");
+        toast.error(data.message || "Invalid credentials");
       }
     } catch (error) {
       console.error("Error logging in:", error);

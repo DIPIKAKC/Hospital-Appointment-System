@@ -3,7 +3,7 @@ const app = express();
 const connectDb = require('./connectDb');
 const cors = require("cors");
 
-require("dotenv").config();
+console.log(require("dotenv").config());
 require('./Control/reminderCron'); //for reminder
 
 const authRoutes = require("./Route/auth");

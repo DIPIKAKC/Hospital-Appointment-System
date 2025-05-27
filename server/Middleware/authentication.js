@@ -18,7 +18,6 @@ const auth = async (req, res, next) => {
     console.log('Decoded Token:', decoded); // Log the decoded token
     
     // Get user from database
-    // const user = await RegisterUser.findById(decoded.id)
     let user;
     if (decoded.role === "doctor") {
       user = await RegisterDoctor.findById(decoded.id);
