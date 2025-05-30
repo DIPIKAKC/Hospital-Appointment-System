@@ -12,7 +12,6 @@ const {RegisterUser, RegisterDoctor} = require("../Schema/registerSchema") //imp
       content,
     } = req.body;
 
-    // Basic validations
     if ( !userType || !notificationType || !content) {
       return res.status(400).json({success:false, message: "All fields are required." });
     }
@@ -26,8 +25,7 @@ const {RegisterUser, RegisterDoctor} = require("../Schema/registerSchema") //imp
 
          doctor = await RegisterDoctor.findById(doctorId);
     }
-
-
+    
     const newNotification = new Notification({
       doctorId,
       userId,

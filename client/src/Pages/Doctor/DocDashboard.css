@@ -1,5 +1,4 @@
-/* DocDashboard.css */
-/* Main Dashboard Styles */
+
 .doctor-dashboard {
     max-width: 1400px;
     margin: 0 0 0 35px;
@@ -77,14 +76,12 @@
     margin: 0;
   }
   
-  /* Main Dashboard Content */
   .dashboard-content {
     display: grid;
     grid-template-columns: 0.4fr 1fr;
     gap: 30px;
   }
   
-  /* Appointments Section */
   .appointments-section {
     background-color: #fff;
     border-radius: 10px;
@@ -119,7 +116,6 @@
     text-decoration: underline;
   }
   
-  /* Sidebar Styles */
   .doctor-dashboard-sidebar {
     display: flex;
     flex-direction: row;

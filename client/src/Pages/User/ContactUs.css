@@ -36,7 +36,6 @@
     height: 24px;
 }
 
-/* Responsive styles */
 @media (max-width: 1024px) {
   .contact-dashboard {
     background-size: 30%;
@@ -61,17 +60,4 @@
     background-position: right;
   }
 
-  /* .contact-info h3 {
-    font-size: 18px;
-  } */
-
-  /* .email-icon {
-    width: 20px;
-    height: 20px;
-  } */
-/* 
-  .contact-email {
-    font-size: 14px;
-    text-align: right;
-  } */
 }

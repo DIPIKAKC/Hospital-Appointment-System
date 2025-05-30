@@ -53,7 +53,7 @@ const PatientProfile = () => {
           image: null
         });
         
-        // Set initial image preview if profile image exists
+        // set initial image preview if profile image exists
         if (data.data.profile) {
           setCurrentImage(data.data.profile);
         }
@@ -100,10 +100,10 @@ const PatientProfile = () => {
 
     const userId = localStorage.getItem("id");
     
-    // Create FormData object for file upload
+    // formData object for file upload
     const formDataForSubmit = new FormData();
     
-    // Append text fields
+    // append text fields
     formDataForSubmit.append('fullName', formData.fullName);
     formDataForSubmit.append('email', formData.email);
     formDataForSubmit.append('contact', formData.contact);
@@ -111,7 +111,7 @@ const PatientProfile = () => {
     formDataForSubmit.append('dateOfBirth', formData.dateOfBirth);
     formDataForSubmit.append('gender', formData.gender);
     
-    // Append image if exists
+    // append image if exists
     if (formData.image) {
       formDataForSubmit.append('image', formData.image);
     }
@@ -121,7 +121,6 @@ const PatientProfile = () => {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`
-          // Don't set Content-Type when sending FormData
         },
         body: formDataForSubmit
       });
@@ -129,7 +128,8 @@ const PatientProfile = () => {
       const result = await response.json();
       if (result.success) {
         toast.success("Profile updated successfully!");
-        // Update local patient state with new data
+        
+        // update local patient state with new data
         setPatient(prevPatient => ({
           ...prevPatient,
           fullName: formData.fullName,

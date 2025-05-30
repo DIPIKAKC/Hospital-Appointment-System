@@ -51,7 +51,6 @@
     text-align: center;
 }
 
-/* Tablet styles */
 @media (max-width: 1024px) {
     .footer-container {
         padding-left: 80px;
@@ -69,7 +68,6 @@
     }
 }
 
-/* Small tablet styles */
 @media (max-width: 768px) {
     .footer-container {
         padding: 30px 50px;
@@ -94,7 +92,6 @@
     }
 }
 
-/* Mobile styles */
 @media (max-width: 480px) {
     .footer-container {
         padding: 20px 20px;
@@ -121,7 +118,6 @@
     }
 }
 
-/* Extra small mobile styles */
 @media (max-width: 320px) {
     .footer-container {
         padding: 15px 15px;

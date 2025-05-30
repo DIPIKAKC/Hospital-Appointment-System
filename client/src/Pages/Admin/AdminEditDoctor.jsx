@@ -109,7 +109,6 @@ const AdminUpdateDoctor = ({ doctorId, onClose, onSuccess }) => {
         throw new Error(data.message || "Error updating doctor data");
       }
 
-      // Handle success
       setSuccess("Doctor updated successfully!");
       if(onSuccess){
         onSuccess(data);

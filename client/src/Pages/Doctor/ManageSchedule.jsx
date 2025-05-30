@@ -27,7 +27,7 @@ const ManageSchedule = () => {
     "05:00 PM", "05:30 PM"
   ];
 
-  // Load doctor's existing schedule
+  // load doctor's existing schedule
   useEffect(() => {
     const fetchDoctorSlots = async () => {
       const token = localStorage.getItem("token");
@@ -56,7 +56,7 @@ const ManageSchedule = () => {
     fetchDoctorSlots();
   }, [navigate]);
 
-  // Update selected time slots when date changes or when editing a slot
+  // update selected time slots when date changes or when editing a slot
   useEffect(() => {
     if (editingSlot) {
       setDate(editingSlot.date);
@@ -90,12 +90,12 @@ const ManageSchedule = () => {
   const slotTime = new Date(date);
   slotTime.setHours(slotHour, minute, 0, 0);
 
-  // If date is today, compare time
+  // comparing time for todays date
   if (selectedDate.toDateString() === now.toDateString()) {
     return slotTime > now;
   }
 
-  // If date is in the future
+  // is date in the future
   return selectedDate > now;
 };
 
@@ -140,16 +140,14 @@ const ManageSchedule = () => {
         throw new Error(data.message || "Failed to update schedule");
       }
       
-      // setMessage(data.message || "Schedule updated successfully");
       toast.success("Schedule updated successfully");
         setTimeout(() => {
-          // Force scroll top before reload
+          // force scroll top before reload
           window.scrollTo(0, 0);
         }, 100);
-      // Refresh local slots
+      // refresh local slots
       setDoctorSlots(data.availableSlots || []);
       
-      // Reset form state
       setSelectedTimeSlots([]);
       setDate("");
       setEditingSlot(null);
@@ -181,14 +179,14 @@ const ManageSchedule = () => {
   maxDate.setMonth(today.getMonth() + 3);
   const maxDateString = maxDate.toISOString().split('T')[0];
 
-  // Filter slots based on view mode
+  // filter slots based on view mode
   const filteredSlots = doctorSlots.filter(slot => {
     const slotDate = new Date(slot.date);
     slotDate.setHours(0, 0, 0, 0);
     
     const currentTime = new Date();
     
-    // Create a date for today with time set to 00:00
+    // create a date for today with time set to 00:00
     const todayDate = new Date();
     todayDate.setHours(0, 0, 0, 0);
 
@@ -249,7 +247,7 @@ const ManageSchedule = () => {
   });
 
 
-  // Format date to be more readable
+  // format date to be more readable
   const formatDate = (dateString) => {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -261,10 +259,7 @@ const ManageSchedule = () => {
       <DocBar />
 
       <div className="main-container">
-      {/* <h2 className="schedule-title">Manage Your Schedule</h2> */}
-        
-        {/* {error && <p className="error-message">{error}</p>}
-        {message && <p className="success-message">{message}</p>} */}
+
         <div className="schedule-content">
         <div className="current-schedule">
           <h3 className="section-heading">Your Schedule</h3>
@@ -305,10 +300,10 @@ const ManageSchedule = () => {
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 
-                // Determine if the slot is for today
+                // determine if the slot is for today
                 const isToday = slotDate.getTime() === today.getTime();
                 
-                // Determine if the slot is in the past
+                // determine if the slot is in the past
                 const isPast = slotDate.getTime() < today.getTime() || 
                   (isToday && slot.times.every(timeStr => {
                     const [time, meridian] = timeStr.split(' ');
@@ -380,7 +375,7 @@ const ManageSchedule = () => {
             <div className="form-group">
               <label className="form-label">Select Available Time Slots:</label>
               <div className="time-slots-grid">
-                {/* disabled logic */}
+                {/* disabled time logic */}
                 {timeSlots.map((time) => {
                   const disabled = !isTimeSlotInFuture(time);
                   return(

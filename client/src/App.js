@@ -8,7 +8,6 @@ import DoctorPage from "./Pages/User/DoctorPage"
 import LoginForm from "./Pages/User/Login";
 import AppointmentList from "./Pages/User/Appointments";
 import ManageSchedule from "./Pages/Doctor/ManageSchedule";
-// import LoginDoctor from "./Pages/Doctor/login";
 import ContactUs from "./Pages/User/ContactUs";
 import Home from "./Pages/User/UserDashboard";
 import Notification from "./Pages/User/Notification";
@@ -40,10 +39,6 @@ import DoctorProfile from "./Pages/Doctor/DocProfile";
 import ChangePasswordDoc from "./Pages/Doctor/ChangeDocPw";
 import PaymentSuccess from "./Pages/User/KhaltiSuccess";
 import AdminResourceManagement from "./Pages/Admin/AdminResourceManagement";
-// import PaymentPage from "./Pages/User/KhaltiPaymentPage";
-// import PaymentStatus from "./Pages/User/KhaltiStatusPayment";
-
-
 
 const App = () => {
 
@@ -57,8 +52,6 @@ const App = () => {
       expand={false}
       offset="16px"
     />
-
-      {/* NavBar should be outside Routes to show on all pages */}
 
       <Routes>
 

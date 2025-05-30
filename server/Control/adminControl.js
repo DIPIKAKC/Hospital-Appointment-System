@@ -90,9 +90,7 @@ const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
 
     try {
-  
-      // To find user in the database
-      const user = await RegisterAdmin.findOne({ email });
+        const user = await RegisterAdmin.findOne({ email });
   
       // if(!user.verified){
       //   return res.status(404).json({success:false, message: 'Email not verified' });
@@ -112,7 +110,6 @@ const loginAdmin = async (req, res) => {
 
 
 //get myself
-
 const getMeDAdmin = async (req, res) => {
   try {
 
@@ -134,10 +131,6 @@ const getMeDAdmin = async (req, res) => {
     res.status(500).json({ message: "Error getting user profile", error: error.message });
   }
 };
-
-
-
-
 
 
 //Register function for Doctor
@@ -464,7 +457,6 @@ const addResource = async (req, res) => {
 
     const {type, total, available} = req.body
 
-    // Validation: available must not be greater than total
     if (available > total) {
       return res.status(400).json({
         success: false,
@@ -524,7 +516,7 @@ const updateResource = async (req, res) => {
         message: '`available` and `total` must not be negative'
       });
     }
-    updatedData.lastUpdated = new Date(); // update lastUpdated timestamp
+    updatedData.lastUpdated = new Date(); 
     const updatedResource = await Resource.findByIdAndUpdate(resourceId, updatedData,{ new: true });
 
     if(!updatedResource){

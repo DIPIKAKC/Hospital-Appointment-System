@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { data, useNavigate } from 'react-router-dom';
 import './AdminResourceManagement.css';
 import AdminBar from '../../Components/Admin/SideBar';
-import { Search, Plus, Edit2, Trash2, X, ArrowLeft, Check } from 'lucide-react';
+import { Search, Plus, Edit2, Trash2, X, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function AdminDepartmentManagement() {
@@ -52,8 +52,6 @@ export default function AdminDepartmentManagement() {
   
     const filtered = resources.filter((resource) => {
       const type = resource.type?.toLowerCase() || '';
-      // const total = resource.total?.toLowerCase() || '';
-      // const available = resource.available?.toLowerCase() || '';
 
       return type.includes(search);
     });
@@ -203,7 +201,6 @@ export default function AdminDepartmentManagement() {
                 <th>NAME</th>
                 <th>TOTAL</th>
                 <th>AVAILABLE</th>
-                {/* <th>LAST UPDATED</th> */}
                 <th>ACTIONS</th>
               </tr>
             </thead>
@@ -214,7 +211,6 @@ export default function AdminDepartmentManagement() {
                   <td>{resource.type}</td>
                   <td>{resource.total}</td>
                   <td>{resource.available}</td>
-                  {/* <td>{new Date(resource.lastUpdated).toLocaleString()}</td> */}
                     <td className="admin-resource-actions">
                       <button
                         className="admin-resource-edit-btn"

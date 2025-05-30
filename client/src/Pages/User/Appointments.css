@@ -94,28 +94,6 @@
   border-radius: 12px;
 }
 
-/* Status Colors */
-/* .apptlist-value:contains("confirmed") {
-  background-color: #e3f2fd;
-  color: #1976d2;
-}
-
-.apptlist-value:contains("completed") {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-}
-
-.apptlist-value:contains("canceled") {
-  background-color: #ffebee;
-  color: #c62828;
-}
-
-.apptlist-value:contains("pending") {
-  background-color: #fff8e1;
-  color: #f57f17;
-} */
-
-
 .apptlist-card-body, .apptlist-actions{
   flex: 1;
 }
@@ -138,7 +116,7 @@
 .apptlist-btn-reminder {
   padding: 8px 20px;
   font-size: 14px;
-  min-width: 130px; /* Ensures same width */
+  min-width: 130px; 
   border: none;
   border-radius: 8px;
   color: white;
@@ -194,9 +172,6 @@
   color: #290352;
 }
 
-/* Existing styles remain unchanged */
-
-/* Responsive Styles */
 @media (max-width: 1024px) {
   .apptlist-dashboard {
     flex-direction: column;

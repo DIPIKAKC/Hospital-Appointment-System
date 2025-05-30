@@ -5,7 +5,6 @@
   margin-left: 250px;
 }
 
-/* Header Section */
 .admin-resource-header {
   display: flex;
   justify-content: space-between;
@@ -40,7 +39,6 @@
   font-size: 14px;
 }
 
-/* Content Box */
 .admin-resource-content {
   background-color: #fff;
   border-radius: 8px;
@@ -49,7 +47,6 @@
   min-height: 600px;
 }
 
-/* Filters Section */
 .admin-resource-search-filter {
   position: relative;
   display: flex;
@@ -86,7 +83,6 @@
   font-size: 14px;
 }
 
-/* Table Styles */
 .admin-resource-table {
   width: 100%;
   border-collapse: collapse;
@@ -115,7 +111,6 @@
   border-bottom: none;
 }
 
-/* Action Buttons */
 .admin-resource-actions {
   display: flex;
   gap: 10px;
@@ -145,7 +140,6 @@
   cursor: pointer;
 }
 
-/* Loading and Error States */
 .admin-resource-table-loading,
 .admin-resource-no-data,
 .error {
@@ -277,27 +271,23 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Header Section */
 .delete-modal-header {
   display: flex;
   align-items: center;
   margin-bottom: 16px;
 }
 
-/* Title */
 .delete-title {
   font-size: 18px;
   font-weight: 600;
   color: #111827;
 }
 
-/* Message */
 .delete-message {
   color: #4b5563;
   margin-bottom: 24px;
 }
 
-/* Buttons Section */
 .delete-modal-buttons {
   display: flex;
   justify-content: flex-end;
@@ -330,7 +320,6 @@
   background-color: #dc2626;
 }
 
-/* Icons */
 .admin-resource-back-icon,
 .plus-icon,
 .edit-icon,

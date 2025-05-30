@@ -14,8 +14,8 @@ const DoctorAppointmentsList = () => {
   const [filters, setFilters] = useState({
     all: true,
     upcoming: true,
-    past: false, // 'Past' starts off unchecked
-    pastDays: 7, // Default to 7 days for 'Past' filter
+    past: false, // past is unchecked
+    pastDays: 7, // Default to 7 days for past filter
   });
 
   const token = localStorage.getItem("token");
@@ -66,7 +66,7 @@ const DoctorAppointmentsList = () => {
       toast.success("Appointment updated successfully");
       console.log(data);
 
-      // Refresh appointments after update
+      // refresh appointments after update
       setAppointments((prev) =>
         prev.map((appt) => (appt._id === id ? { ...appt, status, notes } : appt))
       );
@@ -98,11 +98,11 @@ const DoctorAppointmentsList = () => {
     const isUpcoming = apptDate >= new Date(new Date().setHours(0, 0, 0, 0));
     const isPast = apptDate < new Date(new Date().setHours(0, 0, 0, 0));
 
-    // Calculate past date limits (7 or 30 days ago)
+    // calculate past date limits (7 or 30 days ago)
     const pastDateLimit = new Date(today);
-    pastDateLimit.setDate(today.getDate() - filters.pastDays); // Adjust to 7 or 30 days ago
+    pastDateLimit.setDate(today.getDate() - filters.pastDays); 
 
-    // Filter appointments based on the selected filters
+    // filter 
     return (
       (filters.all && isUpcoming) ||
       (filters.upcoming && isUpcoming) ||
@@ -115,14 +115,14 @@ const DoctorAppointmentsList = () => {
     setFilters((prev) => ({
       ...prev,
       [name]: checked,
-      pastDays: name === "past" && checked ? 7 : prev.pastDays, // Default to 7 days if past is checked
+      pastDays: name === "past" && checked ? 7 : prev.pastDays, // default to 7 days if past is checked
     }));
   };
 
   const handlePastDaysChange = (e) => {
     setFilters((prev) => ({
       ...prev,
-      pastDays: Number(e.target.value), // Ensure pastDays is a number (7 or 30)
+      pastDays: Number(e.target.value), // ensure pastDays is a number (7 or 30)
     }));
   };
 
@@ -141,7 +141,6 @@ const DoctorAppointmentsList = () => {
       <div className="doctor-appointments-container">
         <h2 className="page-title">Patient Appointment Requests</h2>
 
-        {/* Filter Bar */}
         <div className="filter-bar">
           <label>
             <input
@@ -243,6 +242,7 @@ const DoctorAppointmentsList = () => {
                     <label>Reason for visit:</label>
                     <p>{appointment.reason || "No reason provided"}</p>
                   </div>
+
 {/* passed time */}
                   {appointment.status === "pending" ? (() => {
                     console.log("Raw appointment.date:", appointment.date);
@@ -253,7 +253,7 @@ const DoctorAppointmentsList = () => {
                     let hour = 0;
                     let minute = 0;
 
-                    // Handle "07:00 AM" or "02:30 PM"
+                    // handle past and future time
                     const timeMatch = appointment.time.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
                     if (timeMatch) {
                       let [, hr, min, meridian] = timeMatch;
@@ -267,7 +267,7 @@ const DoctorAppointmentsList = () => {
                       minute = min;
                     }
 
-                    // Construct valid local Date object
+                    // construct valid local date object
                     const appointmentDateTime = new Date(
                       Number(year),
                       Number(month) - 1,

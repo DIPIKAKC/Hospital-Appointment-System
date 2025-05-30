@@ -69,7 +69,7 @@ export default function AdminDoctorManagement() {
       const data = await response.json();
       setDepartments(data);
 
-      // Create a mapping of department IDs to department names
+      // create a mapping of department IDs to department names
       const deptMap = {};
       data.forEach(dept => {
         deptMap[dept._id] = dept.name;
@@ -86,13 +86,11 @@ export default function AdminDoctorManagement() {
   
     const filtered = doctors.filter((doctor) => {
       const name = doctor.fullName?.toLowerCase() || '';
-      // Get the department name from our map or use the department ID as fallback
       const departmentName = departmentMap[doctor.department] || doctor.department || '';
 
-      // Search only by name
       const matchesSearch = name.includes(search);
   
-      // Filter by department (using the name, not ID)
+      // filter by department (using the name, not ID)
       const matchesDept =
         selectedDepartment === 'All Departments' ||
         departmentName.toLowerCase() === selectedDepartment.toLowerCase();
@@ -136,9 +134,7 @@ export default function AdminDoctorManagement() {
     fetchDoctors();
   };
   
-  // Handle successful doctor addition
   const handleDoctorAdded = () => {
-    // Close the modal
     setShowAddModal(false);
     toast.success("Doctor added successfully!");
     fetchDoctors();
@@ -215,7 +211,8 @@ export default function AdminDoctorManagement() {
                       onClick={() =>{ 
                         setSelectedDoctor(doctor)
                         setShowEditModal(true)
-                      }}  // Edit button triggers the handleEdit function
+                      }}  
+
                     ><Edit2 size={15} className='edit-doc'/>
                       Edit
                     </button>
@@ -281,7 +278,7 @@ export default function AdminDoctorManagement() {
               <button
                 onClick={() => {
                   handleDelete(showDeleteConfirm._id);
-                  setShowDeleteConfirm(null); // Close modal after deleting
+                  setShowDeleteConfirm(null); 
                 }}
                 className="ok-delete-button"
               >

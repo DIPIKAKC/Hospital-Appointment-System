@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import './Login.css';
-// import { useNavigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
 
 const SignupForm = ({ onClose }) => {
-  // const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
      email: "",
@@ -30,10 +28,7 @@ const SignupForm = ({ onClose }) => {
       const data = await response.json();
       console.log(data)
       if (response.ok) {
-        // alert("Account created successfully");
-        setSuccessMessage('please check your email to verify account')
-        
-            
+        setSuccessMessage('please check your email to verify account')      
       } else {
         setErrorMessage(data.message || 'error ')
 
@@ -65,8 +60,8 @@ const SignupForm = ({ onClose }) => {
         {successMessage && (
           <div
             style={{
-              backgroundColor: "#d1fae5", // light green background
-              color: "#047857",          // dark green text
+              backgroundColor: "#d1fae5", 
+              color: "#047857",          
               padding: "1rem",
               borderRadius: "0.5rem",
               marginBottom: "1rem"
@@ -78,8 +73,8 @@ const SignupForm = ({ onClose }) => {
         {errorMessage && (
           <div
             style={{
-              backgroundColor: "#fee2e2", // light red background
-              color: "#b91c1c",          // dark red text
+              backgroundColor: "#fee2e2", 
+              color: "#b91c1c",         
               padding: "1rem",
               borderRadius: "0.5rem",
               marginBottom: "1rem"

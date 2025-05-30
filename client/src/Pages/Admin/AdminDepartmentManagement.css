@@ -5,7 +5,6 @@
   margin-left: 250px;
 }
 
-/* Header Section */
 .department-header {
   display: flex;
   justify-content: space-between;
@@ -38,7 +37,6 @@
   font-size: 14px;
 }
 
-/* Content Box */
 .department-content {
   background-color: #fff;
   border-radius: 8px;
@@ -49,8 +47,6 @@
   padding-right: 90px;
   min-height: 400px;
 }
-
-/* Filters Section */
 
 .department-search-filter {
   position: relative;
@@ -78,9 +74,9 @@
 }
 
 .add-new-dept {
-  display: flex;               /* Align icon and text inline */
-  align-items: center;         /* Vertically center */
-  gap: 8px;                    /* Space between icon and text */
+  display: flex;              
+  align-items: center;        
+  gap: 8px;                   
   padding: 12px 20px;
   background-color: #10B8B9;
   border: 1px solid #ccc;
@@ -90,7 +86,6 @@
   font-size: 14px;
 }
 
-/* Table Styles */
 .department-table {
   width: 100%;
   border-collapse: collapse;
@@ -121,7 +116,6 @@ vertical-align: top;
   border-bottom: none;
 }
 
-/* Action Buttons */
 .department-actions {
   display: flex;
   gap:10px;
@@ -151,7 +145,6 @@ vertical-align: top;
   cursor: pointer;
 }
 
-/* Loading and Error States */
 .loading,
 .error,
 .no-department-data {
@@ -291,7 +284,6 @@ vertical-align: top;
   z-index: 999;
 }
 
-/* Modal Box */
 .delete-modal {
   background-color: #ffffff;
   border-radius: 8px;
@@ -301,27 +293,23 @@ vertical-align: top;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Header Section */
 .delete-modal-header {
   display: flex;
   align-items: center;
   margin-bottom: 16px;
 }
 
-/* Title */
 .delete-title {
   font-size: 18px;
   font-weight: 600;
   color: #111827;
 }
 
-/* Message */
 .delete-message {
   color: #4b5563;
   margin-bottom: 24px;
 }
 
-/* Buttons Section */
 .delete-modal-buttons {
   display: flex;
   justify-content: flex-end;

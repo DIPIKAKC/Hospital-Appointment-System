@@ -8,7 +8,6 @@ const auth = async (req, res, next) => {
 
     const token = req.header("Authorization")?.replace("Bearer ", "");
 
-    
     if (!token) {
       return res.status(401).json({ message: 'Not authorized, no token provided' });
     }
@@ -35,7 +34,6 @@ const auth = async (req, res, next) => {
     }
     
     req.user= user;
-    
     req.userId = decoded.id; // Ensure userId is attached to the request object
     req.userRole = decoded.role; // Ensure userRole is attached to the request object
     

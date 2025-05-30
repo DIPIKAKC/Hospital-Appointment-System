@@ -2,8 +2,7 @@ import { useState } from 'react';
 import './Reminder.css';
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from 'sonner';
-// import { IoCalendarOutline } from "react-icons/io5";
-// import { PiClock } from "react-icons/pi";
+
 
 const ReminderModal = ({ appointment, onClose }) => {
   const [date, setDate] = useState('');

@@ -103,7 +103,6 @@ export default function AdminAppointmentManagement() {
       if (!response.ok) {
         throw new Error(result.message || "Failed to delete appointment");
       }
-      
       // Remove deleted appointment from state
       setShowDeleteConfirm(null);
       fetchAppointments();

@@ -25,7 +25,6 @@
 } 
 
 
-/* Resource Button Container */
 .resource-button-container {
 position: fixed;
 bottom: 24px;
@@ -33,7 +32,6 @@ left: 24px;
 z-index: 1000;
 }
 
-/* Dropup Menu */
 .resource-dropup {
 position: absolute;
 bottom: 70px;
@@ -73,14 +71,12 @@ cursor: pointer;
 color: #374151;
 }
 
-/* Loading State */
 .resource-loading {
 padding: 16px;
 text-align: center;
 color: #6b7280;
 }
 
-/* Error State */
 .resource-error {
 display: flex;
 align-items: center;
@@ -90,13 +86,11 @@ padding: 16px;
 color: #ef4444;
 }
 
-/* Resource Item */
 .resource-item {
-/* background-color: #cef3f3; */
 padding: 5px 15px;
 border-radius: 3px;
 border-style: line;
-border-bottom: 1px solid #10B8B9; /* adds a bottom border */
+border-bottom: 1px solid #10B8B9;
 }
 
 .resource-header {
@@ -118,7 +112,6 @@ font-size: 14px;
 }
 
 
-/* Last Updated Text */
 .last-updated {
 display: flex;
 align-items: center;
@@ -128,14 +121,12 @@ font-size: 12px;
 color: #6b7280;
 }
 
-/* Resource Content */
 .resource-content {
 display: flex;
 flex-direction: column;
 gap: 8px;
 }
 
-/* Empty state */
 .resource-empty {
 padding: 16px;
 text-align: center;

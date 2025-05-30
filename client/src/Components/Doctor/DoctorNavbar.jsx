@@ -344,11 +344,11 @@ const DocBar = () => {
                 <div className="doc-nav-actions">
                     {isLoggedIn ? (
                         <>
-                            <div className="notification-bell">
-                                <NavLink to="/my-notifications" className="notification-icon">
+                            <div className="doc-notification-bell">
+                                <NavLink to="/my-notifications" className="doc-notification-icon">
                                     <HiOutlineBell size={22} />
                                     {unreadCount > 0 && (
-                                        <span className="notification-count">{unreadCount}</span>
+                                        <span className="doc-notification-count">{unreadCount}</span>
                                     )}
                                 </NavLink>
                             </div>

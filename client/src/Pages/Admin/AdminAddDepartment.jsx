@@ -8,7 +8,7 @@ const AdminAddDepartment = ({ onClose }) => {
     name: "",
     description: ""
   });
-  const [showAddModal, setShowAddModal] = useState(true); // Modal shown by default
+  const [showAddModal, setShowAddModal] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -27,7 +27,6 @@ const AdminAddDepartment = ({ onClose }) => {
         setSuccess("");
 
             try {
-                // Replace with your API call implementation
                 const response = await fetch("http://localhost:5000/auth/add-department", {
                     method: "POST",
                     headers: {
@@ -43,12 +42,7 @@ const AdminAddDepartment = ({ onClose }) => {
                     const errorData = await response.json();
                     throw new Error(errorData.message || "Error adding department");
                 }
-
-
-                // Handle success
                 setSuccess("Department added successfully:", data);
-                
-                // Redirect after success
                 setTimeout(() => {
                     navigate("/admin/departments");
                 }, 2000);

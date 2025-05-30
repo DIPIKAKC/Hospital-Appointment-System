@@ -70,7 +70,7 @@ const NavBar = () => {
 
     const fetchUnreadNotifications = async () => {
         const userId = localStorage.getItem("id");
-        const userType = "patient"; // or determine dynamically if needed
+        const userType = "patient"; 
 
         try {
             const response = await fetch(`http://localhost:5000/auth/my-notification/${userType}/${userId}`);
@@ -126,9 +126,9 @@ const NavBar = () => {
                             <div className="user-notification-bell">
                             <NavLink to="/notification" className="user-notification-icon">
                                 <HiOutlineBell size={22} />
-                                {/* {unreadCount > 0 && (
+                                {unreadCount > 0 && (
                                 <span className="user-notification-count">{unreadCount}</span>
-                                )} */}
+                                )}
                             </NavLink>
                             </div>
 

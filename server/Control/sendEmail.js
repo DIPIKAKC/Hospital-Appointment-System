@@ -12,6 +12,8 @@ service: 'gmail',
   logger: true
 });
 
+
+
 //email verification
 const verifyEmailMail = async (email, token) => {
 
@@ -211,7 +213,7 @@ const passwordResetMail = async (email, token) => {
 
 //notification
 function sendAppointmentStatusEmail(email, doctorName,patientName, appointmentDate, appointmentime, status, note) {
-  // Define the email options
+
   const mailOptions = {
     from: `MedEase <${process.env.NODE_MAILER_EMAIL}>`,
     to: email, ///patient

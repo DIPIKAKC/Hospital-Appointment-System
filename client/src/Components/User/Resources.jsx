@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Activity, Clock, X, AlertCircle } from 'lucide-react';
+import {  X, AlertCircle } from 'lucide-react';
 import './Resources.css';
 
 const Resources = () => {
@@ -39,43 +39,6 @@ const Resources = () => {
     fetchResources();
   },[])
 
-  // Format date to readable format
-  // const formatDate = (dateString) => {
-  //   if (!dateString) return '';
-  //   const date = new Date(dateString);
-  //   return date.toLocaleString();
-  // };
-
-
-  // Get readable label for resource type
-  // const getResourceLabel = (type) => {
-  //   const labels = {
-  //     'generalBeds': 'General Beds',
-  //     'icuBeds': 'ICU Beds',
-  //     'emergencyBeds': 'Emergency Beds',
-  //     'ventilators': 'Ventilators'
-  //   };
-  //   return labels[type] || type;
-  // };
-
-
-  // Get the most recent update time across all resources
-  // const getLatestUpdateTime = () => {
-  //   if (!resources || resources.length === 0) return '';
-    
-  //   let latestDate = new Date(0); // Start with earliest possible date
-    
-  //   resources.forEach(resource => {
-  //     if (resource.lastUpdated) {
-  //       const currentDate = new Date(resource.lastUpdated);
-  //       if (currentDate > latestDate) {
-  //         latestDate = currentDate;
-  //       }
-  //     }
-  //   });
-    
-  //   return formatDate(latestDate);
-  // };
 
   return (
     <div className="resource-button-container">
@@ -124,11 +87,7 @@ const Resources = () => {
                   </div>
                 );
               })}
-
-              {/* <div className="last-updated">
-                <Clock size={12} />
-                <span>Last updated: {getLatestUpdateTime()}</span>
-              </div> */}
+              
             </div>
           )}
 

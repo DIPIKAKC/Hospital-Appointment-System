@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { FaBell, FaCalendarAlt, FaUser, FaExclamationCircle, FaSpinner, FaCheckCircle } from 'react-icons/fa';
-import { GiConfirmed } from "react-icons/gi";
+import { FaBell, FaExclamationCircle, FaSpinner } from 'react-icons/fa';
 import '../User/Notification.css';
 import DocBar from '../../Components/Doctor/DoctorNavbar';
-import Footer from '../../Components/User/Footer';
 import FooterDoc from '../../Components/Doctor/FooterDoctor';
 
 
@@ -17,7 +15,6 @@ const MyNotifications = () => {
 
 
 
-    // Simulated API response
     const fetchNotifications = async () => {
       try {
         const response = await fetch(`http://localhost:5000/auth/my-notification/${userType}/${userId}`,{
@@ -75,14 +72,14 @@ const MyNotifications = () => {
     },[])
 
 
-  // Filter notifications
+  // filter notifications
   const filteredNotifications = notifications.filter(notification => {
     if (filter === 'all') return true;
     if (filter === 'unread') return !notification.isRead;
     return notification.notificationType === filter;
   });
 
-  // Get notification icon based on type
+  // notification icon based on type
   const getNotificationIcon = (type) => {
         if(type === "canceled"){
             return <FaExclamationCircle className="notification-icon system-icon" />;
@@ -91,7 +88,7 @@ const MyNotifications = () => {
         }
   };
 
-  // Format timestamp
+  // format timestamp
   const formatTime = (dateString) => {
     const date = new Date(dateString);
     const now = new Date();

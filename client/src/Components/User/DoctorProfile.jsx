@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import doctorImg from '../../assets/docfemale.jpg';
 import './DoctorProfile.css';
-import { Phone, Mail, Calendar, Clock, Check, X } from 'lucide-react';
+import {  Mail, Clock} from 'lucide-react';
 import { PiMoneyWavy } from "react-icons/pi";
 
 
@@ -56,7 +56,6 @@ return (
       {/* Doctor Info Section */}
       <div className="doctor-info">
         <div className="doctor-header">
-          {/* Circular doctor image on the left */}
           <div className="doctor-image-circle">
             <img 
               src={doctor.profile || doctorImg} 

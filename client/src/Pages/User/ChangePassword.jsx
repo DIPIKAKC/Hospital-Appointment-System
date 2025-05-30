@@ -46,7 +46,7 @@ const ChangePasswordPage = () => {
   };
 
   const handleCancel = () => {
-    navigate('/'); // Change the route to your profile page
+    navigate('/'); 
   };
 
   return (

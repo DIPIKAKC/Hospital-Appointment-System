@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import NavBar from '../../Components/User/Navbar';
 import Resources from '../../Components/User/Resources';
 import Footer from '../../Components/User/Footer';
-import './ResetPassword.css'; // import the CSS file
+import './ResetPassword.css'; 
 
 export const ResetPassword = () => {
   const [password, setPassword] = useState('');

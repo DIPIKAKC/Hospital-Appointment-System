@@ -12,7 +12,7 @@ const Footer = () => {
                     <button className="foot-logo">
                         <Link to= "/" /> MedEase
                     </button>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
                 </div>
                 <div className='footer'>
                     <Link to="/" className="footer-link">Home</Link>

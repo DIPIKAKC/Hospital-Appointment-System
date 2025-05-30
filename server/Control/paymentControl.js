@@ -18,7 +18,7 @@ const khaltiPaymentInitiation = async (req, res) => {
     .populate('user')
     .populate({
       path: 'doctor',
-      populate: { path: 'department' } // populate department inside doctor
+      populate: { path: 'department' } 
 
     });
   
@@ -66,7 +66,7 @@ const khaltiPaymentInitiation = async (req, res) => {
       pidx: data.pidx,
       paymentUrl: data.payment_url,
     
-      // Now store populated data:
+      // Now store populated data
       patientName: appointment.user.fullName,      
       doctorName: appointment.doctor.fullName,   
       amount: appointment.doctor.doctorfee,   

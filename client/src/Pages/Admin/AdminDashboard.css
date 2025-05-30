@@ -1,7 +1,4 @@
 
-/* Dashboard Content */
-
-/* Main Container */
 .admin-dashboard-container {
   width: 1190px;
   min-height: 100vh;
@@ -10,7 +7,6 @@
   /* background-color: #10B8B9; */
 }
 
-/* Header Section */
 .admin-dashboard-header {
   justify-content: space-between;
   align-items: center;
@@ -33,7 +29,6 @@
   border-radius: 8px;
 }
 
-/* Stats Cards */
 .admin-home-stats-container {
   display: grid;
   grid-template-columns: repeat(3,1fr);
@@ -74,13 +69,11 @@
   text-decoration: underline;
 }
 
-/* Color Cards */
 .admin-home-stat-card {
   background-color: #ffffff;
 }
 
 
-/* Quick Actions */
 .admin-home-quick-actions {
   max-width: fit-content;
   /* background-color:#fff; */

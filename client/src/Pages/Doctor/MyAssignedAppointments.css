@@ -1,6 +1,4 @@
-/* DoctorAppointments.css */
 
-/* Base styles */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -14,14 +12,12 @@
     line-height: 1.6;
   }
   
-  /* Main container */
   .doctor-appointments-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 1rem;
   }
   
-  /* Page title */
   .page-title {
     font-size: 1.5rem;
     color: #2d3748;
@@ -31,26 +27,13 @@
     padding-bottom: 0.75rem;
   }
   
-  /* .page-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background-color: #089d9d;
-    border-radius: 2px;
-  } */
-  
-  /* Grid layout for cards */
+
   .appointment-cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
   }
   
-  /* Appointment card */
   .card-appointment {
     background-color: #fff;
     border-radius: 10px;
@@ -65,7 +48,6 @@
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
   }
   
-  /* Status banner at the top of card */
   .card-status-banner {
     height: 8px;
   }
@@ -86,12 +68,10 @@
     background-color: #6b7280;
   }
   
-  /* Card content */
   .card-content {
     padding: 1.25rem;
   }
   
-  /* Appointment header with status and time */
   .appointment-header {
     display: flex;
     justify-content: space-between;
@@ -99,7 +79,6 @@
     margin-bottom: 1rem;
   }
   
-  /* Status badge */
   .status-badge {
     padding: 0.35rem 0.75rem;
     border-radius: 20px;
@@ -128,13 +107,11 @@
     color: #4b5563;
   }
   
-  /* Appointment time */
   .appointment-time {
     font-size: 0.85rem;
     color: #6b7280;
   }
   
-  /* Patient info section */
   .patient-info {
     margin-bottom: 1.25rem;
     padding-bottom: 1rem;
@@ -153,7 +130,6 @@
     color: #6b7280;
   }
   
-  /* Appointment reason section */
   .appointment-reason {
     margin-bottom: 1.25rem;
   }
@@ -175,7 +151,6 @@
     border: 1px solid #e5e7eb;
   }
   
-  /* Action buttons */
   .appointment-actions {
     display: flex;
     gap: 0.75rem;
@@ -226,7 +201,6 @@
     transform: translateY(-2px);
   }
   
-  /* Status message */
   .status-message {
     padding: 0.75rem;
     border-radius: 6px;
@@ -250,7 +224,6 @@
     color: #4b5563;
   }
   
-  /* Appointment notes */
   .appointment-notes {
     margin-top: 1.25rem;
   }
@@ -321,8 +294,7 @@
     gap: 1rem;
   }
   
-  /* Notification message */
-  .notification {
+  /* .notification {
     padding: 1rem;
     border-radius: 8px;
     margin-bottom: 1.5rem;
@@ -352,7 +324,7 @@
     background-color: #fee2e2;
     color: #b91c1c;
     border: 1px solid #fecaca;
-  }
+  } */
   
   @keyframes slideDown {
     from {
@@ -374,7 +346,6 @@
     }
   }
   
-  /* Empty state */
   .empty-state {
     display: flex;
     flex-direction: column;
@@ -403,7 +374,6 @@
     color: #6b7280;
   }
   
-  /* Loading spinner */
   .loading-container {
     display: flex;
     flex-direction: column;
@@ -474,7 +444,6 @@
     }
   }
   
-  /* Responsive adjustments */
   @media (max-width: 768px) {
     .doctor-appointments-container {
       padding: 1.5rem 1rem;

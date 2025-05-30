@@ -5,7 +5,6 @@ import './Notification.css';
 import NavBar from "../../Components/User/Navbar";
 import Resources from "../../Components/User/Resources";
 import Footer from "../../Components/User/Footer";
-import { useParams } from 'react-router-dom';
 
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
@@ -15,9 +14,6 @@ const Notification = () => {
   const userId = localStorage.getItem('id')
   const userType = 'patient'
 
-
-
-    // Simulated API response
     const fetchNotifications = async () => {
       try {
         const response = await fetch(`http://localhost:5000/auth/my-notification/${userType}/${userId}`,{
@@ -76,14 +72,14 @@ const Notification = () => {
     },[])
 
 
-  // Filter notifications
+  // filter notifications
   const filteredNotifications = notifications.filter(notification => {
     if (filter === 'all') return true;
     if (filter === 'unread') return !notification.isRead;
     return notification.notificationType === filter;
   });
 
-  // Get notification icon based on type
+  // get notification icon based on type
   const getNotificationIcon = (type) => {
     switch (type) {
       case 'confirmed':
@@ -95,7 +91,7 @@ const Notification = () => {
     }
   };
 
-  // Format timestamp in user readable format
+  // format timestamp in user readable format
   const formatTime = (dateString) => {
     const date = new Date(dateString);
     const now = new Date();

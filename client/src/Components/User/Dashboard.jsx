@@ -27,14 +27,13 @@ const DashboardComponent = () => {
     }, []);
 
     const handleBookAppointment = () => {
-        // Check if user is logged in by looking for a token or user data in localStorage
-        const token = localStorage.getItem('token'); // Assuming you store auth token in localStorage
+        const token = localStorage.getItem('token'); 
         
         if (token) {
             // User is logged in, redirect to find-doctors page
             window.location.href = '/find-doctors';
         } else {
-            // User is not logged in, show alert
+            // User is not logged in
             toast.info('Please create an account to book an appointment');
         }
     };

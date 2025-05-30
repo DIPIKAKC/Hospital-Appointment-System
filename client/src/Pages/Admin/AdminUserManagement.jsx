@@ -19,7 +19,6 @@ export default function AdminUserManagement() {
 
   useEffect(() => {
     fetchUsers();
-    // fetchUserRoles();
   }, []);
 
   const fetchUsers = async () => {

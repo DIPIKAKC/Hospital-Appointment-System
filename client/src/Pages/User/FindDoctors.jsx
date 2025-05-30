@@ -24,9 +24,8 @@ const FindDoctors = () => {
                 const data = await response.json();
                 console.log("doctor data", data.data)
                 if(data.success){
-                    // data.data.forEach(doctor => console.log(`Doctor: ${doctor.fullName}, Department: ${doctor.department}`));
                     setDoctors(data.data)
-                    setDisplayedDoctors(data.data); // Initially show all doctors
+                    setDisplayedDoctors(data.data); 
                 }
             } catch (error) {
                 console.error("Error fetching doctor data:", error);
@@ -38,7 +37,6 @@ const FindDoctors = () => {
         fetchDoctors();
     }, []);
 
-    // Fetch departments from separate database
     useEffect(() => {
         const fetchDepartments = async () => {
             try {
@@ -56,16 +54,17 @@ const FindDoctors = () => {
         fetchDepartments();
     }, []);
 
-    // Update displayed doctors when filters change
+    
+    // update displayed doctors when filters change
     useEffect(() => {
         if (selectedDepartment || searchTerm) {
             console.log("Filtering with:", selectedDepartment, searchTerm);
             const filtered = doctors.filter(doctor => {
-                // Department filter
+                // department filter
                 const matchesDepartment = selectedDepartment ? 
                 (doctor.department?.name?.toLowerCase().trim() === selectedDepartment.toLowerCase().trim()) : true;              
                           
-                // Search filter (case insensitive)
+                // Search filter -case insensitive
                 const matchesSearch = searchTerm ? 
                 (doctor.fullName?.toLowerCase().includes(searchTerm.toLowerCase())) : true;
                 
@@ -73,22 +72,22 @@ const FindDoctors = () => {
             });
             setDisplayedDoctors(filtered);
         } else {
-            // If no filters are applied, show all doctors
+            // show all doctors
             setDisplayedDoctors(doctors);
         }
     }, [selectedDepartment, searchTerm, doctors]);
 
-    // Handle department selection
+    // handle department selection
     const handleDepartmentClick = (department) => {
         setSelectedDepartment(department === selectedDepartment ? null : department);
     };
 
-    // Handle search input
+    // handle search input
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
     };
 
-    // Clear all filters
+    // clear all filters
     const clearFilters = () => {
         setSelectedDepartment(null);
         setSearchTerm('');

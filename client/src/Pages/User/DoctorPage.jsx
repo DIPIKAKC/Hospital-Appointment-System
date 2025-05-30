@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import { CheckCircle } from 'lucide-react';
 import { MdArrowBackIosNew } from "react-icons/md";
 
@@ -25,7 +25,7 @@ const DoctorPage = () => {
     const navigate= useNavigate()
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false); // Modal state
 
-    // Function to format dates consistently
+    // function to format dates
     const formatDate = (date) => {
         const d = new Date(date);
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -70,14 +70,13 @@ const DoctorPage = () => {
 
                 let times = slotsForDate.times;
 
-                // Filter past times if selectedDate is today
+                // filter past times if selectedDate is today
                 const today = new Date();
                 if (
                     today.toDateString() === selectedDate.toDateString()
                 ) {
                     const now = today.getHours() * 60 + today.getMinutes(); // current time in minutes
 
-                    // Helper: convert "10:30 AM" -> total minutes from midnight
                     const timeToMinutes = (timeStr) => {
                     let [time, meridian] = timeStr.split(' ');
                     let [hours, minutes] = time.split(':').map(Number);
@@ -152,7 +151,6 @@ const DoctorPage = () => {
                 const data = await response.json();
                 toast.success("Your appointment request has been successfully submitted. We'll contact you shortly to confirm the details.") // Open success modal
                 setTimeout(() => {navigate("/appointments")}, 1000);
-                // Reset selected time or redirect to confirmation page
             } catch (error) {
                 console.error("Error booking appointment:", error);
                 toast.error("Failed to book appointment. Please try again.");

@@ -33,17 +33,17 @@ const LoginForm = () => {
       if (response.ok) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user.fullName));
-        localStorage.setItem("id", data.user.userId); // Store user ID
-        localStorage.setItem("role", data.user.role); // Store role
-        localStorage.setItem("userData", JSON.stringify(data.user)); // Store entire user object
+        localStorage.setItem("id", data.user.userId);
+        localStorage.setItem("role", data.user.role);
+        localStorage.setItem("userData", JSON.stringify(data.user));
 
         toast.success("Login successful!");
 
         setTimeout(() => {
           if (data.user.role === 'doctor') {
-            navigate("/doc-dashboard"); // Doctor dashboard
+            navigate("/doc-dashboard"); 
           } else {
-            navigate("/"); // Patient homepage
+            navigate("/");
           }
         }, 1000);
       } else {

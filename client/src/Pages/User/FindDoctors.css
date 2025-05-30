@@ -1,6 +1,4 @@
-/* FindDoctors.css */
 
-/* Main container styles */
 .find-doctor-container {
   display: flex;
   max-width: 1300px;
@@ -9,7 +7,6 @@
   padding: 0 1rem;
 }
 
-/* Sidebar styles */
 .find-doctor-sidebar {
   flex: 0 0 280px;
   background-color: #f8f9fa;
@@ -37,12 +34,12 @@
 
 /* Scrollable department list */
 .scrollable-dept-list {
-    max-height: 300px; /* Adjust as needed */
+    max-height: 300px; 
     overflow-y: auto;
-    padding-right: 5px; /* Prevent content clipping behind scrollbar */
+    padding-right: 5px;
 }
 
-/* Optional: Custom scrollbar styling for WebKit browsers */
+/* scrollbar styling for WebKit browsers */
 .scrollable-dept-list::-webkit-scrollbar {
     width: 6px;
 }
@@ -98,12 +95,10 @@
   color: white;
 }
 
-/* Content area styles */
 .find-doctor-content {
   flex: 1;
 }
 
-/* Search input styles */
 .find-doctor-search-wrapper {
   position: relative;
   margin-bottom: 1.5rem;
@@ -132,7 +127,6 @@
   color: #666;
 }
 
-/* Availability legend styles */
 .find-doctor-availability-legend {
   display: flex;
   align-items: center;
@@ -163,7 +157,6 @@
   background-color: rgb(143, 143, 143);
 }
 
-/* Doctor grid styles */
 .find-doctor-doctor-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -185,7 +178,6 @@
   font-size: 1rem;
 }
 
-/* Responsive styles */
 @media (max-width: 992px) {
   .find-doctor-container {
     flex-direction: column;
@@ -218,7 +210,6 @@
   }
 }
 
-/* Responsive styles */
 @media (max-width: 992px) {
   .find-doctor-container {
     flex-direction: column;

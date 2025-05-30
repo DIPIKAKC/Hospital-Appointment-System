@@ -1,10 +1,8 @@
-/* Admin Home Container */
 .admin-nav-container {
     background-color: #dcfbfb;
     display: flex;
   }
   
-  /* Sidebar */
   .admin-home-sidebar {
     width: 250px;
     min-height: 100vh;

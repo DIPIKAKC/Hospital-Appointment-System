@@ -33,7 +33,7 @@ const AdminAddDoctor = ({ onClose, onSuccess }) => {
             } catch (error) {
                 console.error("Error fetching department data:", error);
             }finally {
-                setLoadingDepartments(false); // <-- You need this!
+                setLoadingDepartments(false); 
               }
         };
         
@@ -51,13 +51,13 @@ const AdminAddDoctor = ({ onClose, onSuccess }) => {
 
   //add doctor
     const handleAddDoctor = async(e) => {
-        e.preventDefault(); // Prevent default form submit behavior
+        e.preventDefault();
         setLoading(true);
         setError("");
         setSuccess("");
 
     try {
-      // Prepare data for the API
+      // prepare data 
       const doctorData = {
         fullName: formData.fullName,
         email: formData.email,
@@ -88,10 +88,7 @@ const AdminAddDoctor = ({ onClose, onSuccess }) => {
         const errorData = await response.json();
         return(errorData.message || "Error adding doctor");
       }
-
-
-      // Handle success
-      // setSuccess("Doctor added successfully!", data);
+      
       setFormData({
         fullName: "",
         email: "",

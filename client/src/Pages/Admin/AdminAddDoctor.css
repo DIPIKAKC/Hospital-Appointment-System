@@ -1,4 +1,3 @@
-/* AdminAddDoctor.css */
 
 .admin-add-doctor-container {
     min-height: 100vh;
@@ -201,6 +200,7 @@
   z-index: 1000;
 }
 
+/* for scroller */
   .adddoc-modal-content::-webkit-scrollbar {
     display: none; /* Chrome, Safari */
     -ms-overflow-style: none;  /* IE and Edge */

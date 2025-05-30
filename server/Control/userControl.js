@@ -33,9 +33,6 @@ const registerUser = async(req,res)=>{
             fullName,
             email: email, 
             password: hashedPassword,
-            // phone:phone,
-            // dob:dob,
-            // address: address
             role: "patient"
         })
 
@@ -64,6 +61,7 @@ const registerUser = async(req,res)=>{
 }
 
 
+//email verification
 const verifyEmail = async (req, res) => {
   try {
     const { token } = req.params;
@@ -222,8 +220,6 @@ const editUserData = async(req,res)=>{
         const editUser = await RegisterUser.findByIdAndUpdate(
           userId,
           updateFields,
-
-        
           { new: true, runValidators: true } // Return updated document and apply validators
         );
 
@@ -244,14 +240,13 @@ const editUserData = async(req,res)=>{
 const deleteUserData = async(req,res)=>{
     try {
         const userId = req.params.userId
-        const { password } = req.body; // Get entered password from request body
+        const { password } = req.body; // password from request body
 
         const deleteUser = await RegisterUser.findByIdAndDelete(userId);
         if (!deleteUser) {
           return res.status(404).json({ success: false, message: "User not found" });
         }
     
-        // Check if password is provided
         if (!password) {
           return res.status(400).json({ success: false, message: "Password is required for account deletion" });
         }
@@ -336,7 +331,7 @@ const getMyAppointments = async (req, res) => {
     const userId = req.userId;
     const userRole = req.userRole;
 
-        // Only allow if role is 'user'
+        // Only allow if role is patient
         if (userRole !== "patient") {
           return res.status(403).json({ message: "Access denied. Only users can view their appointments." });
         }
@@ -348,7 +343,7 @@ const getMyAppointments = async (req, res) => {
         select: "fullName department",
         populate: {
           path: "department",
-          select: "name" // Make sure your Department schema has a 'name' field
+          select: "name"
         }
       })      .sort({ createdAt: -1 });
 
@@ -566,6 +561,7 @@ const forgotPassword = async (req, res) => {
 };
 
 
+
 //reset password- change
 const pwChange = async (req, res) => {
   try {
@@ -694,7 +690,7 @@ const checkpayment = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      payments, // array of { appointment, paymentStatus }
+      payments, // array of -appointment, paymentStatus 
     });
   } catch (error) {
     console.error('Error checking payment:', error);

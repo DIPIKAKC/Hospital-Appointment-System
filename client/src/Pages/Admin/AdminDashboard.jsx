@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
 import AdminBar from '../../Components/Admin/SideBar';
-import { BsPersonAdd } from "react-icons/bs";
-import { GoFileDirectory } from "react-icons/go";
 import AdminAddDoctor from './AdminAddDoctor';
 import AdminAddDepartment from './AdminAddDepartment';
 import { X } from 'lucide-react';

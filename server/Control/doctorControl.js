@@ -46,17 +46,13 @@ const verifyDoctorEmail = async (req, res) => {
   try{
   const { token } = req.params;
   if (!token) {
-      res.status(500).json(400, "Token is required");
-      
+      res.status(500).json(400, "Token is required"); 
   }
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   if (!decoded) {
     res.status(400).json({success: false, message: "Token is required"});
   }
-
-  
-
   const user = await RegisterDoctor.findById(decoded.id);
   if (!user) {
     res.status(404).json({success: false, message: "Doctor not found"});
@@ -140,7 +136,7 @@ const appointmentStatus = async (req, res) => {
     appointment.status = status;
     if (notes) appointment.notes = notes;
     
-        // Send email to patient
+    // Send email to patient
     sendAppointmentStatusEmail(
       appointment.user.email,
       appointment.doctor.fullName,
@@ -181,6 +177,7 @@ const appointmentStatus = async (req, res) => {
   }
 };
 
+
 // Get current user profile
 const getMeDoctor = async (req, res) => {
   try {
@@ -190,7 +187,6 @@ const getMeDoctor = async (req, res) => {
     if(!doctor){
       return res.status(404).send({ message: "doctor does not exist", sucess: false });    
     }
-
     doctor.password = undefined; // Hide password before sending response
 
     res.status(200).json({
@@ -305,7 +301,7 @@ const getAppointmentStats = async (req, res) => {
      status: "confirmed" && !'pending' && !'canceled'
     });
 
-    //Upcoming appointments (after today)
+    //Upcoming appointments -after today
     const upcomingCount = await Appointment.countDocuments({
       doctor: doctorId,
       date: { $gt: tomorrowStr },
@@ -318,7 +314,7 @@ const getAppointmentStats = async (req, res) => {
     })
     const totalPatients = uniquePatients.length;
 
-    //Pending requests from now (current date and time onward)
+    //Pending requests from now -current date and time onwards
     const pendingRequestsCount = await Appointment.countDocuments({
       doctor: doctorId,
       date: { $gte: todayStr },
@@ -356,12 +352,12 @@ const getMyPatients = async (req, res) => {
           name: appt.user?.fullName,
           email: appt.user?.email,
           lastVisit: appt.date,
-          condition: appt.reason || 'General Checkup' // Customize as needed
+          condition: appt.reason 
         });
       }
     }
 
-    // Convert to array and sort by lastVisit descending
+    // Convert to array and sort by lastVisit -descending
     const patients = Array.from(patientMap.values())
     .sort((a, b) => new Date(b.lastVisit) - new Date(a.lastVisit))
     .slice(0, 2); // Get only the 2 most recent

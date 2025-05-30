@@ -33,7 +33,7 @@ const LoginAdmin = () => {
       if (response.ok) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user.fullName));
-        localStorage.setItem("id", data.user.userId); //This stores the user ID
+        localStorage.setItem("id", data.user.userId); 
         toast.success("Login successful!");
         navigate("/admin/dashboard");
       } else {

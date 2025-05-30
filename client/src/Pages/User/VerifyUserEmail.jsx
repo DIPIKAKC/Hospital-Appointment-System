@@ -51,8 +51,8 @@ export const VerifyUserEmail = () => {
           {successMessage && (
           <div
             style={{
-              backgroundColor: "#d1fae5", // light green background
-              color: "#047857",          // dark green text
+              backgroundColor: "#d1fae5", 
+              color: "#047857",         
               padding: "1rem",
               borderRadius: "0.5rem",
               marginBottom: "1rem"

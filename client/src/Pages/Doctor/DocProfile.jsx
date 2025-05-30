@@ -129,10 +129,10 @@ const DoctorProfile = () => {
     e.preventDefault();
 
     const id=localStorage.getItem("id");
-    // Create FormData object for file upload
+    // formData object for file upload
     const formDataForSubmit = new FormData();
     
-    // Append text fields
+    // append text fields
     formDataForSubmit.append('fullName', formData.fullName);
     formDataForSubmit.append('department',formData);
     formDataForSubmit.append('email', formData.email);
@@ -141,7 +141,7 @@ const DoctorProfile = () => {
     formDataForSubmit.append('dateOfBirth', formData.dateOfBirth);
     formDataForSubmit.append('gender', formData.gender);
     
-    // Append image if exists
+    // append image if exists
     if (formData.image) {
       formDataForSubmit.append('image', formData.image);
     }
@@ -151,7 +151,6 @@ const DoctorProfile = () => {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`
-          // Don't set Content-Type when sending FormData
         },
         body: formDataForSubmit
       });
@@ -159,7 +158,7 @@ const DoctorProfile = () => {
       const result = await response.json();
       if (result.success) {
         toast.success("Profile updated successfully!");
-        // Update local patient state with new data
+        // update local patient state with new data
       setDoctor(prevDoctor => ({
           ...prevDoctor,
           fullName: formData.fullName,

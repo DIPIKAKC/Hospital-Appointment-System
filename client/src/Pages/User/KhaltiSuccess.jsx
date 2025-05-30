@@ -9,7 +9,7 @@ import Resources from '../../Components/User/Resources';
 const PaymentSuccess = () => {
   const location = useLocation();
   
-  // If no state or appointment details were passed, redirect to home
+  // if no state or appointment details were passed, redirect to home
   if (!location.state || !location.state.appointmentDetails) {
     return <Navigate to="/" />;
   }
@@ -62,12 +62,6 @@ const PaymentSuccess = () => {
       </div>
       
       <div className="action-buttons">
-        {/* <button 
-          className="print-button"
-          onClick={() => window.print()}
-        >
-          Print Receipt
-        </button> */}
         <button 
           className="home-button"
           onClick={() => window.location.href = '/appointments'}

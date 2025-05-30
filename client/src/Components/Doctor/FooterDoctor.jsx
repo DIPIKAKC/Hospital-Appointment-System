@@ -12,7 +12,7 @@ const FooterDoc = () => {
                     <button className="logo">
                         <Link to= "/dashboard" /> MedEase
                     </button>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
                 </div>
                 <div className='footer'>
                     <Link to="/dashboard" className="footer-link">Manage Schedule</Link>

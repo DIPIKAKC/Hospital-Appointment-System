@@ -75,7 +75,6 @@
   color: #ffffff;
 }
 
-/* Responsive styles for larger screens */
 @media (min-width: 600px) {
   .doctor-password-button-group {
     flex-direction: row;

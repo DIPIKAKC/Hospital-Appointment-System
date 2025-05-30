@@ -1,10 +1,9 @@
-// src/Pages/User/ForgotPassword.jsx
 import React, { useEffect, useState } from 'react';
 import NavBar from '../../Components/User/Navbar';
 import Resources from '../../Components/User/Resources';
 import Footer from '../../Components/User/Footer';
 import { useNavigate } from 'react-router-dom';
-import './ForgotPassword.css'; // Importing the CSS
+import './ForgotPassword.css'; 
 
 export const ForgotPassword = () => {
   const [email, setEmail] = useState('');

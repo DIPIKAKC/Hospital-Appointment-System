@@ -23,13 +23,13 @@ const [showKhaltiPaymentFor, setShowKhaltiPaymentFor] = useState(null); // store
 
 
 
-  // Function to open modal for specific appointment
+  // open modal for specific appointment
   const handleOpenReminder = (appointment) => {
     setSelectedAppointment(appointment);
     setShowReminderModal(true);
   };
 
-    // Helper function to check if appointment is in the future
+    // to check if appointment is in the future
     const isFutureAppointment = (date, time) => {
       if (!date || !time) return false;
       const appointmentDateTime = new Date(`${date} ${time}`);
@@ -76,10 +76,10 @@ const [showKhaltiPaymentFor, setShowKhaltiPaymentFor] = useState(null); // store
 
 
   const cancelAppointment = async (id) => {
-    // Find the appointment in the current state
+    // find the appointment in the current state
     const appointmentToCancel = appointments.find(app => app._id === id);
 
-    // Don't proceed if the appointment is already canceled
+    // don't proceed if the appointment is already canceled
     if (appointmentToCancel.status === 'canceled') {
       toast.info("This appointment is already canceled");
       return;
@@ -96,13 +96,12 @@ const [showKhaltiPaymentFor, setShowKhaltiPaymentFor] = useState(null); // store
       });
 
       const data = await response.json();
-      // alert("Appointment canceled successfully");
       toast.success("Appointment canceled successfully!");
       if (!response.ok) {
         toast.error("Failed to cancel appointment");
       }
 
-      // Update the local state to reflect the canceled appointment
+      // local state to reflect the canceled appointment
       setTimeout(() => {
         setAppointments(prevAppointments =>
           prevAppointments.map(appointment =>
@@ -120,8 +119,7 @@ const [showKhaltiPaymentFor, setShowKhaltiPaymentFor] = useState(null); // store
   };
 
 
-  
-  // Filter appointments based on active tab
+  // filter appointments based on active tab
   const filteredAppointments = appointments.filter(appointment => {
     const isFuture = isFutureAppointment(appointment.date, appointment.time);
 
@@ -164,7 +162,7 @@ const [showKhaltiPaymentFor, setShowKhaltiPaymentFor] = useState(null); // store
         if (data.success && data.payments) {
           const paymentMap = {};
           data.payments.forEach((payment) => {
-            paymentMap[payment.appointment] = payment.paymentStatus; // 'completed' or 'pending'
+            paymentMap[payment.appointment] = payment.paymentStatus; // completed or pending
           });
         setPaymentsStatus(paymentMap);
         console.log("payments:",paymentMap)
@@ -175,13 +173,13 @@ const [showKhaltiPaymentFor, setShowKhaltiPaymentFor] = useState(null); // store
       }
     };
 
-    // Handle payment completion
+    // handle payment completion
   const handlePaymentSuccess = (appointmentId) => {
     setPaymentsStatus(prev => ({
       ...prev,
       [appointmentId]: 'completed',
     }));
-    setShowKhaltiPaymentFor(null); // Close the payment modal
+    setShowKhaltiPaymentFor(null); // close the payment modal
     toast.success("Payment completed successfully!");
   };
     

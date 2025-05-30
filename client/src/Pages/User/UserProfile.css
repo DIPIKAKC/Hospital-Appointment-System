@@ -121,11 +121,6 @@
   margin-bottom: 10px;
 }
 
-/* @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-} */
 
 .profile-error__message {
   color: red;
@@ -238,9 +233,6 @@
   to { opacity: 1; transform: scale(1); }
 }
 
-/* ----------------------
-   Responsive Breakpoints
-------------------------*/
 
 @media (max-width: 768px) {
   .user-profile {
